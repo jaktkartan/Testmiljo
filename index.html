@@ -68,13 +68,17 @@
                     if (text.startsWith("<?xml")) {
                         var parser = new DOMParser();
                         var xmlDoc = parser.parseFromString(text, "text/xml");
-                        var featureInfo = xmlDoc.getElementsByTagName("FeatureInfo")[0];
+                        var features = xmlDoc.getElementsByTagName("Feature");
 
-                        if (featureInfo) {
+                        if (features.length > 0) {
                             var content = '<table>';
-                            for (var i = 0; i < featureInfo.children.length; i++) {
-                                var field = featureInfo.children[i];
-                                content += '<tr><th>' + field.tagName + '</th><td>' + field.textContent + '</td></tr>';
+                            for (var i = 0; i < features.length; i++) {
+                                var feature = features[i];
+                                var fields = feature.children;
+                                for (var j = 0; j < fields.length; j++) {
+                                    var field = fields[j];
+                                    content += '<tr><th>' + field.tagName + '</th><td>' + field.textContent + '</td></tr>';
+                                }
                             }
                             content += '</table>';
                             L.popup()

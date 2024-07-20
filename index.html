@@ -26,7 +26,7 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Skapa ett ArcGIS-feature layer som ska visas vid högre zoomnivåer
+        // Skapa ett ArcGIS-feature layer
         var featureLayer = L.esri.featureLayer({
             url: 'https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/0',
             style: function (feature) {
@@ -37,15 +37,21 @@
                     layer.bindPopup(feature.properties.name);
                 }
             }
-        }).addTo(map);
+        });
 
         // Funktion som döljer eller visar lagret baserat på zoomnivå
         function updateLayerVisibility() {
             var zoomLevel = map.getZoom();
-            if (zoomLevel >= 10) { // Justera detta zoomnivågräns efter behov
-                featureLayer.addTo(map);
+            if (zoomLevel >= 10) { // Justera zoomnivågräns efter behov
+                setTimeout(function() {
+                    if (!map.hasLayer(featureLayer)) {
+                        featureLayer.addTo(map);
+                    }
+                }, 1000); // Fördröj lagring med 1000 ms
             } else {
-                map.removeLayer(featureLayer);
+                if (map.hasLayer(featureLayer)) {
+                    map.removeLayer(featureLayer);
+                }
             }
         }
 

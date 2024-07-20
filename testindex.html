@@ -1,32 +1,61 @@
-var wms_layers = [];
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Karta med WMS Lager</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Skapa en karta och sätt standardvyn
+        var map = L.map('map').setView([63.0, 16.0], 5);
 
+        // Lägg till OSM Standard-baskarta
+        var osmStandard = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors, CC-BY-SA'
+        }).addTo(map);
 
-        var lyr_OSMStandard_0 = new ol.layer.Tile({
-            'title': 'OSM Standard',
-            //'type': 'base',
-            'opacity': 1.000000,
-            
-            
-            source: new ol.source.XYZ({
-    attributions: ' &middot; <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
-                url: 'http://tile.openstreetmap.org/{z}/{x}/{y}.png'
-            })
+        // Lägg till WMS-lager för Älgjaktområden
+        var wmsUrl = "https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer";
+        var algjaktomraden = L.tileLayer.wms(wmsUrl, {
+            layers: '2',
+            format: 'image/png',
+            transparent: true,
+            opacity: 0.35,
+            version: '1.3.0',
+            attribution: ''
+        }).addTo(map);
+
+        // Lägg till lagerkontroll
+        var baseMaps = {
+            "OSM Standard": osmStandard
+        };
+
+        var overlayMaps = {
+            "Älgjaktområden": algjaktomraden
+        };
+
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+        // Kontrollera om WMS-lagret är tillgängligt
+        algjaktomraden.on('tileerror', function(error, tile) {
+            console.error('WMS layer could not be loaded:', error);
+            alert('Failed to load WMS layer. Please check the WMS URL and parameters.');
         });
-var lyr_lgjaktomrden_1 = new ol.layer.Tile({
-                            source: new ol.source.TileWMS(({
-                              url: "https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer",
-    attributions: ' ',
-                              params: {
-                                "LAYERS": "2",
-                                "TILED": "true",
-                                "VERSION": "1.3.0"},
-                            })),
-                            title: "Älgjaktområden",
-                            opacity: 0.350000,
-                            
-                            
-                          });
-              wms_layers.push([lyr_lgjaktomrden_1, 1]);
 
-lyr_OSMStandard_0.setVisible(true);lyr_lgjaktomrden_1.setVisible(true);
-var layersList = [lyr_OSMStandard_0,lyr_lgjaktomrden_1];
+        // Lägg till en funktionslogg för att se om WMS-lagret laddas korrekt
+        console.log('Map initialized and layers added.');
+
+    </script>
+</body>
+</html>

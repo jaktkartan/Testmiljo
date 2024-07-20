@@ -42,7 +42,7 @@
         // Funktion som döljer eller visar lagret baserat på zoomnivå
         function updateLayerVisibility() {
             var zoomLevel = map.getZoom();
-            if (zoomLevel >= 6) { // Visa lagret vid zoomnivå 6 eller högre
+            if (zoomLevel >= 13) { // Visa lagret vid zoomnivå 13 eller högre
                 if (!map.hasLayer(featureLayer)) {
                     featureLayer.addTo(map);
                 }

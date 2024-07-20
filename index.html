@@ -49,16 +49,10 @@
         L.control.layers(baseMaps, overlayMaps).addTo(map);
 
         // Funktion för att hantera GetFeatureInfo-svar
-        function showGetFeatureInfo(err, latlng, content) {
-            if (err) { 
-                console.error(err);
-                return;
-            }
-
-            // Visa ett popup-fönster med attributdata
+        function showGetFeatureInfo(content) {
             L.popup({ maxWidth: 800 })
-                .setLatLng(latlng)
-                .setContent(content)
+                .setLatLng(content.latlng)
+                .setContent(content.info)
                 .openOn(map);
         }
 
@@ -69,23 +63,43 @@
             });
 
             fetch(url)
-                .then(response => response.json())
-                .then(json => {
-                    if (json.features && json.features.length) {
-                        var properties = json.features[0].properties;
-                        var content = '<table>';
-                        for (var key in properties) {
-                            if (properties.hasOwnProperty(key)) {
-                                content += '<tr><th>' + key + '</th><td>' + properties[key] + '</td></tr>';
+                .then(response => response.text())
+                .then(text => {
+                    if (text.startsWith("<?xml")) {
+                        // Hantera XML-svar
+                        var parser = new DOMParser();
+                        var xmlDoc = parser.parseFromString(text, "text/xml");
+                        var features = xmlDoc.getElementsByTagName("Feature");
+                        if (features.length > 0) {
+                            var content = '<table>';
+                            for (var i = 0; i < features[0].children.length; i++) {
+                                var field = features[0].children[i];
+                                content += '<tr><th>' + field.tagName + '</th><td>' + field.textContent + '</td></tr>';
                             }
+                            content += '</table>';
+                            showGetFeatureInfo({ latlng: e.latlng, info: content });
+                        } else {
+                            showGetFeatureInfo({ latlng: e.latlng, info: "No feature information found." });
                         }
-                        content += '</table>';
-                        showGetFeatureInfo(null, e.latlng, content);
                     } else {
-                        showGetFeatureInfo(null, e.latlng, "No feature information found.");
+                        // Hantera JSON-svar
+                        var json = JSON.parse(text);
+                        if (json.features && json.features.length) {
+                            var properties = json.features[0].properties;
+                            var content = '<table>';
+                            for (var key in properties) {
+                                if (properties.hasOwnProperty(key)) {
+                                    content += '<tr><th>' + key + '</th><td>' + properties[key] + '</td></tr>';
+                                }
+                            }
+                            content += '</table>';
+                            showGetFeatureInfo({ latlng: e.latlng, info: content });
+                        } else {
+                            showGetFeatureInfo({ latlng: e.latlng, info: "No feature information found." });
+                        }
                     }
                 })
-                .catch(err => showGetFeatureInfo(err, e.latlng, null));
+                .catch(err => showGetFeatureInfo({ latlng: e.latlng, info: "Error fetching feature info." }));
         });
 
         // Funktion för att bygga GetFeatureInfo URL

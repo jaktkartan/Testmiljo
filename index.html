@@ -27,7 +27,7 @@
         }
 
         // Kontrollera om proj4leaflet är definierad
-        if (typeof L.CRS.Proj4js === 'undefined') {
+        if (typeof L.Proj === 'undefined') {
             console.error('proj4leaflet is not loaded.');
         } else {
             console.log('proj4leaflet is loaded.');
@@ -35,7 +35,7 @@
 
         // Definiera CRS för SWEREF 99 TM
         proj4.defs("EPSG:3006", "+proj=tmerc +lat_0=0 +lon_0=13 +k=1 +x_0=500000 +y_0=-667000 +datum=WGS84 +units=m +no_defs");
-        var sweref99TM = L.CRS.proj4js('EPSG:3006');
+        var sweref99TM = new L.Proj.CRS('EPSG:3006', proj4('EPSG:3006'));
 
         // Initiera kartan
         var map = L.map('map', {

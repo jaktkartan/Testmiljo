@@ -45,12 +45,13 @@
                 version: layer.options.version,
                 layers: layer.options.layers,
                 query_layers: layer.options.layers,
-                info_format: 'application/vnd.ogc.gml',
+                info_format: 'application/json', // Byt till JSON eller HTML beroende på vad tjänsten accepterar
                 bbox: map.getBounds().toBBoxString(),
                 width: size.x,
                 height: size.y,
                 i: Math.floor(point.x),
-                j: Math.floor(point.y)
+                j: Math.floor(point.y),
+                srs: 'EPSG:3006' // Lägg till rätt koordinatsystem
             };
 
             var url = layer._url + L.Util.getParamString(baseParams, layer._url, true);

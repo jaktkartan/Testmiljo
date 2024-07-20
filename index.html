@@ -1,40 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <title>Leaflet WMS Example</title>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet WMS GetFeatureInfo Example</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map {
-            height: 100vh;
+        #map { height: 600px; }
+        .leaflet-popup-content-wrapper {
+            width: 300px;
         }
     </style>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
     <div id="map"></div>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // Initialisera kartan
-        var map = L.map('map').setView([60.128, 18.643], 6);
 
-        // Lägg till OpenStreetMap som bakgrundskarta
+    <script>
+        // Skapa Leaflet-karta
+        var map = L.map('map').setView([59.3293, 18.0686], 6);
+
+        // Lägg till baslager
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
         // Lägg till WMS-lager
-        var algjaktomraden = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
-            layers: '2',
+        var wmsLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
+            layers: '2', // Specifik layer, kontrollera detta
             format: 'image/png',
             transparent: true,
             version: '1.3.0',
-            attribution: 'Länsstyrelsen'
+            crs: 'EPSG:4326' // Specificera att lagret använder EPSG:4326
         }).addTo(map);
 
-        // Funktion för att bygga GetFeatureInfo URL
-        function getFeatureInfoUrl(map, layer, latlng, params) {
+        // Funktion för att skapa GetFeatureInfo URL
+        function getFeatureInfoUrl(map, layer, latlng) {
             var point = map.latLngToContainerPoint(latlng, map.getZoom());
             var size = map.getSize();
 
@@ -50,79 +51,60 @@
                 width: size.x,
                 layers: layer.options.layers,
                 query_layers: layer.options.layers,
-                info_format: params.info_format || 'text/xml', // Hantera XML
+                info_format: 'application/vnd.ogc.gml',
                 i: Math.round(point.x),
                 j: Math.round(point.y)
             };
 
-            var customParams = L.Util.extend(baseParams, params);
-            var url = layer._url + L.Util.getParamString(customParams, layer._url, true);
-
-            console.log('GetFeatureInfo URL:', url); // Logga URL för felsökning
+            var url = layer._url + L.Util.getParamString(baseParams, layer._url, true);
+            console.log('GetFeatureInfo URL:', url);
             return url;
         }
 
-        // Hantera klick på kartan
+        // Hantera klick på kartan för att få information om objekt
         map.on('click', function(e) {
-            var url = getFeatureInfoUrl(map, algjaktomraden, e.latlng, {
-                'info_format': 'application/json' // Försök först JSON
-            });
+            var url = getFeatureInfoUrl(map, wmsLayer, e.latlng);
 
             fetch(url)
                 .then(response => response.text())
                 .then(text => {
-                    try {
-                        if (text.startsWith("<?xml")) {
-                            // Hantera XML-svar
-                            var parser = new DOMParser();
-                            var xmlDoc = parser.parseFromString(text, "text/xml");
-                            var features = xmlDoc.getElementsByTagName("Feature");
-                            if (features.length > 0) {
-                                var content = '<table>';
-                                for (var i = 0; i < features[0].children.length; i++) {
-                                    var field = features[0].children[i];
-                                    content += '<tr><th>' + field.tagName + '</th><td>' + field.textContent + '</td></tr>';
-                                }
-                                content += '</table>';
-                                showGetFeatureInfo({ latlng: e.latlng, info: content });
-                            } else {
-                                showGetFeatureInfo({ latlng: e.latlng, info: "No feature information found." });
+                    if (text.startsWith("<?xml")) {
+                        var parser = new DOMParser();
+                        var xmlDoc = parser.parseFromString(text, "text/xml");
+                        var featureInfo = xmlDoc.getElementsByTagName("FeatureInfo")[0];
+
+                        if (featureInfo) {
+                            var content = '<table>';
+                            for (var i = 0; i < featureInfo.children.length; i++) {
+                                var field = featureInfo.children[i];
+                                content += '<tr><th>' + field.tagName + '</th><td>' + field.textContent + '</td></tr>';
                             }
+                            content += '</table>';
+                            L.popup()
+                                .setLatLng(e.latlng)
+                                .setContent(content)
+                                .openOn(map);
                         } else {
-                            // Hantera JSON-svar
-                            var json = JSON.parse(text);
-                            if (json.features && json.features.length) {
-                                var properties = json.features[0].properties;
-                                var content = '<table>';
-                                for (var key in properties) {
-                                    if (properties.hasOwnProperty(key)) {
-                                        content += '<tr><th>' + key + '</th><td>' + properties[key] + '</td></tr>';
-                                    }
-                                }
-                                content += '</table>';
-                                showGetFeatureInfo({ latlng: e.latlng, info: content });
-                            } else {
-                                showGetFeatureInfo({ latlng: e.latlng, info: "No feature information found." });
-                            }
+                            L.popup()
+                                .setLatLng(e.latlng)
+                                .setContent("No feature information found.")
+                                .openOn(map);
                         }
-                    } catch (err) {
-                        console.error('Error processing feature info:', err);
-                        showGetFeatureInfo({ latlng: e.latlng, info: "Error processing feature info." });
+                    } else {
+                        L.popup()
+                            .setLatLng(e.latlng)
+                            .setContent("Unexpected response format.")
+                            .openOn(map);
                     }
                 })
                 .catch(err => {
                     console.error('Error fetching feature info:', err);
-                    showGetFeatureInfo({ latlng: e.latlng, info: "Error fetching feature info." });
+                    L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent("Error fetching feature info.")
+                        .openOn(map);
                 });
         });
-
-        // Funktion för att visa popup med feature information
-        function showGetFeatureInfo(props) {
-            L.popup()
-                .setLatLng(props.latlng)
-                .setContent(props.info)
-                .openOn(map);
-        }
     </script>
 </body>
 </html>

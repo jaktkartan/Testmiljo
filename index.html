@@ -9,17 +9,119 @@
         #map { height: 600px; }
     </style>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-tilelayer-wms/dist/leaflet-tilelayer-wms.js"></script>
+    <script src="https://unpkg.com/proj4/dist/proj4.js"></script>
+    <script src="https://unpkg.com/proj4leaflet/src/proj4leaflet.js"></script>
 </head>
 <body>
     <div id="map"></div>
     <script>
-        // Skapa Leaflet-karta
-        var map = L.map('map').setView([60.5, 15], 5);
+        // Definiera SWEREF 99 TM CRS
+        var sweref99tm = new L.Proj.CRS('EPSG:3006',
+            '+proj=tmerc +lat_0=0 +lon_0=13 +k=1 +x_0=500000 +y_0=0 ' +
+            '+datum=WGS84 +units=m +no_defs',
+            {
+                resolutions: [156543.03392804097, 78271.51696402048, 39135.75848201024, 19567.87924100512, 9783.93962050256,
+                               4891.96981025128, 2445.98490512564, 1222.99245256282, 611.49622628141, 305.74811314070,
+                               152.87405657035, 76.43702828517, 38.21851414258, 19.10925707129, 9.55462853564, 4.77731426782,
+                               2.38865713391, 1.19432856696, 0.59716428348, 0.29858214174]
+            });
+
+        // Skapa Leaflet-karta med SWEREF 99 TM
+        var map = L.map('map', {
+            crs: sweref99tm,
+            center: [60.5, 15],
+            zoom: 5
+        });
 
         // Lägg till baslager
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
+        // Lägg till WMS-lager
+        var wmsLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
+            layers: '2',
+            format: 'image/png',
+            transparent: true,
+            version: '1.3.0'
+        }).addTo(map);
+
+        // Funktion för att skapa GetFeatureInfo URL
+        function getFeatureInfoUrl(map, layer, latlng) {
+            var point = map.latLngToContainerPoint(latlng);
+            var size = map.getSize();
+
+            var baseParams = {
+                request: 'GetFeatureInfo',
+                service: 'WMS',
+                version: layer.options.version,
+                layers: layer.options.layers,
+                query_layers: layer.options.layers,
+                info_format: 'application/vnd.ogc.gml',
+                bbox: map.getBounds().toBBoxString(),
+                width: size.x,
+                height: size.y,
+                i: Math.floor(point.x),
+                j: Math.floor(point.y),
+                srs: 'EPSG:3006'
+            };
+
+            var url = layer._url + L.Util.getParamString(baseParams, layer._url, true);
+            console.log('GetFeatureInfo URL:', url);
+            return url;
+        }
+
+        // Hantera klick på kartan för att få information om objekt
+        map.on('click', function(e) {
+            var url = getFeatureInfoUrl(map, wmsLayer, e.latlng);
+
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    // Kontrollera om svaret är XML
+                    if (text.startsWith('<?xml')) {
+                        var parser = new DOMParser();
+                        var xmlDoc = parser.parseFromString(text, "text/xml");
+
+                        // För XML-svar
+                        var features = xmlDoc.getElementsByTagName("Feature");
+                        if (features.length > 0) {
+                            var content = '<table>';
+                            for (var i = 0; i < features.length; i++) {
+                                var feature = features[i];
+                                var fields = feature.children;
+                                for (var j = 0; j < fields.length; j++) {
+                                    var field = fields[j];
+                                    content += '<tr><th>' + field.tagName + '</th><td>' + field.textContent + '</td></tr>';
+                                }
+                            }
+                            content += '</table>';
+                            L.popup()
+                                .setLatLng(e.latlng)
+                                .setContent(content)
+                                .openOn(map);
+                        } else {
+                            L.popup()
+                                .setLatLng(e.latlng)
+                                .setContent("No feature information found.")
+                                .openOn(map);
+                        }
+                    } else {
+                        L.popup()
+                            .setLatLng(e.latlng)
+                            .setContent("Unexpected response format.")
+                            .openOn(map);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching feature info:', err);
+                    L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent("Error fetching feature info.")
+                        .openOn(map);
+                });
+        });
     </script>
 </body>
 </html>

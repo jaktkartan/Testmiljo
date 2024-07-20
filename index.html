@@ -45,19 +45,22 @@
             return `hsl(${hue}, 70%, ${lightness}%)`;
         }
 
+        // Färgcache för att bevara färger för varje feature
+        var colorCache = {};
+
         // Skapa ett ArcGIS-feature layer
         var featureLayer = L.esri.featureLayer({
             url: 'https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/0',
             style: function (feature) {
-                // Om feature inte redan har en färg, generera en ny och spara i feature.properties
-                if (!feature.properties.color) {
-                    feature.properties.color = getRandomColor();
+                // Om feature inte redan har en färg i cache, generera och spara i cache
+                if (!colorCache[feature.id]) {
+                    colorCache[feature.id] = getRandomColor();
                 }
                 return {
-                    color: feature.properties.color, // Kantfärg
+                    color: colorCache[feature.id], // Kantfärg
                     weight: 2, // Kantens tjocklek
                     opacity: 1, // Kantens opacitet
-                    fillColor: feature.properties.color, // Fyllningsfärg
+                    fillColor: colorCache[feature.id], // Fyllningsfärg
                     fillOpacity: 0.5 // Konstant transparens på fyllningen
                 };
             },

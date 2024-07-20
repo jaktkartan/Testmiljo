@@ -33,7 +33,8 @@
             opacity: 0.35,
             version: '1.3.0',
             crs: L.CRS.EPSG4326,
-            attribution: 'Länsstyrelsen'
+            attribution: 'Länsstyrelsen',
+            minZoom: 10  // Sätt minsta zoomnivå för att visa WMS-lagret
         }).addTo(map);
 
         // Lägg till lagerkontroll

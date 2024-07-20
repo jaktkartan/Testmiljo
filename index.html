@@ -12,6 +12,7 @@
         }
     </style>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-tilelayer-wms/dist/leaflet-tilelayer-wms.js"></script>
 </head>
 <body>
     <div id="map"></div>
@@ -27,33 +28,29 @@
 
         // Lägg till WMS-lager
         var wmsLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
-            layers: '2', // Specifik layer, kontrollera detta
+            layers: '2', // Kontrollera om detta är rätt layer
             format: 'image/png',
             transparent: true,
-            version: '1.3.0',
-            crs: 'EPSG:4326' // Specificera att lagret använder EPSG:4326
+            version: '1.3.0'
         }).addTo(map);
 
         // Funktion för att skapa GetFeatureInfo URL
         function getFeatureInfoUrl(map, layer, latlng) {
-            var point = map.latLngToContainerPoint(latlng, map.getZoom());
+            var point = map.latLngToContainerPoint(latlng);
             var size = map.getSize();
 
             var baseParams = {
                 request: 'GetFeatureInfo',
                 service: 'WMS',
-                srs: 'EPSG:4326',
-                styles: '',
                 version: layer.options.version,
-                format: layer.options.format,
-                bbox: map.getBounds().toBBoxString(),
-                height: size.y,
-                width: size.x,
                 layers: layer.options.layers,
                 query_layers: layer.options.layers,
                 info_format: 'application/vnd.ogc.gml',
-                i: Math.round(point.x),
-                j: Math.round(point.y)
+                bbox: map.getBounds().toBBoxString(),
+                width: size.x,
+                height: size.y,
+                i: Math.floor(point.x),
+                j: Math.floor(point.y)
             };
 
             var url = layer._url + L.Util.getParamString(baseParams, layer._url, true);

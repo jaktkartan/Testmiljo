@@ -56,7 +56,7 @@
             }
 
             // Visa ett popup-fönster med attributdata
-            L.popup({ maxWidth: 800})
+            L.popup({ maxWidth: 800 })
                 .setLatLng(latlng)
                 .setContent(content)
                 .openOn(map);
@@ -65,12 +65,26 @@
         // Lyssna efter klick-händelser på kartan
         map.on('click', function(e) {
             var url = getFeatureInfoUrl(map, algjaktomraden, e.latlng, {
-                'info_format': 'text/html'
+                'info_format': 'application/json'
             });
 
             fetch(url)
-                .then(response => response.text())
-                .then(html => showGetFeatureInfo(null, e.latlng, html))
+                .then(response => response.json())
+                .then(json => {
+                    if (json.features && json.features.length) {
+                        var properties = json.features[0].properties;
+                        var content = '<table>';
+                        for (var key in properties) {
+                            if (properties.hasOwnProperty(key)) {
+                                content += '<tr><th>' + key + '</th><td>' + properties[key] + '</td></tr>';
+                            }
+                        }
+                        content += '</table>';
+                        showGetFeatureInfo(null, e.latlng, content);
+                    } else {
+                        showGetFeatureInfo(null, e.latlng, "No feature information found.");
+                    }
+                })
                 .catch(err => showGetFeatureInfo(err, e.latlng, null));
         });
 
@@ -91,7 +105,7 @@
                 width: size.x,
                 layers: layer.options.layers,
                 query_layers: layer.options.layers,
-                info_format: 'text/html'
+                info_format: params.info_format || 'text/html'
             };
 
             var customParams = L.Util.extend(baseParams, params);

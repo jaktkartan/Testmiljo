@@ -11,6 +11,18 @@
             height: 100vh;
             width: 100%;
         }
+        .popup-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .popup-table th, .popup-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .popup-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -19,7 +31,7 @@
     <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
     <script>
         // Skapa en Leaflet-karta och sätt initialvy
-        var map = L.map('map').setView([56.5, 15.0], 6); // Ändra latitud, longitud och zoomnivå enligt behov
+        var map = L.map('map').setView([56.5, 15.0], 13); // Ändra latitud, longitud och zoomnivå enligt behov
 
         // Lägg till en baslager från OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -33,11 +45,21 @@
                 return { color: "#FF0000" }; // Anpassa färg på funktioner
             },
             onEachFeature: function (feature, layer) {
-                if (feature.properties && feature.properties.name) {
-                    layer.bindPopup(feature.properties.name);
+                // Bygg en HTML-tabell med attributdata
+                var popupContent = '<table class="popup-table">';
+                if (feature.properties) {
+                    for (var key in feature.properties) {
+                        if (feature.properties.hasOwnProperty(key)) {
+                            popupContent += '<tr><th>' + key + '</th><td>' + feature.properties[key] + '</td></tr>';
+                        }
+                    }
                 }
+                popupContent += '</table>';
+                
+                // Bind popup med HTML-tabellen
+                layer.bindPopup(popupContent);
             }
-        });
+        }).addTo(map);
 
         // Funktion som döljer eller visar lagret baserat på zoomnivå
         function updateLayerVisibility() {
@@ -61,3 +83,4 @@
     </script>
 </body>
 </html>
+

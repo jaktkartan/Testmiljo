@@ -48,14 +48,67 @@
 
         L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-        // Kontrollera om WMS-lagret är tillgängligt
-        algjaktomraden.on('tileerror', function(error, tile) {
-            console.error('WMS layer could not be loaded:', error);
-            alert('Failed to load WMS layer. Please check the WMS URL and parameters.');
+        // Funktion för att hantera GetFeatureInfo-svar
+        function showGetFeatureInfo(err, latlng, content) {
+            if (err) { 
+                console.error(err);
+                return;
+            }
+
+            // Visa ett popup-fönster med attributdata
+            L.popup({ maxWidth: 800})
+                .setLatLng(latlng)
+                .setContent(content)
+                .openOn(map);
+        }
+
+        // Lyssna efter klick-händelser på kartan
+        map.on('click', function(e) {
+            var url = getFeatureInfoUrl(map, algjaktomraden, e.latlng, {
+                'info_format': 'text/html'
+            });
+
+            fetch(url)
+                .then(response => response.text())
+                .then(html => showGetFeatureInfo(null, e.latlng, html))
+                .catch(err => showGetFeatureInfo(err, e.latlng, null));
         });
 
-        // Lägg till en funktionslogg för att se om WMS-lagret laddas korrekt
-        console.log('Map initialized and layers added.');
+        // Funktion för att bygga GetFeatureInfo URL
+        function getFeatureInfoUrl(map, layer, latlng, params) {
+            var point = map.latLngToContainerPoint(latlng, map.getZoom());
+            var size = map.getSize();
+
+            var baseParams = {
+                request: 'GetFeatureInfo',
+                service: 'WMS',
+                srs: 'EPSG:4326',
+                styles: '',
+                version: layer.options.version,
+                format: layer.options.format,
+                bbox: map.getBounds().toBBoxString(),
+                height: size.y,
+                width: size.x,
+                layers: layer.options.layers,
+                query_layers: layer.options.layers,
+                info_format: 'text/html'
+            };
+
+            var customParams = L.Util.extend(baseParams, params);
+
+            var url = layer._url + L.Util.getParamString(customParams, layer._url, true);
+
+            if (layer.options.crs && layer.options.crs !== L.CRS.EPSG3857) {
+                var projectedPoint = layer.options.crs.project(latlng);
+                customParams.i = Math.round(projectedPoint.x);
+                customParams.j = Math.round(projectedPoint.y);
+            } else {
+                customParams.i = point.x;
+                customParams.j = point.y;
+            }
+
+            return url;
+        }
     </script>
 </body>
 </html>

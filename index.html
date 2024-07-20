@@ -26,14 +26,14 @@
         }).addTo(map);
 
         // Lägg till WMS-lager för Älgjaktområden
-        var wmsUrl = "https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer";
-        var algjaktomraden = L.tileLayer.wms(wmsUrl, {
+        var algjaktomraden = L.tileLayer.wms("https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer", {
             layers: '2',
             format: 'image/png',
             transparent: true,
             opacity: 0.35,
             version: '1.3.0',
-            attribution: ''
+            crs: L.CRS.EPSG4326,
+            attribution: 'Länsstyrelsen'
         }).addTo(map);
 
         // Lägg till lagerkontroll
@@ -55,7 +55,6 @@
 
         // Lägg till en funktionslogg för att se om WMS-lagret laddas korrekt
         console.log('Map initialized and layers added.');
-
     </script>
 </body>
 </html>

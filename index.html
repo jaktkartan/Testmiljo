@@ -12,17 +12,19 @@
 <body>
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/proj4@2.7.8/dist/proj4.js"></script>
-    <script src="https://unpkg.com/proj4leaflet@1.0.1/dist/proj4leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/proj4@2.7.8/dist/proj4.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/proj4leaflet@1.0.1/dist/proj4leaflet.js"></script>
 
     <script>
         // Kontrollera att proj4 och proj4leaflet är korrekt laddade
         if (typeof proj4 === 'undefined' || typeof L.CRS.proj4js === 'undefined') {
             console.error('proj4 or proj4leaflet is not loaded correctly.');
+        } else {
+            console.log('proj4 and proj4leaflet are loaded correctly.');
         }
 
         // Definiera CRS för SWEREF 99 TM
-        proj4.defs("EPSG:3006", "+proj=tmerc +lat_0=0 +lon_0=13 +k=1 +x_0=500000 +y_0=-667_000 +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:3006", "+proj=tmerc +lat_0=0 +lon_0=13 +k=1 +x_0=500000 +y_0=-667000 +datum=WGS84 +units=m +no_defs");
         var sweref99TM = L.CRS.proj4js('EPSG:3006');
 
         // Initiera kartan

@@ -45,13 +45,13 @@
                 version: layer.options.version,
                 layers: layer.options.layers,
                 query_layers: layer.options.layers,
-                info_format: 'application/json', // Byt till JSON eller HTML beroende på vad tjänsten accepterar
+                info_format: 'text/html', // Testa med text/html om application/json inte accepteras
                 bbox: map.getBounds().toBBoxString(),
                 width: size.x,
                 height: size.y,
                 i: Math.floor(point.x),
                 j: Math.floor(point.y),
-                srs: 'EPSG:3006' // Lägg till rätt koordinatsystem
+                srs: 'EPSG:4326' // Testa med EPSG:4326 om EPSG:3006 inte fungerar
             };
 
             var url = layer._url + L.Util.getParamString(baseParams, layer._url, true);
@@ -66,11 +66,13 @@
             fetch(url)
                 .then(response => response.text())
                 .then(text => {
-                    if (text.startsWith("<?xml")) {
+                    // Kontrollera om svaret är HTML eller XML
+                    if (text.startsWith('<?xml') || text.startsWith('<html')) {
                         var parser = new DOMParser();
                         var xmlDoc = parser.parseFromString(text, "text/xml");
-                        var features = xmlDoc.getElementsByTagName("Feature");
 
+                        // För XML-svar
+                        var features = xmlDoc.getElementsByTagName("Feature");
                         if (features.length > 0) {
                             var content = '<table>';
                             for (var i = 0; i < features.length; i++) {

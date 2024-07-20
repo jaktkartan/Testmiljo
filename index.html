@@ -19,16 +19,16 @@
     <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
     <script>
         // Skapa en Leaflet-karta och sätt initialvy
-        var map = L.map('map').setView([56.5, 15.0], 6); // Ange lämplig latitud, longitud och zoomnivå
+        var map = L.map('map').setView([56.5, 15.0], 6); // Ändra latitud, longitud och zoomnivå enligt behov
 
         // Lägg till en baslager från OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Lägg till ArcGIS-tjänsten
-        L.esri.featureLayer({
-            url: 'https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/0', // Ändra URL:en vid behov
+        // Skapa ett ArcGIS-feature layer som ska visas vid högre zoomnivåer
+        var featureLayer = L.esri.featureLayer({
+            url: 'https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/0',
             style: function (feature) {
                 return { color: "#FF0000" }; // Anpassa färg på funktioner
             },
@@ -38,6 +38,22 @@
                 }
             }
         }).addTo(map);
+
+        // Funktion som döljer eller visar lagret baserat på zoomnivå
+        function updateLayerVisibility() {
+            var zoomLevel = map.getZoom();
+            if (zoomLevel >= 10) { // Justera detta zoomnivågräns efter behov
+                featureLayer.addTo(map);
+            } else {
+                map.removeLayer(featureLayer);
+            }
+        }
+
+        // Lägg till en "zoomend" lyssnare för att uppdatera lagrets synlighet när användaren zoomar
+        map.on('zoomend', updateLayerVisibility);
+
+        // Initial kontroll för att ställa in lagrets synlighet när kartan först laddas
+        updateLayerVisibility();
     </script>
 </body>
 </html>

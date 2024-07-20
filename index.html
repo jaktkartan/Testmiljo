@@ -40,7 +40,6 @@
 
         // Funktion för att generera en slumpmässig färg i en naturlig nyans
         function getRandomColor() {
-            // Skapar en färg med låg mättnad och ljus nyans
             var hue = Math.floor(Math.random() * 360); // Färgton
             var lightness = Math.floor(Math.random() * 40) + 40; // Ljushet från 40 till 80
             return `hsl(${hue}, 70%, ${lightness}%)`;
@@ -50,11 +49,15 @@
         var featureLayer = L.esri.featureLayer({
             url: 'https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/rest/services/Jaktadm/lst_jaktadm_visning/MapServer/0',
             style: function (feature) {
+                // Om feature inte redan har en färg, generera en ny och spara i feature.properties
+                if (!feature.properties.color) {
+                    feature.properties.color = getRandomColor();
+                }
                 return {
-                    color: getRandomColor(), // Slumpmässig kantfärg
+                    color: feature.properties.color, // Kantfärg
                     weight: 2, // Kantens tjocklek
                     opacity: 1, // Kantens opacitet
-                    fillColor: getRandomColor(), // Slumpmässig fyllningsfärg
+                    fillColor: feature.properties.color, // Fyllningsfärg
                     fillOpacity: 0.5 // Konstant transparens på fyllningen
                 };
             },

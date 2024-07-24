@@ -104,13 +104,30 @@
 
         function isWithinDateRange(startDate, endDate, checkDate) {
             const check = new Date(checkDate);
-            const startYear = check.getFullYear();
-            const endYear = (new Date(startDate) <= new Date(endDate)) ? startYear : startYear + 1;
+            const startParts = startDate.split(' ');
+            const endParts = endDate.split(' ');
 
-            const parsedStartDate = new Date(`${startYear}-${parseDateWithoutYear(startDate)}`);
-            const parsedEndDate = new Date(`${endYear}-${parseDateWithoutYear(endDate)}`);
+            let startYear = check.getFullYear();
+            let endYear = check.getFullYear();
 
-            return parsedStartDate <= check && check <= parsedEndDate;
+            const start = new Date(`${startYear}-${monthsReverse[startParts[1]]}-${startParts[0].padStart(2, '0')}`);
+            let end = new Date(`${endYear}-${monthsReverse[endParts[1]]}-${endParts[0].padStart(2, '0')}`);
+
+            if (end < start) {
+                end.setFullYear(end.getFullYear() + 1);
+            }
+
+            if (check >= start && check <= end) {
+                return true;
+            }
+
+            // Check for year-end spanning
+            const prevYearEnd = new Date(end);
+            prevYearEnd.setFullYear(prevYearEnd.getFullYear() - 1);
+            const nextYearStart = new Date(start);
+            nextYearStart.setFullYear(nextYearStart.getFullYear() + 1);
+
+            return (check >= prevYearEnd && check <= start) || (check >= end && check <= nextYearStart);
         }
 
         function formatResult(result) {

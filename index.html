@@ -104,25 +104,19 @@
 
         function isWithinDateRange(startDate, endDate, checkDate) {
             const check = new Date(checkDate);
+            const checkMonthDay = `${(check.getMonth() + 1).toString().padStart(2, '0')}-${check.getDate().toString().padStart(2, '0')}`;
+
             const [startDay, startMonth] = startDate.split(' ');
             const [endDay, endMonth] = endDate.split(' ');
 
-            const startMonthIndex = parseInt(monthsReverse[translateMonth(startMonth)]) - 1;
-            const endMonthIndex = parseInt(monthsReverse[translateMonth(endMonth)]) - 1;
+            const startMonthDay = `${monthsReverse[translateMonth(startMonth)]}-${startDay.padStart(2, '0')}`;
+            const endMonthDay = `${monthsReverse[translateMonth(endMonth)]}-${endDay.padStart(2, '0')}`;
 
-            let start = new Date(check.getFullYear(), startMonthIndex, parseInt(startDay));
-            let end = new Date(check.getFullYear(), endMonthIndex, parseInt(endDay));
-
-            if (end < start) {
-                end.setFullYear(end.getFullYear() + 1);
+            if (startMonthDay <= endMonthDay) {
+                return startMonthDay <= checkMonthDay && checkMonthDay <= endMonthDay;
+            } else {
+                return startMonthDay <= checkMonthDay || checkMonthDay <= endMonthDay;
             }
-
-            if (check < start) {
-                start.setFullYear(start.getFullYear() - 1);
-            }
-
-            const isInRange = (start <= check && check <= end);
-            return isInRange;
         }
 
         function formatResult(result) {

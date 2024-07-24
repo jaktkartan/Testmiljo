@@ -63,8 +63,8 @@
         }
 
         function formatDateForDisplay(dateString) {
-            const [day, monthNumber] = dateString.split('-');
-            return `${parseInt(day)} ${translateMonth(monthNumber)}`;
+            const [year, month, day] = dateString.split('-');
+            return `${parseInt(day)} ${translateMonth(month)}`;
         }
 
         function parseDateWithoutYear(dateString) {
@@ -94,7 +94,6 @@
             if (start <= end) {
                 return start <= check && check <= end;
             } else {
-                // Om intervallet går över årsskiftet (t.ex. December till Januari)
                 return start <= check || check <= end;
             }
         }
@@ -103,8 +102,8 @@
             return `
                 <div>
                     <h3>${result['Slag av vilt']}</h3>
-                    <p><strong>Starttid:</strong> ${formatDateForDisplay(result['Starttid'])}</p>
-                    <p><strong>Sluttid:</strong> ${formatDateForDisplay(result['Sluttid'])}</p>
+                    <p><strong>Starttid:</strong> ${formatDateForDisplay(`2024-${parseDateWithoutYear(result['Starttid'])}`)}</p>
+                    <p><strong>Sluttid:</strong> ${formatDateForDisplay(`2024-${parseDateWithoutYear(result['Sluttid'])}`)}</p>
                     ${result['Upplysning'] ? `<p><strong>Upplysning:</strong> ${result['Upplysning']}</p>` : ''}
                 </div>
             `;

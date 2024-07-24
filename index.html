@@ -39,9 +39,17 @@
 
     <script>
         async function fetchHuntingData() {
-            const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
-            const data = await response.json();
-            return data;
+            try {
+                const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching hunting data:", error);
+                return [];
+            }
         }
 
         // Översättningstabell för månader (engelska till svenska)
@@ -130,6 +138,12 @@
             console.log(`Selected county: ${county}`);
             console.log(`Selected date: ${date}`);
 
+            if (data.length === 0) {
+                console.error("No data found in the JSON file.");
+                document.getElementById('results').innerHTML = "Inga resultat funna.";
+                return;
+            }
+
             const results = data.filter(entry => {
                 const areas = entry['Område'].split(',');
                 const isInCounty = areas.some(area => area.trim() === county || area.trim() === "Alla län");
@@ -143,7 +157,11 @@
 
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = '';
-            resultsDiv.innerHTML = results.length > 0 ? results.map(formatResult).join('') : "Inga resultat funna.";
+            if (results.length > 0) {
+                resultsDiv.innerHTML = results.map(formatResult).join('');
+            } else {
+                resultsDiv.innerHTML = "Inga resultat funna.";
+            }
         }
     </script>
 </body>

@@ -94,7 +94,8 @@
 
             function formatDate(dateString) {
                 const [day, month] = dateString.split(' ');
-                return `${day} ${months[month]}`;
+                const monthNumber = Object.keys(months).find(key => months[key] === month);
+                return `${day} ${months[monthNumber]}`;
             }
 
             return `

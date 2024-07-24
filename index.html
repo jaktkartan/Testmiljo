@@ -106,7 +106,7 @@
             const check = new Date(checkDate);
             const parsedStartDate = parseDateWithoutYear(startDate);
             const parsedEndDate = parseDateWithoutYear(endDate);
-            
+
             if (!parsedStartDate || !parsedEndDate) {
                 console.error(`Error parsing dates: ${startDate}, ${endDate}`);
                 return false;
@@ -119,7 +119,20 @@
                 end.setFullYear(end.getFullYear() + 1);
             }
 
-            return start <= check && check <= end;
+            // Adjust for year crossing
+            let prevYearEnd = new Date(end);
+            prevYearEnd.setFullYear(end.getFullYear() - 1);
+            if (prevYearEnd < start) {
+                prevYearEnd.setFullYear(start.getFullYear());
+            }
+
+            let nextYearStart = new Date(start);
+            nextYearStart.setFullYear(start.getFullYear() + 1);
+            if (nextYearStart > end) {
+                nextYearStart.setFullYear(end.getFullYear());
+            }
+
+            return (start <= check && check <= end) || (prevYearEnd <= check && check <= start) || (end <= check && check <= nextYearStart);
         }
 
         function formatResult(result) {

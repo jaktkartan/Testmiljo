@@ -92,13 +92,16 @@
         }
 
         function isWithinDateRange(startDate, endDate, checkDate) {
-            const start = new Date(`2024-${parseDateWithoutYear(startDate)}`);
-            const end = new Date(`2024-${parseDateWithoutYear(endDate)}`);
+            const [startDay, startMonth] = startDate.split(' ');
+            const [endDay, endMonth] = endDate.split(' ');
+            const start = new Date(`2024-${monthsReverse[startMonth]}-${startDay.padStart(2, '0')}`);
+            const end = new Date(`2024-${monthsReverse[endMonth]}-${endDay.padStart(2, '0')}`);
             const check = new Date(checkDate);
 
             if (start <= end) {
                 return start <= check && check <= end;
             } else {
+                // Om intervallet går över årsskiftet (t.ex. December till Januari)
                 return start <= check || check <= end;
             }
         }

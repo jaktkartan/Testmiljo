@@ -85,7 +85,7 @@
         };
 
         function translateMonth(monthName) {
-            return months[monthName];
+            return months[monthName] || Object.keys(monthsReverse).find(key => monthsReverse[key] === monthName);
         }
 
         function formatDateForDisplay(dateString) {
@@ -96,7 +96,7 @@
 
         function parseDateWithoutYear(dateString) {
             const [day, month] = dateString.split(' ');
-            const monthNumber = monthsReverse[month];
+            const monthNumber = monthsReverse[translateMonth(month)];
             if (!monthNumber) {
                 console.error(`Invalid month: ${month}`);
                 return null;

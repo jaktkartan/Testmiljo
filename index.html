@@ -64,9 +64,9 @@
         }
 
         function isWithinDateRange(startDate, endDate, checkDate) {
-            const start = parseDateWithoutYear(startDate);
-            const end = parseDateWithoutYear(endDate);
-            const check = checkDate.slice(5);  // Remove the year part
+            const start = new Date(`2024-${parseDateWithoutYear(startDate)}`);
+            const end = new Date(`2024-${parseDateWithoutYear(endDate)}`);
+            const check = new Date(checkDate);
 
             if (start <= end) {
                 return start <= check && check <= end;
@@ -77,7 +77,7 @@
         }
 
         function formatResult(result) {
-            const monthNames = {
+            const months = {
                 '01': 'Januari',
                 '02': 'Februari',
                 '03': 'Mars',
@@ -94,20 +94,6 @@
 
             function formatDate(dateString) {
                 const [day, month] = dateString.split(' ');
-                const months = {
-                    'January': 'Januari',
-                    'February': 'Februari',
-                    'March': 'Mars',
-                    'April': 'April',
-                    'May': 'Maj',
-                    'June': 'Juni',
-                    'July': 'Juli',
-                    'August': 'Augusti',
-                    'September': 'September',
-                    'October': 'Oktober',
-                    'November': 'November',
-                    'December': 'December'
-                };
                 return `${day} ${months[month]}`;
             }
 
@@ -134,7 +120,7 @@
 
             const results = data.filter(entry => {
                 const areas = entry['Område'].split(',');
-                return areas.some(area => area.trim() === county) &&
+                return areas.some(area => area.trim() === county || area.trim() === "Alla län") &&
                        isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
             });
 

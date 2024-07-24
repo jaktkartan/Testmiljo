@@ -51,6 +51,18 @@
             return start <= check && check <= end;
         }
 
+        function formatResult(result) {
+            return `
+                <div>
+                    <h3>${result['Slag av vilt']}</h3>
+                    <p><strong>Område:</strong> ${result['Område']}</p>
+                    <p><strong>Starttid:</strong> ${result['Starttid']}</p>
+                    <p><strong>Sluttid:</strong> ${result['Sluttid']}</p>
+                    <p><strong>Upplysning:</strong> ${result['Upplysning'] ? result['Upplysning'] : ''}</p>
+                </div>
+            `;
+        }
+
         async function getHuntingInfo() {
             const county = document.getElementById('county').value.trim();
             const date = document.getElementById('date').value;
@@ -69,7 +81,7 @@
             });
 
             const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = results.length > 0 ? JSON.stringify(results, null, 2) : "Inga resultat funna.";
+            resultsDiv.innerHTML = results.length > 0 ? results.map(formatResult).join('') : "Inga resultat funna.";
         }
     </script>
 </body>

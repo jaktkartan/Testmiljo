@@ -113,11 +113,18 @@
             const start = new Date(check.getFullYear(), startMonthIndex, parseInt(startDay));
             let end = new Date(check.getFullYear(), endMonthIndex, parseInt(endDay));
 
+            console.log(`Check Date: ${check}`);
+            console.log(`Start Date: ${start}`);
+            console.log(`End Date: ${end}`);
+
             if (end < start) {
                 end.setFullYear(end.getFullYear() + 1);
+                console.log(`Adjusted End Date: ${end}`);
             }
 
-            return (start <= check && check <= end);
+            const isInRange = (start <= check && check <= end);
+            console.log(`Is In Range: ${isInRange}`);
+            return isInRange;
         }
 
         function formatResult(result) {
@@ -153,6 +160,8 @@
                 const isInDateRange = isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
                 return isInCounty && isInDateRange;
             });
+
+            console.log('Filtered Results:', results);
 
             results.sort((a, b) => {
                 if (a['Grupp'] === b['Grupp']) {

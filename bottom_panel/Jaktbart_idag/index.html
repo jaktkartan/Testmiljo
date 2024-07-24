@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Jakttider</title>
+</head>
+<body>
+    <h1>Jakttider</h1>
+    <label for="county">Välj län:</label>
+    <input type="text" id="county" name="county">
+    <br>
+    <label for="date">Välj datum:</label>
+    <input type="date" id="date" name="date">
+    <br>
+    <button onclick="getHuntingInfo()">Sök</button>
+    <div id="results"></div>
+
+    <script>
+        async function fetchHuntingData() {
+            const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
+            const data = await response.json();
+            return data;
+        }
+
+        function isWithinDateRange(startDate, endDate, checkDate) {
+            const start = new Date(`2024-${startDate}`);
+            const end = new Date(`2024-${endDate}`);
+            const check = new Date(checkDate);
+            return start <= check && check <= end;
+        }
+
+        async function getHuntingInfo() {
+            const county = document.getElementById('county').value.trim();
+            const date = document.getElementById('date').value;
+            
+            if (!county || !date) {
+                alert("Vänligen fyll i både län och datum.");
+                return;
+            }
+
+            const data = await fetchHuntingData();
+
+            const results = data.filter(entry => {
+                const areas = entry['Område'].split(',');
+                return areas.some(area => area.trim() === county) &&
+                       isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
+            });
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = results.length > 0 ? JSON.stringify(results, null, 2) : "Inga resultat funna.";
+        }
+    </script>
+</body>
+</html>

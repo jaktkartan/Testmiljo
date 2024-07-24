@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Jakttider</title>
 </head>
-<body>
+<body onload="initializePage()">
     <h1>Jakttider</h1>
     <label for="county">Välj län:</label>
     <select id="county">
@@ -36,6 +36,8 @@
     <br>
     <button onclick="getHuntingInfo()">Sök</button>
     <div id="results"></div>
+    <br>
+    <button onclick="window.location.href='https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/'">Jaktförordning (1987:905)</button>
 
     <script>
         async function fetchHuntingData() {
@@ -169,6 +171,12 @@
             } else {
                 resultsDiv.innerHTML = "Inga resultat funna.";
             }
+        }
+
+        function initializePage() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+            getHuntingInfo();
         }
     </script>
 </body>

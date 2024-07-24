@@ -138,6 +138,9 @@
                 return isInCounty && isInDateRange;
             });
 
+            console.log(`Results found: ${results.length}`);
+            console.log(results);
+
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = '';
             resultsDiv.innerHTML = results.length > 0 ? results.map(formatResult).join('') : "Inga resultat funna.";

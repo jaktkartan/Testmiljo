@@ -44,20 +44,20 @@
             return data;
         }
 
-        // Översättningstabell för månader (nummer till svenska)
+        // Översättningstabell för månader (engelska till svenska)
         const months = {
-            '01': 'Januari',
-            '02': 'Februari',
-            '03': 'Mars',
-            '04': 'April',
-            '05': 'Maj',
-            '06': 'Juni',
-            '07': 'Juli',
-            '08': 'Augusti',
-            '09': 'September',
-            '10': 'Oktober',
-            '11': 'November',
-            '12': 'December'
+            'January': 'Januari',
+            'February': 'Februari',
+            'March': 'Mars',
+            'April': 'April',
+            'May': 'Maj',
+            'June': 'Juni',
+            'July': 'Juli',
+            'August': 'Augusti',
+            'September': 'September',
+            'October': 'Oktober',
+            'November': 'November',
+            'December': 'December'
         };
 
         // Omvänd översättningstabell för månader (svenska till nummer)
@@ -76,14 +76,14 @@
             'December': '12'
         };
 
-        function translateMonth(monthNumber) {
-            return months[monthNumber];
+        function translateMonth(monthName) {
+            return months[monthName];
         }
 
         function formatDateForDisplay(dateString) {
             const [day, month] = dateString.split(' ');
-            const monthNumber = monthsReverse[month];
-            return `${parseInt(day)} ${translateMonth(monthNumber)}`;
+            const translatedMonth = translateMonth(month);
+            return `${parseInt(day)} ${translatedMonth}`;
         }
 
         function parseDateWithoutYear(dateString) {

@@ -80,10 +80,9 @@
             return `
                 <div>
                     <h3>${result['Slag av vilt']}</h3>
-                    <p><strong>Område:</strong> ${result['Område']}</p>
                     <p><strong>Starttid:</strong> ${result['Starttid']}</p>
                     <p><strong>Sluttid:</strong> ${result['Sluttid']}</p>
-                    <p><strong>Upplysning:</strong> ${result['Upplysning'] ? result['Upplysning'] : ''}</p>
+                    ${result['Upplysning'] ? `<p><strong>Upplysning:</strong> ${result['Upplysning']}</p>` : ''}
                 </div>
             `;
         }

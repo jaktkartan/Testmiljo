@@ -66,20 +66,21 @@
         function formatDate(dateString) {
             const [day, month] = dateString.split(' ');
             const months = {
-                'Januari': '01',
-                'Februari': '02',
-                'Mars': '03',
-                'April': '04',
-                'Maj': '05',
-                'Juni': '06',
-                'Juli': '07',
-                'Augusti': '08',
-                'September': '09',
-                'Oktober': '10',
-                'November': '11',
-                'December': '12'
+                '01': 'Januari',
+                '02': 'Februari',
+                '03': 'Mars',
+                '04': 'April',
+                '05': 'Maj',
+                '06': 'Juni',
+                '07': 'Juli',
+                '08': 'Augusti',
+                '09': 'September',
+                '10': 'Oktober',
+                '11': 'November',
+                '12': 'December'
             };
-            return `${day.padStart(2, '0')} ${month}`;
+            const monthKey = Object.keys(months).find(key => months[key].toLowerCase() === month.toLowerCase());
+            return `${day} ${months[monthKey]}`;
         }
 
         function isWithinDateRange(startDate, endDate, checkDate) {

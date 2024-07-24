@@ -101,6 +101,7 @@
                 end.setFullYear(end.getFullYear() + 1);
             }
 
+            console.log(`Checking date range: ${start} - ${end} against ${check}`);
             return start <= check && check <= end;
         }
 
@@ -126,10 +127,15 @@
 
             const data = await fetchHuntingData();
 
+            console.log(`Selected county: ${county}`);
+            console.log(`Selected date: ${date}`);
+
             const results = data.filter(entry => {
                 const areas = entry['Område'].split(',');
-                return areas.some(area => area.trim() === county || area.trim() === "Alla län") &&
-                       isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
+                const isInCounty = areas.some(area => area.trim() === county || area.trim() === "Alla län");
+                const isInDateRange = isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
+                console.log(`Checking entry: ${entry['Slag av vilt']} - In county: ${isInCounty}, In date range: ${isInDateRange}`);
+                return isInCounty && isInDateRange;
             });
 
             const resultsDiv = document.getElementById('results');

@@ -92,20 +92,13 @@
         }
 
         function isWithinDateRange(startDate, endDate, checkDate) {
-            const [startDay, startMonth] = startDate.split(' ');
-            const [endDay, endMonth] = endDate.split(' ');
             const check = new Date(checkDate);
+            let start = new Date(`${check.getFullYear()}-${parseDateWithoutYear(startDate)}`);
+            let end = new Date(`${check.getFullYear()}-${parseDateWithoutYear(endDate)}`);
 
-            let start = new Date(`${check.getFullYear()}-${monthsReverse[startMonth]}-${startDay.padStart(2, '0')}`);
-            let end = new Date(`${check.getFullYear()}-${monthsReverse[endMonth]}-${endDay.padStart(2, '0')}`);
-
+            // Hantera fall där jakttiden sträcker sig över årsskiftet
             if (end < start) {
                 end.setFullYear(end.getFullYear() + 1);
-            }
-
-            // Justera år för check-datum om det är över årsskiftet
-            if (check < start && startMonth === "December" && endMonth === "January") {
-                check.setFullYear(check.getFullYear() + 1);
             }
 
             return start <= check && check <= end;
@@ -140,6 +133,7 @@
             });
 
             const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
             resultsDiv.innerHTML = results.length > 0 ? results.map(formatResult).join('') : "Inga resultat funna.";
         }
     </script>

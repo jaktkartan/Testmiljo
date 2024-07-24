@@ -156,6 +156,8 @@
                 return isInCounty && isInDateRange;
             });
 
+            console.log('Filtered Results:', results);
+
             results.sort((a, b) => {
                 if (a['Grupp'] === b['Grupp']) {
                     return a['Slag av vilt'].localeCompare(b['Slag av vilt']);
@@ -164,6 +166,8 @@
                     return groupOrder.indexOf(a['Grupp']) - groupOrder.indexOf(b['Grupp']);
                 }
             });
+
+            console.log('Sorted Results:', results);
 
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = '';

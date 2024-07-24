@@ -104,35 +104,13 @@
 
         function isWithinDateRange(startDate, endDate, checkDate) {
             const check = new Date(checkDate);
-            const parsedStartDate = parseDateWithoutYear(startDate);
-            const parsedEndDate = parseDateWithoutYear(endDate);
+            const startYear = check.getFullYear();
+            const endYear = (new Date(startDate) <= new Date(endDate)) ? startYear : startYear + 1;
 
-            if (!parsedStartDate || !parsedEndDate) {
-                console.error(`Error parsing dates: ${startDate}, ${endDate}`);
-                return false;
-            }
+            const parsedStartDate = new Date(`${startYear}-${parseDateWithoutYear(startDate)}`);
+            const parsedEndDate = new Date(`${endYear}-${parseDateWithoutYear(endDate)}`);
 
-            let start = new Date(`${check.getFullYear()}-${parsedStartDate}`);
-            let end = new Date(`${check.getFullYear()}-${parsedEndDate}`);
-
-            if (end < start) {
-                end.setFullYear(end.getFullYear() + 1);
-            }
-
-            // Adjust for year crossing
-            let prevYearEnd = new Date(end);
-            prevYearEnd.setFullYear(end.getFullYear() - 1);
-            if (prevYearEnd < start) {
-                prevYearEnd.setFullYear(start.getFullYear());
-            }
-
-            let nextYearStart = new Date(start);
-            nextYearStart.setFullYear(start.getFullYear() + 1);
-            if (nextYearStart > end) {
-                nextYearStart.setFullYear(end.getFullYear());
-            }
-
-            return (start <= check && check <= end) || (prevYearEnd <= check && check <= start) || (end <= check && check <= nextYearStart);
+            return parsedStartDate <= check && check <= parsedEndDate;
         }
 
         function formatResult(result) {

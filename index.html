@@ -44,11 +44,36 @@
             return data;
         }
 
+        function parseDateWithoutYear(dateString) {
+            const [day, month] = dateString.split(' ');
+            const months = {
+                'January': '01',
+                'February': '02',
+                'March': '03',
+                'April': '04',
+                'May': '05',
+                'June': '06',
+                'July': '07',
+                'August': '08',
+                'September': '09',
+                'October': '10',
+                'November': '11',
+                'December': '12'
+            };
+            return `${months[month]}-${day.padStart(2, '0')}`;
+        }
+
         function isWithinDateRange(startDate, endDate, checkDate) {
-            const start = new Date(`2024-${startDate}`);
-            const end = new Date(`2024-${endDate}`);
-            const check = new Date(checkDate);
-            return start <= check && check <= end;
+            const start = parseDateWithoutYear(startDate);
+            const end = parseDateWithoutYear(endDate);
+            const check = checkDate.slice(5);  // Remove the year part
+
+            if (start <= end) {
+                return start <= check && check <= end;
+            } else {
+                // If the date range spans the end of the year (e.g., November to February)
+                return start <= check || check <= end;
+            }
         }
 
         function formatResult(result) {
@@ -66,7 +91,7 @@
         async function getHuntingInfo() {
             const county = document.getElementById('county').value.trim();
             const date = document.getElementById('date').value;
-            
+
             if (!county || !date) {
                 alert("Vänligen fyll i både län och datum.");
                 return;

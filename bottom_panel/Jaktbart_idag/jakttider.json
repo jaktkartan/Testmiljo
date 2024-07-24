@@ -53,7 +53,7 @@
         "Område": "Värmlands län, Örebro län, Dalarnas län, Gävleborgs län",
         "Starttid": "1 August",
         "Sluttid": "31 March",
-        "Upplysning": "För Dalarnas län: Gäller ej Älvdalens kommun"
+        "Upplysning": "(För Dalarnas län: Gäller ej Älvdalens kommun)"
     },
     {
         "Grupp": "Däggdjur",
@@ -61,7 +61,7 @@
         "Område": "Dalarnas län",
         "Starttid": "1 August",
         "Sluttid": "15 April",
-        "Upplysning": "För Dalarnas län: Endast Älvdalens kommun"
+        "Upplysning": "(För Dalarnas län: Endast Älvdalens kommun)"
     },
     {
         "Grupp": "Däggdjur",
@@ -229,7 +229,7 @@
         "Område": "Alla län",
         "Starttid": "11 August",
         "Sluttid": "31 January",
-        "Upplysning": "För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",
@@ -237,7 +237,7 @@
         "Område": "Alla län",
         "Starttid": "11 August",
         "Sluttid": "31 January",
-        "Upplysning": "För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",
@@ -285,7 +285,7 @@
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
         "Sluttid": "30 November",
-        "Upplysning": "För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",
@@ -293,7 +293,7 @@
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
         "Sluttid": "30 November",
-        "Upplysning": "För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",
@@ -301,7 +301,7 @@
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
         "Sluttid": "30 November",
-        "Upplysning": "För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",
@@ -357,7 +357,7 @@
         "Område": "Alla län",
         "Starttid": "21 August",
         "Sluttid": "31 January",
-        "Upplysning": "För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",
@@ -365,7 +365,7 @@
         "Område": "Alla län",
         "Starttid": "21 August",
         "Sluttid": "31 January",
-        "Upplysning": "För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",
@@ -397,7 +397,7 @@
         "Område": "Alla län",
         "Starttid": "21 August",
         "Sluttid": "31 January",
-        "Upplysning": " För Norrbottens län: Gäller utom gränsälvsområdet."
+        "Upplysning": "(För Norrbottens län: Gäller utom gränsälvsområdet)."
     },
     {
         "Grupp": "Fågelarter",

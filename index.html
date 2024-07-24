@@ -63,6 +63,25 @@
             return `${months[month]}-${day.padStart(2, '0')}`;
         }
 
+        function formatDate(dateString) {
+            const [day, month] = dateString.split(' ');
+            const months = {
+                'Januari': '01',
+                'Februari': '02',
+                'Mars': '03',
+                'April': '04',
+                'Maj': '05',
+                'Juni': '06',
+                'Juli': '07',
+                'Augusti': '08',
+                'September': '09',
+                'Oktober': '10',
+                'November': '11',
+                'December': '12'
+            };
+            return `${day.padStart(2, '0')} ${month}`;
+        }
+
         function isWithinDateRange(startDate, endDate, checkDate) {
             const start = new Date(`2024-${parseDateWithoutYear(startDate)}`);
             const end = new Date(`2024-${parseDateWithoutYear(endDate)}`);
@@ -77,27 +96,6 @@
         }
 
         function formatResult(result) {
-            const months = {
-                '01': 'Januari',
-                '02': 'Februari',
-                '03': 'Mars',
-                '04': 'April',
-                '05': 'Maj',
-                '06': 'Juni',
-                '07': 'Juli',
-                '08': 'Augusti',
-                '09': 'September',
-                '10': 'Oktober',
-                '11': 'November',
-                '12': 'December'
-            };
-
-            function formatDate(dateString) {
-                const [day, month] = dateString.split(' ');
-                const monthNumber = Object.keys(months).find(key => months[key] === month);
-                return `${day} ${months[monthNumber]}`;
-            }
-
             return `
                 <div>
                     <h3>${result['Slag av vilt']}</h3>

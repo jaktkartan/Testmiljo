@@ -63,8 +63,20 @@
             return `${months[month]}-${day.padStart(2, '0')}`;
         }
 
-        function formatDate(dateString) {
-            const [day, month] = dateString.split(' ');
+        function isWithinDateRange(startDate, endDate, checkDate) {
+            const start = new Date(`2024-${parseDateWithoutYear(startDate)}`);
+            const end = new Date(`2024-${parseDateWithoutYear(endDate)}`);
+            const check = new Date(checkDate);
+
+            if (start <= end) {
+                return start <= check && check <= end;
+            } else {
+                // Om intervallet går över årsskiftet (t.ex. December till Januari)
+                return start <= check || check <= end;
+            }
+        }
+
+        function translateMonth(month) {
             const months = {
                 '01': 'Januari',
                 '02': 'Februari',
@@ -79,21 +91,27 @@
                 '11': 'November',
                 '12': 'December'
             };
-            const monthKey = Object.keys(months).find(key => months[key].toLowerCase() === month.toLowerCase());
-            return `${day} ${months[monthKey]}`;
+            return months[month];
         }
 
-        function isWithinDateRange(startDate, endDate, checkDate) {
-            const start = new Date(`2024-${parseDateWithoutYear(startDate)}`);
-            const end = new Date(`2024-${parseDateWithoutYear(endDate)}`);
-            const check = new Date(checkDate);
-
-            if (start <= end) {
-                return start <= check && check <= end;
-            } else {
-                // Om intervallet går över årsskiftet (t.ex. December till Januari)
-                return start <= check || check <= end;
-            }
+        function formatDate(dateString) {
+            const [day, month] = dateString.split(' ');
+            const months = {
+                'Januari': '01',
+                'Februari': '02',
+                'Mars': '03',
+                'April': '04',
+                'Maj': '05',
+                'Juni': '06',
+                'Juli': '07',
+                'Augusti': '08',
+                'September': '09',
+                'Oktober': '10',
+                'November': '11',
+                'December': '12'
+            };
+            const monthKey = Object.keys(months).find(key => months[key].toLowerCase() === month.toLowerCase());
+            return `${day} ${translateMonth(monthKey)}`;
         }
 
         function formatResult(result) {

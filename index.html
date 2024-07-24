@@ -98,11 +98,16 @@
             const end = new Date(`2024-${monthsReverse[endMonth]}-${endDay.padStart(2, '0')}`);
             const check = new Date(checkDate);
 
-            if (start <= end) {
-                return start <= check && check <= end;
+            if (startMonth === "December" && endMonth === "January") {
+                const endNextYear = new Date(`2025-${monthsReverse[endMonth]}-${endDay.padStart(2, '0')}`);
+                return (start <= check && check <= new Date('2024-12-31')) || (new Date('2025-01-01') <= check && check <= endNextYear);
             } else {
-                // Om intervallet går över årsskiftet (t.ex. December till Januari)
-                return start <= check || check <= end;
+                if (start <= end) {
+                    return start <= check && check <= end;
+                } else {
+                    // Om intervallet går över årsskiftet (t.ex. December till Januari)
+                    return start <= check || check <= end;
+                }
             }
         }
 

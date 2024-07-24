@@ -1,5 +1,6 @@
 [
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Fälthare",
         "Område": "Alla län",
         "Starttid": "1 September",
@@ -7,6 +8,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Skogshare",
         "Område": "Gotlands län, Hallands län, Jönköpings län, Kalmar län, Kronobergs län, Skåne län, Södermanlands län, Västra Götalands län, Östergötlands län",
         "Starttid": "1 September",
@@ -14,6 +16,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Skogshare",
         "Område": "Blekinge län, Dalarnas län, Gävleborgs län, Norrbottens län, Stockholms län, Uppsala län, Värmlands län, Västernorrlands län, Västmanlands län, Västerbottens län, Örebro län, Jämtlands län",
         "Starttid": "1 September",
@@ -21,6 +24,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Bäver",
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "1 October",
@@ -28,6 +32,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Bäver",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
         "Starttid": "1 October",
@@ -35,6 +40,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rödräv",
         "Område": "Blekinge län, Skåne län, Hallands län",
         "Starttid": "1 August",
@@ -42,6 +48,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rödräv",
         "Område": "Värmlands län, Örebro län, Dalarnas län, Gävleborgs län",
         "Starttid": "1 August",
@@ -49,6 +56,7 @@
         "Upplysning": "Gäller ej Älvdalens kommun"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rödräv",
         "Område": "Dalarnas län",
         "Starttid": "1 August",
@@ -56,6 +64,7 @@
         "Upplysning": "Endast Älvdalens kommun"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rödräv",
         "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "1 August",
@@ -63,6 +72,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rödräv",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Västra Götalands län, Västmanlands län",
         "Starttid": "1 August",
@@ -70,6 +80,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Iller",
         "Område": "Alla län",
         "Starttid": "1 September",
@@ -77,6 +88,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Skogsmård",
         "Område": "Värmlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "1 September",
@@ -84,6 +96,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Skogsmård",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Örebro län, Västmanlands län",
         "Starttid": "1 September",
@@ -91,6 +104,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Grävling",
         "Område": "Alla län",
         "Starttid": "1 August",
@@ -98,6 +112,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Vildsvin, utom sugga som följs av randiga eller bruna små kultingar",
         "Område": "Alla län",
         "Starttid": "1 April",
@@ -105,6 +120,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Vildsvin, årsunge",
         "Område": "Alla län",
         "Starttid": "1 July",
@@ -112,6 +128,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Dovhjort - alla djur",
         "Område": "Alla län",
         "Starttid": "1 October",
@@ -119,6 +136,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Dovhjort - alla djur",
         "Område": "Alla län",
         "Starttid": "16 November",
@@ -126,6 +144,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Dovhjort - hornbärande djur och kalv",
         "Område": "Alla län",
         "Starttid": "1 September",
@@ -133,6 +152,7 @@
         "Upplysning": " endast smyg- eller vaktjakt"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Dovhjort - hind och kalv",
         "Område": "Alla län",
         "Starttid": "21 October",
@@ -140,6 +160,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Dovhjort - hind och kalv",
         "Område": "Alla län",
         "Starttid": "1 March",
@@ -147,6 +168,7 @@
         "Upplysning": "under mars månad endast smyg- eller vaktjakt"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Kronhjort",
         "Område": "Skåne län",
         "Starttid": "8 October",
@@ -154,6 +176,7 @@
         "Upplysning": "utanför kronhjortsområden"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Kronhjort årskalv",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "16 August",
@@ -161,6 +184,7 @@
         "Upplysning": "utanför kronhjortsskötselområden. Under perioden den 16 aug.-30 sept. endast smyg- eller vaktjakt"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rådjur - hornbärande",
         "Område": "Alla län",
         "Starttid": "16 August",
@@ -168,6 +192,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rådjur - hornbärande",
         "Område": "Alla län",
         "Starttid": "1 May",
@@ -175,6 +200,7 @@
         "Upplysning": "under perioden 1 maj-15 juni endast smyg- eller vaktjakt"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rådjur - kid",
         "Område": "Alla län",
         "Starttid": "1 September",
@@ -182,6 +208,7 @@
         "Upplysning": "endast smyg- eller vaktjakt"
     },
     {
+        "Grupp": "Däggdjur",
         "Slag av vilt": "Rådjur",
         "Område": "Alla län",
         "Starttid": "1 October",
@@ -189,6 +216,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Bläsgås",
         "Område": "Skåne län",
         "Starttid": "1 October",
@@ -196,6 +224,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Grågås",
         "Område": "Alla län",
         "Starttid": "11 August",
@@ -203,6 +232,7 @@
         "Upplysning": "utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kanadagås",
         "Område": "Alla län",
         "Starttid": "11 August",
@@ -210,6 +240,7 @@
         "Upplysning": "utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Grågås",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -217,6 +248,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kanadagås",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -224,6 +256,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Bläsand",
         "Område": "Gotlands län, Blekinge län, Skåne län",
         "Starttid": "21 August",
@@ -231,6 +264,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Gräsand",
         "Område": "Gotlands län, Blekinge län, Skåne län",
         "Starttid": "21 August",
@@ -238,6 +272,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kricka",
         "Område": "Gotlands län, Blekinge län, Skåne län",
         "Starttid": "21 August",
@@ -245,6 +280,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Bläsand",
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -252,6 +288,7 @@
         "Upplysning": "utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Gräsand",
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -259,6 +296,7 @@
         "Upplysning": "utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kricka",
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -266,6 +304,7 @@
         "Upplysning": "utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Bläsand",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -273,6 +312,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Gräsand",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -280,6 +320,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kricka",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -287,6 +328,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Bläsand",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
         "Starttid": "21 August",
@@ -294,6 +336,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kricka",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
         "Starttid": "21 August",
@@ -301,6 +344,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Gräsand",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
         "Starttid": "21 August",
@@ -308,6 +352,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Knipa",
         "Område": "Alla län",
         "Starttid": "21 August",
@@ -315,6 +360,7 @@
         "Upplysning": "utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Storskrake",
         "Område": "Alla län",
         "Starttid": "21 August",
@@ -322,6 +368,7 @@
         "Upplysning": "utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Knipa",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -329,6 +376,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Storskrake",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -336,6 +384,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Sjöorre",
         "Område": "Alla län",
         "Starttid": "21 September",
@@ -343,6 +392,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Vigg",
         "Område": "Alla län",
         "Starttid": "21 August",
@@ -350,6 +400,7 @@
         "Upplysning": " utom gränsälvsområdet i Norrbottens län"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Vigg",
         "Område": "Norrbottens län",
         "Starttid": "20 August",
@@ -357,6 +408,7 @@
         "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Dalripa",
         "Område": "Dalarnas län",
         "Starttid": "25 August",
@@ -364,6 +416,7 @@
         "Upplysning": "Endast Älvdalens kommun"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fjällripa",
         "Område": "Dalarnas län",
         "Starttid": "25 August",
@@ -371,6 +424,7 @@
         "Upplysning": "Endast Älvdalens kommun"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Dalripa",
         "Område": "Jämtlands län",
         "Starttid": "25 August",
@@ -378,6 +432,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fjällripa",
         "Område": "Jämtlands län",
         "Starttid": "25 August",
@@ -385,6 +440,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Dalripa",
         "Område": "Dalarnas län",
         "Starttid": "25 August",
@@ -392,6 +448,7 @@
         "Upplysning": "Gäller ej Älvdalens kommun"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fjällripa",
         "Område": "Dalarnas län",
         "Starttid": "25 August",
@@ -399,6 +456,7 @@
         "Upplysning": "Gäller ej Älvdalens kommun"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Dalripa",
         "Område": "Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -406,6 +464,7 @@
         "Upplysning": "nedanför lappmarksgränsen"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fjällripa",
         "Område": "Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -413,6 +472,7 @@
         "Upplysning": "nedanför lappmarksgränsen"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Dalripa",
         "Område": "Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -420,6 +480,7 @@
         "Upplysning": "ovanför lappmarksgränsen"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fjällripa",
         "Område": "Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -427,6 +488,7 @@
         "Upplysning": "ovanför lappmarksgränsen"
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Dalripa",
         "Område": "Gävleborgs län, Västernorrlands län",
         "Starttid": "25 August",
@@ -434,6 +496,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fjällripa",
         "Område": "Gävleborgs län, Västernorrlands län",
         "Starttid": "25 August",
@@ -441,6 +504,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Järpe",
         "Område": "Norrbottens län, Västerbottens län, Jämtlands län, Västernorrlands län, Gävleborgs län, Dalarnas län, Värmlands län",
         "Starttid": "25 August",
@@ -448,6 +512,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Orre",
         "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
         "Starttid": "25 August",
@@ -455,6 +520,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Tjäder",
         "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
         "Starttid": "25 August",
@@ -462,6 +528,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Orre",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -469,6 +536,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Tjäder",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "25 August",
@@ -476,6 +544,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Orrtupp",
         "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
         "Starttid": "1 January",
@@ -483,6 +552,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Tjädertupp",
         "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
         "Starttid": "1 January",
@@ -490,6 +560,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Orrtupp",
         "Område": "Skåne län",
         "Starttid": "1 September",
@@ -497,6 +568,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Orrtupp",
         "Område": "Skåne län",
         "Starttid": "1 January",
@@ -504,6 +576,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Tjädertupp",
         "Område": "Skåne län",
         "Starttid": "1 September",
@@ -511,6 +584,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Tjädertupp",
         "Område": "Skåne län",
         "Starttid": "1 January",
@@ -518,6 +592,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Orrtupp",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "16 November",
@@ -525,6 +600,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Tjädertupp",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "16 November",
@@ -532,6 +608,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Rapphöna",
         "Område": "Alla län",
         "Starttid": "16 September",
@@ -539,6 +616,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fasan",
         "Område": "Alla län",
         "Starttid": "1 October",
@@ -546,6 +624,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Morkulla",
         "Område": "Alla län",
         "Starttid": "11 September",
@@ -553,6 +632,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Fiskmås",
         "Område": "Alla län",
         "Starttid": "11 August",
@@ -560,6 +640,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Gråtrut",
         "Område": "Alla län",
         "Starttid": "1 August",
@@ -567,6 +648,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Ringduva",
         "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "1 August",
@@ -574,6 +656,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Ringduva",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
         "Starttid": "16 August",
@@ -581,6 +664,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Nötskrika",
         "Område": "Alla län",
         "Starttid": "21 August",
@@ -588,6 +672,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kaja",
         "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "16 July",
@@ -595,6 +680,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kråka",
         "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "16 July",
@@ -602,6 +688,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Skata",
         "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "16 July",
@@ -609,6 +696,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kaja",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län",
         "Starttid": "1 July",
@@ -616,6 +704,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Kråka",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län",
         "Starttid": "1 July",
@@ -623,6 +712,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Skata",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län",
         "Starttid": "1 July",
@@ -630,6 +720,7 @@
         "Upplysning": ""
     },
     {
+        "Grupp": "Fågelarter",
         "Slag av vilt": "Råka",
         "Område": "Skåne län, Hallands län",
         "Starttid": "21 July",

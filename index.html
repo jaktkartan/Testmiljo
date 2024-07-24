@@ -104,13 +104,9 @@
 
         function isWithinDateRange(startDate, endDate, checkDate) {
             const check = new Date(checkDate);
-            const startYear = check.getFullYear();
-            const endYear = check.getFullYear();
+            const start = new Date(check.getFullYear(), monthsReverse[translateMonth(startDate.split(' ')[1])] - 1, startDate.split(' ')[0]);
+            let end = new Date(check.getFullYear(), monthsReverse[translateMonth(endDate.split(' ')[1])] - 1, endDate.split(' ')[0]);
 
-            const start = new Date(`${startYear}-${parseDateWithoutYear(startDate)}`);
-            let end = new Date(`${endYear}-${parseDateWithoutYear(endDate)}`);
-
-            // If the end date is before the start date, it means the range spans the end of the year
             if (end < start) {
                 end.setFullYear(end.getFullYear() + 1);
             }

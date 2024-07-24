@@ -1,639 +1,181 @@
-[
-    {
-        "Slag av vilt": "Fälthare",
-        "Område": "Alla län",
-        "Starttid": "1 September",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Skogshare",
-        "Område": "Gotlands län, Hallands län, Jönköpings län, Kalmar län, Kronobergs län, Skåne län, Södermanlands län, Västra Götalands län, Östergötlands län",
-        "Starttid": "1 September",
-        "Sluttid": "15 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Skogshare",
-        "Område": "Blekinge län, Dalarnas län, Gävleborgs län, Norrbottens län, Stockholms län, Uppsala län, Värmlands län, Västernorrlands län, Västmanlands län, Västerbottens län, Örebro län, Jämtlands län",
-        "Starttid": "1 September",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Bäver",
-        "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "1 October",
-        "Sluttid": "15 May",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Bäver",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
-        "Starttid": "1 October",
-        "Sluttid": "10 May",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Rödräv",
-        "Område": "Blekinge län, Skåne län, Hallands län",
-        "Starttid": "1 August",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Rödräv",
-        "Område": "Värmlands län, Örebro län, Dalarnas län, Gävleborgs län",
-        "Starttid": "1 August",
-        "Sluttid": "31 March",
-        "Upplysning": "Gäller ej Älvdalens kommun"
-    },
-    {
-        "Slag av vilt": "Rödräv",
-        "Område": "Dalarnas län",
-        "Starttid": "1 August",
-        "Sluttid": "15 April",
-        "Upplysning": "Endast Älvdalens kommun"
-    },
-    {
-        "Slag av vilt": "Rödräv",
-        "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "1 August",
-        "Sluttid": "15 April",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Rödräv",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Västra Götalands län, Västmanlands län",
-        "Starttid": "1 August",
-        "Sluttid": "15 March",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Iller",
-        "Område": "Alla län",
-        "Starttid": "1 September",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Skogsmård",
-        "Område": "Värmlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "1 September",
-        "Sluttid": "31 March",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Skogsmård",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Örebro län, Västmanlands län",
-        "Starttid": "1 September",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Grävling",
-        "Område": "Alla län",
-        "Starttid": "1 August",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Vildsvin, utom sugga som följs av randiga eller bruna små kultingar",
-        "Område": "Alla län",
-        "Starttid": "1 April",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Vildsvin, årsunge",
-        "Område": "Alla län",
-        "Starttid": "1 July",
-        "Sluttid": "30 June",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Dovhjort - alla djur",
-        "Område": "Alla län",
-        "Starttid": "1 October",
-        "Sluttid": "20 October",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Dovhjort - alla djur",
-        "Område": "Alla län",
-        "Starttid": "16 November",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Dovhjort - hornbärande djur och kalv",
-        "Område": "Alla län",
-        "Starttid": "1 September",
-        "Sluttid": "30 September",
-        "Upplysning": " endast smyg- eller vaktjakt"
-    },
-    {
-        "Slag av vilt": "Dovhjort - hind och kalv",
-        "Område": "Alla län",
-        "Starttid": "21 October",
-        "Sluttid": "15 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Dovhjort - hind och kalv",
-        "Område": "Alla län",
-        "Starttid": "1 March",
-        "Sluttid": "31 March",
-        "Upplysning": "under mars månad endast smyg- eller vaktjakt"
-    },
-    {
-        "Slag av vilt": "Kronhjort",
-        "Område": "Skåne län",
-        "Starttid": "8 October",
-        "Sluttid": "31 January",
-        "Upplysning": "utanför kronhjortsområden"
-    },
-    {
-        "Slag av vilt": "Kronhjort årskalv",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "16 August",
-        "Sluttid": "31 January",
-        "Upplysning": "utanför kronhjortsskötselområden. Under perioden den 16 aug.-30 sept. endast smyg- eller vaktjakt"
-    },
-    {
-        "Slag av vilt": "Rådjur - hornbärande",
-        "Område": "Alla län",
-        "Starttid": "16 August",
-        "Sluttid": "30 September",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Rådjur - hornbärande",
-        "Område": "Alla län",
-        "Starttid": "1 May",
-        "Sluttid": "15 June",
-        "Upplysning": "under perioden 1 maj-15 juni endast smyg- eller vaktjakt"
-    },
-    {
-        "Slag av vilt": "Rådjur - kid",
-        "Område": "Alla län",
-        "Starttid": "1 September",
-        "Sluttid": "30 September",
-        "Upplysning": "endast smyg- eller vaktjakt"
-    },
-    {
-        "Slag av vilt": "Rådjur",
-        "Område": "Alla län",
-        "Starttid": "1 October",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Bläsgås",
-        "Område": "Skåne län",
-        "Starttid": "1 October",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Grågås",
-        "Område": "Alla län",
-        "Starttid": "11 August",
-        "Sluttid": "31 January",
-        "Upplysning": "utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Kanadagås",
-        "Område": "Alla län",
-        "Starttid": "11 August",
-        "Sluttid": "31 January",
-        "Upplysning": "utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Grågås",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "31 January",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Kanadagås",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "31 January",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Bläsand",
-        "Område": "Gotlands län, Blekinge län, Skåne län",
-        "Starttid": "21 August",
-        "Sluttid": "31 December",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Gräsand",
-        "Område": "Gotlands län, Blekinge län, Skåne län",
-        "Starttid": "21 August",
-        "Sluttid": "31 December",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Kricka",
-        "Område": "Gotlands län, Blekinge län, Skåne län",
-        "Starttid": "21 August",
-        "Sluttid": "31 December",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Bläsand",
-        "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "30 November",
-        "Upplysning": "utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Gräsand",
-        "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "30 November",
-        "Upplysning": "utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Kricka",
-        "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "30 November",
-        "Upplysning": "utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Bläsand",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "30 November",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Gräsand",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "30 November",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Kricka",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "30 November",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Bläsand",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
-        "Starttid": "21 August",
-        "Sluttid": "30 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Kricka",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
-        "Starttid": "21 August",
-        "Sluttid": "30 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Gräsand",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
-        "Starttid": "21 August",
-        "Sluttid": "31 December",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Knipa",
-        "Område": "Alla län",
-        "Starttid": "21 August",
-        "Sluttid": "31 January",
-        "Upplysning": "utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Storskrake",
-        "Område": "Alla län",
-        "Starttid": "21 August",
-        "Sluttid": "31 January",
-        "Upplysning": "utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Knipa",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "31 January",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Storskrake",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "31 January",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Sjöorre",
-        "Område": "Alla län",
-        "Starttid": "21 September",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Vigg",
-        "Område": "Alla län",
-        "Starttid": "21 August",
-        "Sluttid": "31 January",
-        "Upplysning": " utom gränsälvsområdet i Norrbottens län"
-    },
-    {
-        "Slag av vilt": "Vigg",
-        "Område": "Norrbottens län",
-        "Starttid": "20 August",
-        "Sluttid": "31 January",
-        "Upplysning": "Endast för Gränsälvsområdet till Finland. Gäller från klockan 11.00 den 20 aug."
-    },
-    {
-        "Slag av vilt": "Dalripa",
-        "Område": "Dalarnas län",
-        "Starttid": "25 August",
-        "Sluttid": "29 February",
-        "Upplysning": "Endast Älvdalens kommun"
-    },
-    {
-        "Slag av vilt": "Fjällripa",
-        "Område": "Dalarnas län",
-        "Starttid": "25 August",
-        "Sluttid": "29 February",
-        "Upplysning": "Endast Älvdalens kommun"
-    },
-    {
-        "Slag av vilt": "Dalripa",
-        "Område": "Jämtlands län",
-        "Starttid": "25 August",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Fjällripa",
-        "Område": "Jämtlands län",
-        "Starttid": "25 August",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Dalripa",
-        "Område": "Dalarnas län",
-        "Starttid": "25 August",
-        "Sluttid": "15 February",
-        "Upplysning": "Gäller ej Älvdalens kommun"
-    },
-    {
-        "Slag av vilt": "Fjällripa",
-        "Område": "Dalarnas län",
-        "Starttid": "25 August",
-        "Sluttid": "15 February",
-        "Upplysning": "Gäller ej Älvdalens kommun"
-    },
-    {
-        "Slag av vilt": "Dalripa",
-        "Område": "Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "15 February",
-        "Upplysning": "nedanför lappmarksgränsen"
-    },
-    {
-        "Slag av vilt": "Fjällripa",
-        "Område": "Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "15 February",
-        "Upplysning": "nedanför lappmarksgränsen"
-    },
-    {
-        "Slag av vilt": "Dalripa",
-        "Område": "Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "15 March",
-        "Upplysning": "ovanför lappmarksgränsen"
-    },
-    {
-        "Slag av vilt": "Fjällripa",
-        "Område": "Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "15 March",
-        "Upplysning": "ovanför lappmarksgränsen"
-    },
-    {
-        "Slag av vilt": "Dalripa",
-        "Område": "Gävleborgs län, Västernorrlands län",
-        "Starttid": "25 August",
-        "Sluttid": "15 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Fjällripa",
-        "Område": "Gävleborgs län, Västernorrlands län",
-        "Starttid": "25 August",
-        "Sluttid": "15 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Järpe",
-        "Område": "Norrbottens län, Västerbottens län, Jämtlands län, Västernorrlands län, Gävleborgs län, Dalarnas län, Värmlands län",
-        "Starttid": "25 August",
-        "Sluttid": "15 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Orre",
-        "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
-        "Starttid": "25 August",
-        "Sluttid": "30 September",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Tjäder",
-        "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
-        "Starttid": "25 August",
-        "Sluttid": "30 September",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Orre",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "15 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Tjäder",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "25 August",
-        "Sluttid": "15 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Orrtupp",
-        "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
-        "Starttid": "1 January",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Tjädertupp",
-        "Område": "Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Blekinge län, Hallands län, Västra Götalands län",
-        "Starttid": "1 January",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Orrtupp",
-        "Område": "Skåne län",
-        "Starttid": "1 September",
-        "Sluttid": "15 September",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Orrtupp",
-        "Område": "Skåne län",
-        "Starttid": "1 January",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Tjädertupp",
-        "Område": "Skåne län",
-        "Starttid": "1 September",
-        "Sluttid": "15 September",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Tjädertupp",
-        "Område": "Skåne län",
-        "Starttid": "1 January",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Orrtupp",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "16 November",
-        "Sluttid": "15 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Tjädertupp",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "16 November",
-        "Sluttid": "15 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Rapphöna",
-        "Område": "Alla län",
-        "Starttid": "16 September",
-        "Sluttid": "30 November",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Fasan",
-        "Område": "Alla län",
-        "Starttid": "1 October",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Morkulla",
-        "Område": "Alla län",
-        "Starttid": "11 September",
-        "Sluttid": "31 December",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Fiskmås",
-        "Område": "Alla län",
-        "Starttid": "11 August",
-        "Sluttid": "29 February",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Gråtrut",
-        "Område": "Alla län",
-        "Starttid": "1 August",
-        "Sluttid": "31 March",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Ringduva",
-        "Område": "Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "1 August",
-        "Sluttid": "31 December",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Ringduva",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län",
-        "Starttid": "16 August",
-        "Sluttid": "31 December",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Nötskrika",
-        "Område": "Alla län",
-        "Starttid": "21 August",
-        "Sluttid": "10 March",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Kaja",
-        "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "16 July",
-        "Sluttid": "30 April",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Kråka",
-        "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "16 July",
-        "Sluttid": "30 April",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Skata",
-        "Område": "Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
-        "Starttid": "16 July",
-        "Sluttid": "30 April",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Kaja",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län",
-        "Starttid": "1 July",
-        "Sluttid": "15 April",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Kråka",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län",
-        "Starttid": "1 July",
-        "Sluttid": "15 April",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Skata",
-        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Skåne län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län",
-        "Starttid": "1 July",
-        "Sluttid": "15 April",
-        "Upplysning": ""
-    },
-    {
-        "Slag av vilt": "Råka",
-        "Område": "Skåne län, Hallands län",
-        "Starttid": "21 July",
-        "Sluttid": "31 January",
-        "Upplysning": ""
-    }
-]
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Jakttider</title>
+</head>
+<body>
+    <h1>Jakttider</h1>
+    <label for="county">Välj län:</label>
+    <select id="county">
+        <option value="Blekinge län">Blekinge län</option>
+        <option value="Dalarnas län">Dalarnas län</option>
+        <option value="Gotlands län">Gotlands län</option>
+        <option value="Gävleborgs län">Gävleborgs län</option>
+        <option value="Hallands län">Hallands län</option>
+        <option value="Jämtlands län">Jämtlands län</option>
+        <option value="Jönköpings län">Jönköpings län</option>
+        <option value="Kalmar län">Kalmar län</option>
+        <option value="Kronobergs län">Kronobergs län</option>
+        <option value="Norrbottens län">Norrbottens län</option>
+        <option value="Skåne län">Skåne län</option>
+        <option value="Stockholms län">Stockholms län</option>
+        <option value="Södermanlands län">Södermanlands län</option>
+        <option value="Uppsala län">Uppsala län</option>
+        <option value="Värmlands län">Värmlands län</option>
+        <option value="Västerbottens län">Västerbottens län</option>
+        <option value="Västernorrlands län">Västernorrlands län</option>
+        <option value="Västmanlands län">Västmanlands län</option>
+        <option value="Västra Götalands län">Västra Götalands län</option>
+        <option value="Örebro län">Örebro län</option>
+        <option value="Östergötlands län">Östergötlands län</option>
+    </select>
+    <br>
+    <label for="date">Välj datum:</label>
+    <input type="date" id="date" name="date">
+    <br>
+    <button onclick="getHuntingInfo()">Sök</button>
+    <div id="results"></div>
+
+    <script>
+        async function fetchHuntingData() {
+            try {
+                const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching hunting data:", error);
+                return [];
+            }
+        }
+
+        // Översättningstabell för månader (engelska till svenska)
+        const months = {
+            'January': 'Januari',
+            'February': 'Februari',
+            'March': 'Mars',
+            'April': 'April',
+            'May': 'Maj',
+            'June': 'Juni',
+            'July': 'Juli',
+            'August': 'Augusti',
+            'September': 'September',
+            'October': 'Oktober',
+            'November': 'November',
+            'December': 'December'
+        };
+
+        // Omvänd översättningstabell för månader (svenska till nummer)
+        const monthsReverse = {
+            'Januari': '01',
+            'Februari': '02',
+            'Mars': '03',
+            'April': '04',
+            'Maj': '05',
+            'Juni': '06',
+            'Juli': '07',
+            'Augusti': '08',
+            'September': '09',
+            'Oktober': '10',
+            'November': '11',
+            'December': '12'
+        };
+
+        function translateMonth(monthName) {
+            return months[monthName];
+        }
+
+        function formatDateForDisplay(dateString) {
+            const [day, month] = dateString.split(' ');
+            const translatedMonth = translateMonth(month);
+            return `${parseInt(day)} ${translatedMonth}`;
+        }
+
+        function parseDateWithoutYear(dateString) {
+            const [day, month] = dateString.split(' ');
+            const monthNumber = monthsReverse[month];
+            if (!monthNumber) {
+                console.error(`Invalid month: ${month}`);
+                return null;
+            }
+            return `${monthNumber}-${day.padStart(2, '0')}`;
+        }
+
+        function isWithinDateRange(startDate, endDate, checkDate) {
+            const check = new Date(checkDate);
+            const parsedStartDate = parseDateWithoutYear(startDate);
+            const parsedEndDate = parseDateWithoutYear(endDate);
+            
+            if (!parsedStartDate || !parsedEndDate) {
+                console.error(`Error parsing dates: ${startDate}, ${endDate}`);
+                return false;
+            }
+
+            let start = new Date(`${check.getFullYear()}-${parsedStartDate}`);
+            let end = new Date(`${check.getFullYear()}-${parsedEndDate}`);
+
+            // Hantera fall där jakttiden sträcker sig över årsskiftet
+            if (end < start) {
+                end.setFullYear(end.getFullYear() + 1);
+            }
+
+            console.log(`Checking date range: ${start} - ${end} against ${check}`);
+            return start <= check && check <= end;
+        }
+
+        function formatResult(result) {
+            return `
+                <div>
+                    <h3>${result['Slag av vilt']}</h3>
+                    <p><strong>Starttid:</strong> ${formatDateForDisplay(result['Starttid'])}</p>
+                    <p><strong>Sluttid:</strong> ${formatDateForDisplay(result['Sluttid'])}</p>
+                    ${result['Upplysning'] ? `<p><strong>Upplysning:</strong> ${result['Upplysning']}</p>` : ''}
+                </div>
+            `;
+        }
+
+        async function getHuntingInfo() {
+            const county = document.getElementById('county').value.trim();
+            const date = document.getElementById('date').value;
+
+            if (!county || !date) {
+                alert("Vänligen fyll i både län och datum.");
+                return;
+            }
+
+            const data = await fetchHuntingData();
+
+            console.log(`Selected county: ${county}`);
+            console.log(`Selected date: ${date}`);
+
+            if (data.length === 0) {
+                console.error("No data found in the JSON file.");
+                document.getElementById('results').innerHTML = "Inga resultat funna.";
+                return;
+            }
+
+            const results = data.filter(entry => {
+                const areas = entry['Område'].split(',');
+                const isInCounty = areas.some(area => area.trim() === county || area.trim() === "Alla län");
+                const isInDateRange = isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
+                console.log(`Checking entry: ${entry['Slag av vilt']} - In county: ${isInCounty}, In date range: ${isInDateRange}`);
+                return isInCounty && isInDateRange;
+            });
+
+            console.log(`Results found: ${results.length}`);
+            console.log(results);
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            if (results.length > 0) {
+                resultsDiv.innerHTML = results.map(formatResult).join('');
+            } else {
+                resultsDiv.innerHTML = "Inga resultat funna.";
+            }
+        }
+    </script>
+</body>
+</html>

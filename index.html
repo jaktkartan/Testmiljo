@@ -39,7 +39,7 @@
 
     <script>
         async function fetchHuntingData() {
-            const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
+            const response = await fetch('bottom_panel/Jaktbart_idag/cleaned_jakttider.json');
             const data = await response.json();
             return data;
         }
@@ -71,7 +71,7 @@
             if (start <= end) {
                 return start <= check && check <= end;
             } else {
-                // If the date range spans the end of the year (e.g., November to February)
+                // If the date range spans the end of the year (e.g., December to January)
                 return start <= check || check <= end;
             }
         }

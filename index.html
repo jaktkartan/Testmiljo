@@ -96,14 +96,16 @@
             const [endDay, endMonth] = endDate.split(' ');
             const check = new Date(checkDate);
 
-            let startYear = check.getFullYear();
-            let endYear = check.getFullYear();
-
-            const start = new Date(`${startYear}-${monthsReverse[startMonth]}-${startDay.padStart(2, '0')}`);
-            let end = new Date(`${endYear}-${monthsReverse[endMonth]}-${endDay.padStart(2, '0')}`);
+            let start = new Date(`${check.getFullYear()}-${monthsReverse[startMonth]}-${startDay.padStart(2, '0')}`);
+            let end = new Date(`${check.getFullYear()}-${monthsReverse[endMonth]}-${endDay.padStart(2, '0')}`);
 
             if (end < start) {
                 end.setFullYear(end.getFullYear() + 1);
+            }
+
+            // Justera år för check-datum om det är över årsskiftet
+            if (check < start && startMonth === "December" && endMonth === "January") {
+                check.setFullYear(check.getFullYear() + 1);
             }
 
             return start <= check && check <= end;

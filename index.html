@@ -96,13 +96,26 @@
 
         function parseDateWithoutYear(dateString) {
             const [day, month] = dateString.split(' ');
-            return `${monthsReverse[month]}-${day.padStart(2, '0')}`;
+            const monthNumber = monthsReverse[month];
+            if (!monthNumber) {
+                console.error(`Invalid month: ${month}`);
+                return null;
+            }
+            return `${monthNumber}-${day.padStart(2, '0')}`;
         }
 
         function isWithinDateRange(startDate, endDate, checkDate) {
             const check = new Date(checkDate);
-            let start = new Date(`${check.getFullYear()}-${parseDateWithoutYear(startDate)}`);
-            let end = new Date(`${check.getFullYear()}-${parseDateWithoutYear(endDate)}`);
+            const parsedStartDate = parseDateWithoutYear(startDate);
+            const parsedEndDate = parseDateWithoutYear(endDate);
+            
+            if (!parsedStartDate || !parsedEndDate) {
+                console.error(`Error parsing dates: ${startDate}, ${endDate}`);
+                return false;
+            }
+
+            let start = new Date(`${check.getFullYear()}-${parsedStartDate}`);
+            let end = new Date(`${check.getFullYear()}-${parsedEndDate}`);
 
             // Hantera fall där jakttiden sträcker sig över årsskiftet
             if (end < start) {

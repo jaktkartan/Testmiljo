@@ -52,7 +52,6 @@
             }
         }
 
-        // Översättningstabell för månader (engelska till svenska)
         const months = {
             'January': 'Januari',
             'February': 'Februari',
@@ -68,7 +67,6 @@
             'December': 'December'
         };
 
-        // Omvänd översättningstabell för månader (svenska till nummer)
         const monthsReverse = {
             'Januari': '01',
             'Februari': '02',
@@ -117,12 +115,10 @@
             let start = new Date(`${check.getFullYear()}-${parsedStartDate}`);
             let end = new Date(`${check.getFullYear()}-${parsedEndDate}`);
 
-            // Hantera fall där jakttiden sträcker sig över årsskiftet
             if (end < start) {
                 end.setFullYear(end.getFullYear() + 1);
             }
 
-            console.log(`Checking date range: ${start} - ${end} against ${check}`);
             return start <= check && check <= end;
         }
 
@@ -148,11 +144,7 @@
 
             const data = await fetchHuntingData();
 
-            console.log(`Selected county: ${county}`);
-            console.log(`Selected date: ${date}`);
-
             if (data.length === 0) {
-                console.error("No data found in the JSON file.");
                 document.getElementById('results').innerHTML = "Inga resultat funna.";
                 return;
             }
@@ -161,12 +153,8 @@
                 const areas = entry['Område'].split(',');
                 const isInCounty = areas.some(area => area.trim() === county || area.trim() === "Alla län");
                 const isInDateRange = isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
-                console.log(`Checking entry: ${entry['Slag av vilt']} - In county: ${isInCounty}, In date range: ${isInDateRange}`);
                 return isInCounty && isInDateRange;
             });
-
-            console.log(`Results found: ${results.length}`);
-            console.log(results);
 
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = '';

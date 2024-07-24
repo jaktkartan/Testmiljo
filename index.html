@@ -63,20 +63,7 @@
             return `${months[month]}-${day.padStart(2, '0')}`;
         }
 
-        function isWithinDateRange(startDate, endDate, checkDate) {
-            const start = new Date(`2024-${parseDateWithoutYear(startDate)}`);
-            const end = new Date(`2024-${parseDateWithoutYear(endDate)}`);
-            const check = new Date(checkDate);
-
-            if (start <= end) {
-                return start <= check && check <= end;
-            } else {
-                // Om intervallet går över årsskiftet (t.ex. December till Januari)
-                return start <= check || check <= end;
-            }
-        }
-
-        function translateMonth(month) {
+        function translateMonth(monthNumber) {
             const months = {
                 '01': 'Januari',
                 '02': 'Februari',
@@ -91,7 +78,7 @@
                 '11': 'November',
                 '12': 'December'
             };
-            return months[month];
+            return months[monthNumber];
         }
 
         function formatDate(dateString) {
@@ -110,8 +97,21 @@
                 'November': '11',
                 'December': '12'
             };
-            const monthKey = Object.keys(months).find(key => months[key].toLowerCase() === month.toLowerCase());
-            return `${day} ${translateMonth(monthKey)}`;
+            const monthNumber = months[month];
+            return `${day} ${translateMonth(monthNumber)}`;
+        }
+
+        function isWithinDateRange(startDate, endDate, checkDate) {
+            const start = new Date(`2024-${parseDateWithoutYear(startDate)}`);
+            const end = new Date(`2024-${parseDateWithoutYear(endDate)}`);
+            const check = new Date(checkDate);
+
+            if (start <= end) {
+                return start <= check && check <= end;
+            } else {
+                // Om intervallet går över årsskiftet (t.ex. December till Januari)
+                return start <= check || check <= end;
+            }
         }
 
         function formatResult(result) {

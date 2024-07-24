@@ -47,16 +47,16 @@
         function parseDateWithoutYear(dateString) {
             const [day, month] = dateString.split(' ');
             const months = {
-                'January': '01',
-                'February': '02',
-                'March': '03',
+                'Januari': '01',
+                'Februari': '02',
+                'Mars': '03',
                 'April': '04',
-                'May': '05',
-                'June': '06',
-                'July': '07',
-                'August': '08',
+                'Maj': '05',
+                'Juni': '06',
+                'Juli': '07',
+                'Augusti': '08',
                 'September': '09',
-                'October': '10',
+                'Oktober': '10',
                 'November': '11',
                 'December': '12'
             };
@@ -77,11 +77,45 @@
         }
 
         function formatResult(result) {
+            const monthNames = {
+                '01': 'Januari',
+                '02': 'Februari',
+                '03': 'Mars',
+                '04': 'April',
+                '05': 'Maj',
+                '06': 'Juni',
+                '07': 'Juli',
+                '08': 'Augusti',
+                '09': 'September',
+                '10': 'Oktober',
+                '11': 'November',
+                '12': 'December'
+            };
+
+            function formatDate(dateString) {
+                const [day, month] = dateString.split(' ');
+                const months = {
+                    'January': 'Januari',
+                    'February': 'Februari',
+                    'March': 'Mars',
+                    'April': 'April',
+                    'May': 'Maj',
+                    'June': 'Juni',
+                    'July': 'Juli',
+                    'August': 'Augusti',
+                    'September': 'September',
+                    'October': 'Oktober',
+                    'November': 'November',
+                    'December': 'December'
+                };
+                return `${day} ${months[month]}`;
+            }
+
             return `
                 <div>
                     <h3>${result['Slag av vilt']}</h3>
-                    <p><strong>Starttid:</strong> ${result['Starttid']}</p>
-                    <p><strong>Sluttid:</strong> ${result['Sluttid']}</p>
+                    <p><strong>Starttid:</strong> ${formatDate(result['Starttid'])}</p>
+                    <p><strong>Sluttid:</strong> ${formatDate(result['Sluttid'])}</p>
                     ${result['Upplysning'] ? `<p><strong>Upplysning:</strong> ${result['Upplysning']}</p>` : ''}
                 </div>
             `;

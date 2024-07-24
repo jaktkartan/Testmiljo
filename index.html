@@ -94,6 +94,7 @@
             if (start <= end) {
                 return start <= check && check <= end;
             } else {
+                // Om intervallet går över årsskiftet (t.ex. December till Januari)
                 return start <= check || check <= end;
             }
         }

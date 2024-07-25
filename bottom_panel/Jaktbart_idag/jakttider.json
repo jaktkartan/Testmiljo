@@ -53,7 +53,7 @@
         "Område": "Värmlands län, Örebro län, Dalarnas län, Gävleborgs län",
         "Starttid": "1 August",
         "Sluttid": "31 March",
-        "Upplysning": "(För Dalarnas län: Gäller ej Älvdalens kommun)"
+        "Upplysning": "(För Dalarnas län: Gäller ej Älvdalens kommun, se separat jakttid)."
     },
     {
         "Grupp": "Däggdjur",
@@ -61,7 +61,7 @@
         "Område": "Dalarnas län",
         "Starttid": "1 August",
         "Sluttid": "15 April",
-        "Upplysning": "(För Dalarnas län: Endast Älvdalens kommun)"
+        "Upplysning": "Gäller endast Älvdalens kommun"
     },
     {
         "Grupp": "Däggdjur",

@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Jakttider</title>
+    <title>Jaktbart idag</title>
 </head>
 <body onload="initializePage()">
     <!-- Sidans titel -->
@@ -10,7 +10,7 @@
 
     <!-- Dropdown för att välja län -->
     <label for="county">Välj län:</label>
-    <select id="county">
+    <select id="county" onchange="getHuntingInfo()">
         <option value="Blekinge län">Blekinge län</option>
         <option value="Dalarnas län">Dalarnas län</option>
         <option value="Gotlands län">Gotlands län</option>
@@ -37,11 +37,8 @@
 
     <!-- Datumväljare -->
     <label for="date">Välj datum:</label>
-    <input type="date" id="date" name="date">
+    <input type="date" id="date" name="date" onchange="getHuntingInfo()">
     <br>
-
-    <!-- Sökknapp -->
-    <button onclick="getHuntingInfo()">Sök</button>
 
     <!-- Div för att visa resultaten -->
     <div id="results"></div>
@@ -165,7 +162,7 @@
             const date = document.getElementById('date').value;
 
             if (!county || !date) {
-                alert("Vänligen fyll i både län och datum.");
+                document.getElementById('results').innerHTML = "Vänligen välj både län och datum.";
                 return;
             }
 

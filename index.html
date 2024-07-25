@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaktkartan.se</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles_modal_o_FAB.css" />
+    <!-- esri stil för WMS tjänst -->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet/dist/esri-leaflet.css" />
+    <style>
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centrera innehållet horisontellt */
+            height: 100vh; /* Sätt höjden till fulla höjden av vyporten */
+            margin: 0; /* Ta bort marginaler för att undvika onödig skrollning */
+            overflow-x: hidden; /* Dölj horisontell skrollning */
+        }
+        
+    </style>
+    <!-- Lägg till Google Analytics-spårningskod här -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNF0NYCHPW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LNF0NYCHPW');
+    </script>
+</head>
+<body>
+    <!-- jaktkartan logo längst upp i vänstra hörnet med länk till jaktkartan.se -->
+    <a href="http://www.jaktkartan.se" style="position: fixed; top: 4px; left: 4px; z-index: 9999;">
+        <img src="bilder/jaktkartan_logga_liten.png" alt="Jaktkartan.se" style="width: 60px; height: auto;">
+    </a>
+
+<div id="fab-container">
+    <button id="fab-daggdjur" class="fab" style="display:none;">Däggdjur</button>
+    <button id="fab-fagel" class="fab" style="display:none;">Fågel</button>
+    <button id="fab-alg" class="fab" style="display:none;">Älgjakt</button>
+    <button id="fab-alg-omraden" class="fab" style="display:none;">Jaktområden</button>
+    <button id="fab-upptack" class="fab" style="display:none;">Upptäck!</button>
+
+    
+</div>
+
+        <!-- Modals- till FAB-knapparna -->
+    <div id="modal-daggdjur" class="modal"></div>
+    <div id="modal-fagel" class="modal"></div>
+    <div id="modal-alg" class="modal"></div>
+    <div id="modal-alg-omraden" class="modal"></div>    
+    <div id="modal-upptack" class="modal"></div>
+    <div id="modal-startruta" class="modal"></div>
+
+    
+    <div id="info-panel">
+        <div id="accuracy">Lägesnoggrannhet: Unknown</div>
+        <div id="sunrise-sunset">
+            <img id="sunrise-icon" src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/soluppgang.png" alt="Sunrise Icon" style="height: 24px;">
+            <span id="sunrise"></span>
+            <img id="sunset-icon" src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/solnedgang.png" alt="Sunset Icon" style="height: 24px;">
+            <span id="sunset"></span>
+            <div class="expand-toggle" onclick="togglePanel()">Väderprognos <span class="arrow">&#9660;</span></div>
+            <div id="weather-info" style="display: none;">
+                <div id="weather-text">Laddar väder...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="map" style="width: 100%; height: 100%;"></div>
+    
+    <div id="bottom-panel">
+        <button class="panel-button" onclick="openTab('tab1', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/upptack.png" alt="Upptäck"></button>
+        <button class="panel-button" onclick="openTab('tab2', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/kartor.png" alt="Kartor"></button>
+        <button class="panel-button" onclick="openTab('tab3', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/jaktbart idag.png" alt="Jaktbart idag"></button>
+        <button class="panel-button" onclick="openTab('tab4', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/kaliberkrav.png" alt="Kaliberkrav"></button>
+        <button class="panel-button" onclick="openTab('tab5', 'bottom_panel/Jaktkollen/Jaktkollen.html')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/jaktkollen.png" alt="Jaktkollen"></button>
+    </div>
+
+    <div id="tab-content" style="display:none;">
+        <div id="tab1" class="tab-pane"></div>
+        <div id="tab2" class="tab-pane"></div>
+        <div id="tab3" class="tab-pane"></div>
+        <div id="tab4" class="tab-pane"></div>
+        <div id="tab5" class="tab-pane"></div>
+    </div>
+    
+    <div id="popup-panel">
+        <div id="popup-panel-content">
+            <!-- Innehåll i panelen uppdateras dynamiskt här -->
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/suncalc/suncalc.js"></script>
+    <script src="vaderprognos.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="bottom_panel/FAB-knapparnas_modaler_kartor_och_upptack.js"></script>
+    <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+    
+    
+
+    <script>
+      // Declare map as a global variable
+        var map;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("Initializing map...");
+
+            map = L.map('map', {
+                zoomControl: false // Ta bort standardzoomkontrollerna
+            }).setView([62.0, 15.0], 5);
+
+            L.control.zoom({
+                position: 'topleft' // Ändra positionen på zoomkontrollerna
+            }).addTo(map);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Lägg till lyssnare för zoomhändelser
+            map.on('zoomend', function() {
+                console.log("Zoom level changed to: " + map.getZoom());
+                // Här kan du lägga till din egen logik eller anrop till funktioner vid zoomförändringar
+            });
+    
+            var accuracyCircle;
+            var userMarker;
+            var pulsingDotMarker;
+            var sunriseIcon = L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/timothylevin/Testmiljo/main/sunrise.png',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10],
+                popupAnchor: [0, 0],
+            });
+            var sunsetIcon = L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/timothylevin/Testmiljo/main/sunset.png',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10],
+                popupAnchor: [0, 0],
+            });
+
+            function createPulsingCircle(lat, lon) {
+                var divIcon = L.divIcon({
+                    className: 'pulsing-circle',
+                    iconSize: [12, 12],
+                    html: `<div class="pulsing-dot" data-lat="${lat}" data-lon="${lon}"></div>`
+                });
+                return L.marker([lat, lon], { icon: divIcon }).addTo(map);
+            }
+
+            function updateUserPosition(lat, lon, accuracy) {
+                console.log(`Updating user position: ${lat}, ${lon}, accuracy: ${accuracy}`);
+
+                var accuracyInfo = document.getElementById('accuracy');
+                accuracyInfo.innerHTML = "Lägesnoggrannhet: " + accuracy + " meters";
+
+                if (!accuracyCircle) {
+                    accuracyCircle = L.circle([lat, lon], {
+                        radius: accuracy,
+                        fillColor: 'green',
+                        fillOpacity: 0.5,
+                        stroke: false
+                    }).addTo(map);
+                } else {
+                    accuracyCircle.setLatLng([lat, lon]).setRadius(accuracy).setStyle({fillColor: 'green'});
+                }
+
+                if (!userMarker) {
+                    userMarker = L.marker([lat, lon], { icon: L.divIcon({className: 'transparent-marker-icon'}) }).addTo(map);
+                } else {
+                    userMarker.setLatLng([lat, lon]);
+                }
+
+                if (!pulsingDotMarker) {
+                    pulsingDotMarker = createPulsingCircle(lat, lon);
+                } else {
+                    pulsingDotMarker.setLatLng([lat, lon]);
+                }
+
+                var times = SunCalc.getTimes(new Date(), lat, lon);
+                var sunrise = times.sunrise ? times.sunrise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Unknown';
+                var sunset = times.sunset                     ? times.sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Unknown';
+                var sunriseSpan = document.getElementById('sunrise');
+                var sunsetSpan = document.getElementById('sunset');
+
+                sunriseSpan.innerHTML = sunrise;
+                sunsetSpan.innerHTML = sunset;
+            }
+
+            function saveUserPosition(lat, lon) {
+                var position = { latitude: lat, longitude: lon };
+                localStorage.setItem('lastKnownPosition', JSON.stringify(position));
+            }
+
+            function getPositionFromIP() {
+                axios.get('https://ipinfo.io/json?token=c57bc38a5d7e2c')
+                    .then(function (response) {
+                        var loc = response.data.loc.split(',');
+                        var lat = parseFloat(loc[0]);
+                        var lon = parseFloat(loc[1]);
+                        updateUserPosition(lat, lon, "Unknown");
+                        saveUserPosition(lat, lon); // Spara användarens position baserat på IP-uppslag
+                    })
+                    .catch(function (error) {
+                        console.log("IP Geolocation failed: " + error.message);
+                    });
+            }
+
+            function handleGeolocation(position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+                var accuracy = position.coords.accuracy;
+                updateUserPosition(lat, lon, accuracy.toFixed(2));
+                saveUserPosition(lat, lon); // Spara användarens position när den uppdateras
+            }
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                        handleGeolocation(position);
+                    },
+                    function (error) {
+                        console.log("Geolocation failed: " + error.message);
+                        getPositionFromIP();
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+
+                navigator.geolocation.watchPosition(
+                    function (position) {
+                        handleGeolocation(position);
+                    },
+                    function (error) {
+                        console.log("Geolocation failed: " + error.message);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                map.setView([62.0, 15.0], 5);
+                getPositionFromIP(); // Använd IP-uppslag om geolocation inte stöds
+            }
+
+
+            // Hämta lagrad position från localStorage och uppdatera kartan
+            var storedPosition = localStorage.getItem('lastKnownPosition');
+            if (storedPosition) {
+                var parsedPosition = JSON.parse(storedPosition);
+                updateUserPosition(parsedPosition.latitude, parsedPosition.longitude, "Stored");
+            }
+        });
+        
+    </script>
+    <script src="Oversattningstabell.js"></script>
+    <script src="popupHandler.js"></script>
+    <script src="bottom_panel/Upptack/Upptack_geojsonHandler.js"></script>
+    <script src="bottom_panel/Kartor/Kartor_geojsonHandler.js"></script>
+    <script src="tabHandler.js"></script>
+    <script src="bottom_panel/Jaktbart_idag/Jaktbart_idag_flikbeteende.js"></script>
+    <script src="bottom_panel/Upptack/Upptack_flikbeteende.js"></script>
+    <script src="bottom_panel/Kartor/kartor_flikbeteende.js"></script>
+    <script src="bottom_panel/Kartor/Algjaktskartan/WMS/Algjaktsomraden.js"></script>
+    
+    
+</body>
+</html>

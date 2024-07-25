@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Anpassad CSS för att ändra zoomkontrollernas position. */
+.leaflet-top.leaflet-left {
+    top: 80px !important;
+    left: 10px !important;
+}
+
+body, button, span, div {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Stilsättning för .panel-button */
+.panel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 3px;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgb(50, 94, 88);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.panel-button img {
+    display: block;
+    max-width: 100%;
+    max-height: 90px;
+    object-fit: contain;
+}
+
+/* Stil för elementet som håller knapparna när man tryckt på upptäck eller kartor */
+.button-container {
+    display: flex;
+    justify-content: space-around; /* Fördela knapparna jämnt */
+    align-items: center; /* Centrera knapparna vertikalt */
+    flex-wrap: nowrap; /* Knapparna ska inte brytas till nästa rad */
+    gap: 10px; /* Justera mellanrum mellan knappar */
+    padding: 0px; /* Justera paddingen efter behov */
+    width: 100%;
+    height: 15vh; /* Låt höjden justeras automatiskt för att fylla föräldern */
+    overflow: hidden;
+    max-height: 100vh; /* Maxhöjd på container */
+}
+
+.styled-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(50, 94, 88);
+    border-radius: 5px;
+    overflow: hidden;
+    height: 9vh; /* Maxhöjd för knapparna */
+    flex: 1; /* Gör att knapparna växer och krymper jämnt */
+    background-color: rgb(240, 240, 240);
+    color: rgb(50, 94, 88);
+    cursor: pointer;
+    outline: none;
+    z-index: 999;
+    position: relative; /* Lägg till för att få texten att positionera korrekt */
+    text-align: center; /* Centrerar texten */
+    flex-direction: column; /* Placera innehållet i en kolumn */
+}
+
+.styled-button img {
+    width: auto; /* Bilden anpassas efter knappens bredd */
+    height: 100%; /* Bilden tar upp hela knappens höjd */
+    object-fit: cover; /* Sätt objektet att fylla innehållsramen och bibehålla proportionerna */
+}
+
+.styled-button .text-content {
+    position: absolute; /* Lägg texten över bilden */
+    bottom: 0; /* Placera texten längst ner */
+    width: 100%;
+    color: rgb(50, 94, 88); /* Textens färg */
+    text-shadow: 
+        -1px -1px 0 rgb(240, 240, 240),
+        1px -1px 0 rgb(240, 240, 240),
+        -1px 1px 0 rgb(240, 240, 240),
+        1px 1px 0 rgb(240, 240, 240),
+        -2px -2px 0 rgb(240, 240, 240),
+        2px -2px 0 rgb(240, 240, 240),
+        -2px 2px 0 rgb(240, 240, 240),
+        2px 2px 0 rgb(240, 240, 240); /* Bredare textskugga */
+    font-size: 1.2em; /* Startstorlek på texten */
+    overflow: hidden;
+    white-space: pre-line; /* Gör att radbrytning fungerar med <br> */
+    text-align: center; /* Centrerar texten horisontellt */
+    line-height: 1.2em; /* Justera radavståndet */
+    padding: 3px; /* Padding för texten */
+    box-sizing: border-box; /* Inkludera padding i elementets totala bredd och höjd */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#bottom-panel {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    padding: 3px;
+    z-index: 2;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.tab-pane {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    background-color: white;
+    color: rgb(50, 94, 88);
+    padding: 10px;
+    z-index: 1000;
+    overflow-y: hidden; /* Ändra till hidden för att undvika att fliken skrollar */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    height: 50vh; /* Generell höjd för flikar */
+    display: flex;
+    flex-direction: column; /* Lägg till detta för att använda flexbox layout */
+}
+
+/* Specifika stilar för #tab1 och #tab2 */
+#tab1.tab-pane, #tab2.tab-pane {
+    height: 15vh; /* Specifik höjd för tab1 och tab2 */
+    width: 100%;
+    display: flex; /* Lägg till flexbox layout här också */
+    flex-direction: column; /* Säkerställ att barnen ordnas i kolumner */
+    padding: 0px;
+    justify-content: flex-end; /* Placera innehållet längst ner */
+}
+
+.tab1-2-header-title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    color: rgb(50, 94, 88);
+}
+
+#tab1 .button-container, #tab2 .button-container {
+    margin-top: 5vh; /* Glipa mellan knapparnas överkant och flikens överkant */
+}
+
+/* Skrollbara flikar */
+#tab3.tab-pane, #tab5.tab-pane {
+    height: 50vh; /* Specifik höjd för tab3 och tab5 */
+    width: 100%;
+    display: flex; /* Flexbox layout */
+    flex-direction: column; /* Kolumnlayout */
+    padding: 0px;
+    justify-content: flex-start; /* Placera innehållet längst upp */
+    overflow-y: auto; /* Gör fliken skrollbar */
+}
+
+#info-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: rgb(50, 94, 88);
+    padding: 5px 20px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+}
+
+#info-panel * {
+    color: rgb(50, 94, 88);
+}
+
+.pulsing-circle {
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.8) 0%, transparent 50%), 
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.5) 0%, transparent 60%),
+                linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    background-color: blue;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.pulsing-circle::before {
+    content: '';
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    background: rgba(0, 0, 255, 0.5);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+#zoom-message {
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    z-index: 10001;
+    text-align: center;
+    font-size: 18px;
+    color: rgb(50, 94, 88);
+}

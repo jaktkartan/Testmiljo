@@ -2,9 +2,9 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Jaktbart!</title>
+    <title>Jakttider</title>
     <style>
-        /* Lägg till stil för notisen */
+        /* Stil för notisen */
         #disclaimer {
             font-size: 0.9em;
             color: #666;
@@ -17,6 +17,32 @@
         }
         #disclaimer a:hover {
             text-decoration: underline;
+        }
+        /* Animation för att visa resultatet */
+        .slide-down {
+            animation: slideDown 0.5s ease-out;
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Animation för att markera ändringar */
+        .highlight-change {
+            animation: highlightChange 1s ease-in-out;
+        }
+        @keyframes highlightChange {
+            from {
+                background-color: yellow;
+            }
+            to {
+                background-color: white;
+            }
         }
     </style>
 </head>
@@ -165,7 +191,7 @@
             }
 
             return `
-                <div>
+                <div class="result-item">
                     <h3>${result['Slag av vilt']}</h3>
                     <p><strong>Starttid:</strong> ${formatDateForDisplay(result['Starttid'])}</p>
                     <p><strong>Sluttid:</strong> ${formatDateForDisplay(result['Sluttid'])}</p>
@@ -229,7 +255,22 @@
 
             // Visa resultatet
             const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = mammalResults + birdResults || "Inga resultat funna.";
+            const newContent = mammalResults + birdResults || "Inga resultat funna.";
+
+            // Kolla om innehållet ändrats och lägg till animation
+            if (resultsDiv.innerHTML !== newContent) {
+                resultsDiv.innerHTML = newContent;
+                const resultItems = resultsDiv.querySelectorAll('.result-item');
+                resultItems.forEach(item => {
+                    item.classList.add('slide-down');
+                });
+
+                // Lägg till "highlight-change" klass och ta bort den efter animationen
+                resultsDiv.classList.add('highlight-change');
+                setTimeout(() => {
+                    resultsDiv.classList.remove('highlight-change');
+                }, 1000);
+            }
         }
 
         // Funktion för att initiera sidan med dagens datum och visa resultatet

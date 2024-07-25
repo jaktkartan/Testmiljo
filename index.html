@@ -32,18 +32,6 @@
                 transform: translateY(0);
             }
         }
-        /* Animation för att markera ändringar */
-        .highlight-change {
-            animation: highlightChange 1s ease-in-out;
-        }
-        @keyframes highlightChange {
-            from {
-                background-color: yellow;
-            }
-            to {
-                background-color: white;
-            }
-        }
     </style>
 </head>
 <body onload="initializePage()">
@@ -255,22 +243,13 @@
 
             // Visa resultatet
             const resultsDiv = document.getElementById('results');
-            const newContent = mammalResults + birdResults || "Inga resultat funna.";
+            resultsDiv.innerHTML = mammalResults + birdResults || "Inga resultat funna.";
 
-            // Kolla om innehållet ändrats och lägg till animation
-            if (resultsDiv.innerHTML !== newContent) {
-                resultsDiv.innerHTML = newContent;
-                const resultItems = resultsDiv.querySelectorAll('.result-item');
-                resultItems.forEach(item => {
-                    item.classList.add('slide-down');
-                });
-
-                // Lägg till "highlight-change" klass och ta bort den efter animationen
-                resultsDiv.classList.add('highlight-change');
-                setTimeout(() => {
-                    resultsDiv.classList.remove('highlight-change');
-                }, 1000);
-            }
+            // Lägg till slide-down animation
+            const resultItems = resultsDiv.querySelectorAll('.result-item');
+            resultItems.forEach(item => {
+                item.classList.add('slide-down');
+            });
         }
 
         // Funktion för att initiera sidan med dagens datum och visa resultatet

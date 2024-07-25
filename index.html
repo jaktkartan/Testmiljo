@@ -8,7 +8,7 @@
         #disclaimer {
             font-size: 0.9em;
             color: #666;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         /* Stil för länken i notisen */
         #disclaimer a {
@@ -23,6 +23,11 @@
 <body onload="initializePage()">
     <!-- Sidans titel -->
     <h1>Jakttider</h1>
+
+    <!-- Notis för att informera användaren -->
+    <div id="disclaimer">
+        <p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>
+    </div>
 
     <!-- Dropdown för att välja län -->
     <label for="county">Välj län:</label>
@@ -59,14 +64,6 @@
     <!-- Div för att visa resultaten -->
     <div id="results"></div>
     <br>
-
-    <!-- Knapp för att länka till Jaktförordning -->
-    <button onclick="window.location.href='https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/'">Jaktförordning (1987:905)</button>
-
-    <!-- Notis för att informera användaren -->
-    <div id="disclaimer">
-        <p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>
-    </div>
 
     <script>
         // Funktion för att hämta jaktdatan från en JSON-fil

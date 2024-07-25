@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upptäck</title>
+    <style>
+        /* Grundstilar för content */
+        .content {
+            display: none; /* Dölj innehållet som standard */
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Använd checkbox för att styra visning av innehållet */
+        input[type="checkbox"] {
+            display: none; /* Dölj checkboxen */
+        }
+
+        /* Stilar för knappen */
+        label.accordion-button {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        label.accordion-button:hover {
+            background-color: #ddd;
+        }
+
+        /* Visa innehållet när checkboxen är kryssad */
+        input[type="checkbox"]:checked + label + .content {
+            display: block;
+        }
+
+        /* Stilar för listan och etiketter */
+        .points-list {
+            list-style-type: none; /* Ta bort punkterna från listan */
+            padding: 0; /* Ta bort standard padding */
+            margin: 0; /* Ta bort marginaler */
+        }
+
+        .points-list li {
+            display: flex; /* Använd flexbox för att placera bilden och texten på en rad */
+            align-items: center; /* Justera vertikalt för att centrera bilden och texten */
+            margin-bottom: 10px; /* Lägg till lite avstånd mellan listobjekten */
+        }
+
+        .points-list img {
+            margin-right: 10px; /* Lägg till avstånd mellan bilden och texten */
+            max-width: 50px; /* Justera bredden på bilderna efter behov */
+            height: auto; /* Behåll bildens proportioner */
+        }
+
+        .points-list p {
+            margin: 0; /* Ta bort standard marginal för paragrafer */
+        }
+
+        /* Stilar för rubriker */
+        h2 {
+            margin-top: 0; /* Ta bort eventuell övre marginal för rubriken */
+        }
+
+        /* Specifika stilar för modal-content */
+        .modal-content {
+            width: 80%; /* Justera bredden efter behov */
+            margin: 0 auto; /* Centrera modalen på sidan */
+        }
+
+        /* Knapp för att stänga modalen */
+        .close {
+            cursor: pointer;
+            font-size: 24px;
+            color: #000;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-content">
+        <span class="close" id="close-upptack">&times;</span>
+        <p class="main-title">Upptäck!</p>
+        <p>Här hittar du information om jaktrelaterade evenemang, var du kan köpa dagkort för jakt och mycket mer.</p>
+        
+        <!-- Checkbox för att styra visningen av fliken Teckenförklaring -->
+        <input type="checkbox" id="toggle-teckenforklaring-upptack">
+        <label for="toggle-teckenforklaring-upptack" class="accordion-button">Teckenförklaring</label>
+        <div class="content">
+            <ul class="points-list">
+                <li>
+                    <img src="bottom_panel/Upptack/bilder/punkt_massor.png" alt="Jaktmässor">
+                    <p><strong>Jaktmässor:</strong> Information om kommande mässor runt om i Sverige.</p>
+                </li>
+                <li>
+                    <img src="bottom_panel/Upptack/bilder/punkt_jaktkort.png" alt="Jaktkort">
+                    <p><strong>Jaktkort:</strong> Områden där du kan köpa dagkort för jakt, så att du kan planera din jaktresa i förväg.</p>
+                </li>
+                <li>
+                    <img src="bottom_panel/Upptack/bilder/punkt_jaktskyttebanor.png" alt="Jaktskyttebanor">
+                    <p><strong>Jaktskyttebanor:</strong> Platser för att träna ditt skytte och förbättra din precision (kommer snart).</p>
+                </li>
+                <li>
+                    <img src="bottom_panel/Upptack/bilder/punkt_butiker.png" alt="Jaktbutiker">
+                    <p><strong>Jaktbutiker:</strong> Butiker där du kan köpa jaktutrustning och tillbehör, med tips på de bästa ställena att handla (kommer snart).</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

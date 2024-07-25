@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal för älgjaktsområden</title>
+    <style>
+        /* Grundstilar för content */
+        .content {
+            display: none; /* Dölj innehållet som standard */
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Använd checkbox för att styra visning av innehållet */
+        input[type="checkbox"] {
+            display: none; /* Dölj checkboxen */
+        }
+
+        /* Stilar för knappen */
+        label.accordion-button {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        label.accordion-button:hover {
+            background-color: #ddd;
+        }
+
+        /* Visa innehållet när checkboxen är kryssad */
+        input[type="checkbox"]:checked + label + .content {
+            display: block;
+        }
+
+        /* Stilar för listan */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        li span {
+            font-weight: bold;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-content">
+        <span class="close" id="close-upptack">&times;</span>
+        <p class="main-title">Älgjaktsområden!</p>
+        <p>Kartan visar Älgjaktsområden i Sverige</p>
+        
+        <!-- Checkbox för att styra visningen -->
+        <input type="checkbox" id="toggle-features-alg">
+        <label for="toggle-features-alg" class="accordion-button">Kartans funktioner</label>
+        <div class="content">
+            <h3>Information kommer snart</h3>
+            <ul>
+                <li><span>...</span>---</li>
+                <li><span>...</span>---</li>
+                <li><span>...</span>---</li>
+                <li><span>...</span>---</li>
+                <li><span>...</span>---</li>
+                <li><span>...</span>---</li>
+            </ul>
+        </div>
+
+        <input type="checkbox" id="toggle-teckenforklaring-alg">
+        <label for="toggle-teckenforklaring-alg" class="accordion-button">Teckenförklaring</label>
+        <div class="content">
+            <p>Teckenförklaring kommer snart.</p>
+        </div>
+    </div>
+</body>
+</html>

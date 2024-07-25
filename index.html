@@ -5,7 +5,10 @@
     <title>Jakttider</title>
 </head>
 <body onload="initializePage()">
+    <!-- Sidans titel -->
     <h1>Jakttider</h1>
+
+    <!-- Dropdown för att välja län -->
     <label for="county">Välj län:</label>
     <select id="county">
         <option value="Blekinge län">Blekinge län</option>
@@ -31,15 +34,24 @@
         <option value="Östergötlands län">Östergötlands län</option>
     </select>
     <br>
+
+    <!-- Datumväljare -->
     <label for="date">Välj datum:</label>
     <input type="date" id="date" name="date">
     <br>
+
+    <!-- Sökknapp -->
     <button onclick="getHuntingInfo()">Sök</button>
+
+    <!-- Div för att visa resultaten -->
     <div id="results"></div>
     <br>
+
+    <!-- Knapp för att länka till Jaktförordning -->
     <button onclick="window.location.href='https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/'">Jaktförordning (1987:905)</button>
 
     <script>
+        // Funktion för att hämta jaktdatan från en JSON-fil
         async function fetchHuntingData() {
             try {
                 const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
@@ -54,6 +66,7 @@
             }
         }
 
+        // Månader på svenska och engelska för översättning
         const months = {
             'January': 'Januari',
             'February': 'Februari',
@@ -84,16 +97,19 @@
             'December': '12'
         };
 
+        // Funktion för att översätta månadsnamn från engelska till svenska och vice versa
         function translateMonth(monthName) {
             return months[monthName] || Object.keys(monthsReverse).find(key => monthsReverse[key] === monthName);
         }
 
+        // Funktion för att formatera datum för visning
         function formatDateForDisplay(dateString) {
             const [day, month] = dateString.split(' ');
             const translatedMonth = translateMonth(month);
             return `${parseInt(day)} ${translatedMonth}`;
         }
 
+        // Funktion för att parsa datum utan år
         function parseDateWithoutYear(dateString) {
             const [day, month] = dateString.split(' ');
             const monthNumber = monthsReverse[translateMonth(month)];
@@ -104,6 +120,7 @@
             return `${monthNumber}-${day.padStart(2, '0')}`;
         }
 
+        // Funktion för att kontrollera om ett datum är inom ett datumintervall
         function isWithinDateRange(startDate, endDate, checkDate) {
             const check = new Date(checkDate);
             const checkMonthDay = `${(check.getMonth() + 1).toString().padStart(2, '0')}-${check.getDate().toString().padStart(2, '0')}`;
@@ -121,17 +138,28 @@
             }
         }
 
-        function formatResult(result) {
+        // Funktion för att formatera resultatet för visning
+        function formatResult(result, county) {
+            let extraInfo = result['Upplysning'];
+            // Kontrollera om specifika upplysningar ska döljas
+            if (county !== 'Norrbottens län' && extraInfo.includes('Gäller utom gränsälvsområdet')) {
+                extraInfo = '';
+            }
+            if (county !== 'Dalarnas län' && extraInfo.includes('Gäller ej Älvdalens kommun, se separat jakttid')) {
+                extraInfo = '';
+            }
+
             return `
                 <div>
                     <h3>${result['Slag av vilt']}</h3>
                     <p><strong>Starttid:</strong> ${formatDateForDisplay(result['Starttid'])}</p>
                     <p><strong>Sluttid:</strong> ${formatDateForDisplay(result['Sluttid'])}</p>
-                    ${result['Upplysning'] ? `<p><strong>Upplysning:</strong> ${result['Upplysning']}</p>` : ''}
+                    ${extraInfo ? `<p><strong>Upplysning:</strong> ${extraInfo}</p>` : ''}
                 </div>
             `;
         }
 
+        // Funktion för att hämta och visa jakttider baserat på valda län och datum
         async function getHuntingInfo() {
             const county = document.getElementById('county').value.trim();
             const date = document.getElementById('date').value;
@@ -148,6 +176,7 @@
                 return;
             }
 
+            // Filtrera resultat baserat på valt län och datum
             const results = data.filter(entry => {
                 const areas = entry['Område'].split(',');
                 const isInCounty = areas.some(area => area.trim() === county || area.trim() === "Alla län");
@@ -155,6 +184,7 @@
                 return isInCounty && isInDateRange;
             });
 
+            // Sortera resultatet
             results.sort((a, b) => {
                 if (a['Grupp'] === b['Grupp']) {
                     return a['Slag av vilt'].localeCompare(b['Slag av vilt']);
@@ -164,15 +194,17 @@
                 }
             });
 
+            // Visa resultatet
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = '';
             if (results.length > 0) {
-                resultsDiv.innerHTML = results.map(formatResult).join('');
+                resultsDiv.innerHTML = results.map(result => formatResult(result, county)).join('');
             } else {
                 resultsDiv.innerHTML = "Inga resultat funna.";
             }
         }
 
+        // Funktion för att initiera sidan med dagens datum och visa resultatet
         function initializePage() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = today;

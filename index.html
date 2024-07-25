@@ -2,11 +2,11 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Jaktbart idag</title>
+    <title>Jakttider</title>
 </head>
 <body onload="initializePage()">
     <!-- Sidans titel -->
-    <h1>Jaktbart!</h1>
+    <h1>Jakttider</h1>
 
     <!-- Dropdown för att välja län -->
     <label for="county">Välj län:</label>
@@ -191,14 +191,27 @@
                 }
             });
 
+            // Organisera resultatet med rubriker för Däggdjur och Fågelarter
+            let mammalResults = '';
+            let birdResults = '';
+
+            results.forEach(result => {
+                if (result['Grupp'] === 'Däggdjur') {
+                    if (mammalResults === '') {
+                        mammalResults += '<h2>Däggdjur:</h2>';
+                    }
+                    mammalResults += formatResult(result, county);
+                } else if (result['Grupp'] === 'Fågelarter') {
+                    if (birdResults === '') {
+                        birdResults += '<h2>Fågelarter:</h2>';
+                    }
+                    birdResults += formatResult(result, county);
+                }
+            });
+
             // Visa resultatet
             const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-            if (results.length > 0) {
-                resultsDiv.innerHTML = results.map(result => formatResult(result, county)).join('');
-            } else {
-                resultsDiv.innerHTML = "Inga resultat funna.";
-            }
+            resultsDiv.innerHTML = mammalResults + birdResults || "Inga resultat funna.";
         }
 
         // Funktion för att initiera sidan med dagens datum och visa resultatet

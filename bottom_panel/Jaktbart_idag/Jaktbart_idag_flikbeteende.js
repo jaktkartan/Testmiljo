@@ -9,7 +9,7 @@ function findCountyForCoordinates(latitude, longitude, geojson) {
         if (feature.geometry && feature.geometry.type === 'MultiPolygon') {
             for (let polygon of feature.geometry.coordinates) {
                 if (isPointInPolygon([longitude, latitude], polygon)) {
-                    return feature.properties.LAN;
+                    return feature.properties["Län"]; // Använd korrekt fält
                 }
             }
         }

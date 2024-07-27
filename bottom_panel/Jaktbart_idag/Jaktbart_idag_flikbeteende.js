@@ -1,12 +1,193 @@
-async function fetchHuntingData(url) {
+// Ladda GeoJSON-filen med Sveriges länspolygoner.
+async function loadGeoJSON(url) {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error('Failed to load JSON file');
+            throw new Error('Failed to load GeoJSON file');
         }
         return await response.json();
     } catch (error) {
-        console.error('Error loading JSON:', error);
+        console.error('Error loading GeoJSON:', error);
+        return null;
+    }
+}
+
+// Jämför användarens sparade position med länspolygoner
+function findCountyForCoordinates(latitude, longitude, geojson) {
+    if (!geojson || !geojson.features) {
+        console.error('GeoJSON data is invalid.');
+        return 'Okänt län';
+    }
+
+    for (let feature of geojson.features) {
+        if (feature.geometry && feature.geometry.type === 'MultiPolygon') {
+            for (let polygon of feature.geometry.coordinates) {
+                if (isPointInPolygon([longitude, latitude], polygon)) {
+                    return feature.properties.LÄN;
+                }
+            }
+        }
+    }
+
+    return 'Okänt län'; // Om ingen matchning hittades
+}
+
+// Funktion för att avgöra om en punkt ligger inuti en polygon
+function isPointInPolygon(point, polygon) {
+    if (!polygon || polygon.length === 0 || polygon[0].length === 0) {
+        return false;
+    }
+
+    let x = point[0], y = point[1];
+    let inside = false;
+    for (let i = 0, j = polygon[0].length - 1; i < polygon[0].length; j = i++) {
+        let xi = polygon[0][i][0], yi = polygon[0][i][1];
+        let xj = polygon[0][j][0], yj = polygon[0][j][1];
+
+        let intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+    return inside;
+}
+
+// Hämta användarens sparade position från localStorage
+function getSavedUserPosition() {
+    var storedPosition = localStorage.getItem('lastKnownPosition');
+    if (storedPosition) {
+        var { latitude, longitude } = JSON.parse(storedPosition);
+        return { latitude, longitude };
+    } else {
+        return null; // Returnera null om ingen position är sparad
+    }
+}
+
+// Visa användarens sparade position i fliken
+function displaySavedUserPosition() {
+    var savedPosition = getSavedUserPosition();
+    if (savedPosition) {
+        // Ladda GeoJSON-filen och avgör län baserat på sparade koordinater
+        loadGeoJSON('bottom_panel/Jaktbart_idag/Sveriges_lan.geojson')
+            .then(geojson => {
+                var county = findCountyForCoordinates(savedPosition.latitude, savedPosition.longitude, geojson);
+                if (county !== 'Okänt län') {
+                    document.getElementById('county').value = county;
+                    getHuntingInfo();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading GeoJSON:', error);
+            });
+    } else {
+        console.log("Ingen sparad position hittades.");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", initializePage);
+
+function initializePage() {
+    const head = document.head;
+    const body = document.body;
+
+    const style = document.createElement("style");
+    style.textContent = `
+        #disclaimer {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+        #disclaimer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        #disclaimer a:hover {
+            text-decoration: underline;
+        }
+        .slide-down {
+            animation: slideDown 0.5s ease-out;
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    `;
+    head.appendChild(style);
+
+    const title = document.createElement("h1");
+    title.textContent = "Jakttider";
+    body.appendChild(title);
+
+    const disclaimer = document.createElement("div");
+    disclaimer.id = "disclaimer";
+    disclaimer.innerHTML = `
+        <p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>
+    `;
+    body.appendChild(disclaimer);
+
+    const countyLabel = document.createElement("label");
+    countyLabel.setAttribute("for", "county");
+    countyLabel.textContent = "Välj län:";
+    body.appendChild(countyLabel);
+
+    const countySelect = document.createElement("select");
+    countySelect.id = "county";
+    countySelect.onchange = getHuntingInfo;
+    const counties = [
+        "Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", 
+        "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", 
+        "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", 
+        "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", 
+        "Örebro län", "Östergötlands län"
+    ];
+    counties.forEach(county => {
+        const option = document.createElement("option");
+        option.value = county;
+        option.textContent = county;
+        countySelect.appendChild(option);
+    });
+    body.appendChild(countySelect);
+    body.appendChild(document.createElement("br"));
+
+    const dateLabel = document.createElement("label");
+    dateLabel.setAttribute("for", "date");
+    dateLabel.textContent = "Välj datum:";
+    body.appendChild(dateLabel);
+
+    const dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.id = "date";
+    dateInput.name = "date";
+    dateInput.onchange = getHuntingInfo;
+    body.appendChild(dateInput);
+    body.appendChild(document.createElement("br"));
+
+    const resultsDiv = document.createElement("div");
+    resultsDiv.id = "results";
+    body.appendChild(resultsDiv);
+    body.appendChild(document.createElement("br"));
+
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
+    displaySavedUserPosition();
+    getHuntingInfo();
+}
+
+async function fetchHuntingData() {
+    try {
+        const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching hunting data:", error);
         return [];
     }
 }
@@ -97,7 +278,7 @@ function formatResult(result, county) {
     `;
 }
 
-async function getHuntingInfo(url) {
+async function getHuntingInfo() {
     const county = document.getElementById('county').value.trim();
     const date = document.getElementById('date').value;
 
@@ -106,7 +287,7 @@ async function getHuntingInfo(url) {
         return;
     }
 
-    const data = await fetchHuntingData(url);
+    const data = await fetchHuntingData();
 
     if (data.length === 0) {
         document.getElementById('results').innerHTML = "Inga resultat funna.";
@@ -154,109 +335,3 @@ async function getHuntingInfo(url) {
         item.classList.add('slide-down');
     });
 }
-
-function initializePage() {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('date').value = today;
-    getHuntingInfo('bottom_panel/Jaktbart_idag/jakttider.json');
-}
-
-function createJakttiderInterface() {
-    // Skapa stil-elementet
-    const style = document.createElement('style');
-    style.innerHTML = `
-        #disclaimer {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-        }
-        #disclaimer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        #disclaimer a:hover {
-            text-decoration: underline;
-        }
-        .slide-down {
-            animation: slideDown 0.5s ease-out;
-        }
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Skapa och fyll tab3-innehållet
-    const tab3 = document.getElementById('tab3');
-    tab3.innerHTML = `
-        <h1>Jakttider</h1>
-        <div id="disclaimer">
-            <p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>
-        </div>
-        <label for="county">Välj län:</label>
-        <select id="county" onchange="getHuntingInfo('bottom_panel/Jaktbart_idag/jakttider.json')">
-            <option value="Blekinge län">Blekinge län</option>
-            <option value="Dalarnas län">Dalarnas län</option>
-            <option value="Gotlands län">Gotlands län</option>
-            <option value="Gävleborgs län">Gävleborgs län</option>
-            <option value="Hallands län">Hallands län</option>
-            <option value="Jämtlands län">Jämtlands län</option>
-            <option value="Jönköpings län">Jönköpings län</option>
-            <option value="Kalmar län">Kalmar län</option>
-            <option value="Kronobergs län">Kronobergs län</option>
-            <option value="Norrbottens län">Norrbottens län</option>
-            <option value="Skåne län">Skåne län</option>
-            <option value="Stockholms län">Stockholms län</option>
-            <option value="Södermanlands län">Södermanlands län</option>
-            <option value="Uppsala län">Uppsala län</option>
-            <option value="Värmlands län">Värmlands län</option>
-            <option value="Västerbottens län">Västerbottens län</option>
-            <option value="Västernorrlands län">Västernorrlands län</option>
-            <option value="Västmanlands län">Västmanlands län</option>
-            <option value="Västra Götalands län">Västra Götalands län</option>
-            <option value="Örebro län">Örebro län</option>
-            <option value="Östergötlands län">Östergötlands län</option>
-        </select>
-        <br>
-        <label for="date">Välj datum:</label>
-        <input type="date" id="date" name="date" onchange="getHuntingInfo('bottom_panel/Jaktbart_idag/jakttider.json')">
-        <br>
-        <div id="results"></div>
-        <br>
-    `;
-}
-
-// Funktion för att öppna specifik tab och ladda innehåll dynamiskt
-function openTab(tabId, url) {
-    // Göm alla tab-innehåll
-    const tabs = document.getElementsByClassName('tab-pane');
-    for (let i = 0; i < tabs.length; i++) {
-        tabs[i].style.display = 'none';
-    }
-
-    // Visa vald tab
-    const tab = document.getElementById(tabId);
-    tab.style.display = 'block';
-
-    // Om tabId är 'tab3', skapa gränssnittet och initiera sidan
-    if (tabId === 'tab3') {
-        createJakttiderInterface();
-        initializePage();
-    }
-}
-
-// Exportera funktioner för att anropa dem utifrån
-export {
-    fetchHuntingData,
-    getHuntingInfo,
-    initializePage,
-    createJakttiderInterface,
-    openTab
-};

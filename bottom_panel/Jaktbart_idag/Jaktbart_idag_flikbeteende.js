@@ -1,4 +1,4 @@
-// Jämför användarens sparade position med länspolygoner.
+// Jämför användarens sparade position med länspolygoner
 function findCountyForCoordinates(latitude, longitude, geojson) {
     if (!geojson || !geojson.features) {
         console.error('GeoJSON data is invalid.');
@@ -63,9 +63,18 @@ function displaySavedUserPosition() {
         tab.innerHTML = '';
 
         // Ladda GeoJSON-filen och avgör län baserat på sparade koordinater
-        loadGeoJSON('bottom_panel/Jaktbart_idag/Sveriges_lan.geojson')
+        loadGeoJSON('bottom_panel/Jaktbart_idag/Corrected_Sveriges_lan.geojson')
             .then(geojson => {
+                if (!geojson) {
+                    console.error('GeoJSON is null or undefined.');
+                    var errorInfo = document.createElement('p');
+                    errorInfo.textContent = 'Fel vid laddning av GeoJSON.';
+                    tab.appendChild(errorInfo);
+                    return;
+                }
+
                 console.log('GeoJSON loaded:', geojson); // Logga GeoJSON-datan
+
                 var county = findCountyForCoordinates(savedPosition.latitude, savedPosition.longitude, geojson);
 
                 // Visa länet i tabben

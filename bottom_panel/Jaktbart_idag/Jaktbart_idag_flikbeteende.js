@@ -1,4 +1,4 @@
-// Jämför användarens sparade position med länspolygoner
+// Jämför användarens sparade position med länspolygoner.
 function findCountyForCoordinates(latitude, longitude, geojson) {
     if (!geojson || !geojson.features) {
         console.error('GeoJSON data is invalid.');

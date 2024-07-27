@@ -8,11 +8,13 @@ function findCountyForCoordinates(latitude, longitude, geojson) {
     console.log('Latitude:', latitude, 'Longitude:', longitude); // Logga koordinaterna
 
     for (let feature of geojson.features) {
+        console.log('Feature properties:', feature.properties); // Logga feature properties för felsökning
+
         if (feature.geometry && feature.geometry.type === 'MultiPolygon') {
             for (let polygon of feature.geometry.coordinates) {
                 if (isPointInPolygon([longitude, latitude], polygon)) {
-                    console.log('Match found in polygon for county:', feature.properties["Län"]);
-                    return feature.properties["Län"]; // Använd korrekt fält
+                    console.log('Match found in polygon for county:', feature.properties["LÄN"]);
+                    return feature.properties["LÄN"]; // Använd korrekt fält
                 }
             }
         }

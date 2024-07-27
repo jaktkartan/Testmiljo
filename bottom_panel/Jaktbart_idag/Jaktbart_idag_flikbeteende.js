@@ -5,22 +5,27 @@ function findCountyForCoordinates(latitude, longitude, geojson) {
         return 'Okänt län';
     }
 
+    console.log('Latitude:', latitude, 'Longitude:', longitude); // Logga koordinaterna
+
     for (let feature of geojson.features) {
         if (feature.geometry && feature.geometry.type === 'MultiPolygon') {
             for (let polygon of feature.geometry.coordinates) {
                 if (isPointInPolygon([longitude, latitude], polygon)) {
+                    console.log('Match found in polygon for county:', feature.properties["Län"]);
                     return feature.properties["Län"]; // Använd korrekt fält
                 }
             }
         }
     }
 
+    console.log('No match found for coordinates.');
     return 'Okänt län'; // Om ingen matchning hittades
 }
 
 // Funktion för att avgöra om en punkt ligger inuti en polygon
 function isPointInPolygon(point, polygon) {
     if (!polygon || polygon.length === 0 || polygon[0].length === 0) {
+        console.error('Polygon data is invalid.');
         return false;
     }
 
@@ -33,6 +38,7 @@ function isPointInPolygon(point, polygon) {
         let intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
         if (intersect) inside = !inside;
     }
+    console.log('Point:', point, 'inside polygon:', inside);
     return inside;
 }
 
@@ -57,6 +63,7 @@ function displaySavedUserPosition() {
         // Ladda GeoJSON-filen och avgör län baserat på sparade koordinater
         loadGeoJSON('bottom_panel/Jaktbart_idag/Sveriges_lan.geojson')
             .then(geojson => {
+                console.log('GeoJSON loaded:', geojson); // Logga GeoJSON-datan
                 var county = findCountyForCoordinates(savedPosition.latitude, savedPosition.longitude, geojson);
 
                 // Visa länet i tabben

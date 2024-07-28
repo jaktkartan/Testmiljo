@@ -20,7 +20,7 @@ function openJaktbartIdag() {
 
     // Skapa och lägg till grundläggande HTML-element dynamiskt
     const h1 = document.createElement('h1');
-    h1.textContent = 'Jakttider';
+    h1.textContent = 'Jaktbart idag!';
     tabPane.appendChild(h1);
 
     const disclaimer = document.createElement('div');
@@ -30,7 +30,7 @@ function openJaktbartIdag() {
 
     const countyLabel = document.createElement('label');
     countyLabel.htmlFor = 'county';
-    countyLabel.textContent = 'Välj län:';
+    countyLabel.textContent = 'Välj annat län:';
     tabPane.appendChild(countyLabel);
 
     const countySelect = document.createElement('select');

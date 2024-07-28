@@ -325,7 +325,7 @@ h1 {
 #disclaimer {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 20px;
     border-radius: 5px;
 }

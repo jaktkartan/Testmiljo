@@ -28,10 +28,13 @@ function openJaktbartIdag() {
     disclaimer.innerHTML = '<p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>';
     tabPane.appendChild(disclaimer);
 
+    const filterDiv = document.createElement('div');
+    filterDiv.className = 'filter-container';
+
     const countyLabel = document.createElement('label');
     countyLabel.htmlFor = 'county';
     countyLabel.textContent = 'Välj annat län:';
-    tabPane.appendChild(countyLabel);
+    filterDiv.appendChild(countyLabel);
 
     const countySelect = document.createElement('select');
     countySelect.id = 'county';
@@ -43,23 +46,21 @@ function openJaktbartIdag() {
         option.textContent = county;
         countySelect.appendChild(option);
     });
-    tabPane.appendChild(countySelect);
-
-    tabPane.appendChild(document.createElement('br'));
+    filterDiv.appendChild(countySelect);
 
     const dateLabel = document.createElement('label');
     dateLabel.htmlFor = 'date';
     dateLabel.textContent = 'Välj annat datum:';
-    tabPane.appendChild(dateLabel);
+    filterDiv.appendChild(dateLabel);
 
     const dateInput = document.createElement('input');
     dateInput.type = 'date';
     dateInput.id = 'date';
     dateInput.name = 'date';
     dateInput.onchange = getHuntingInfo;
-    tabPane.appendChild(dateInput);
+    filterDiv.appendChild(dateInput);
 
-    tabPane.appendChild(document.createElement('br'));
+    tabPane.appendChild(filterDiv);
 
     const resultsDiv = document.createElement('div');
     resultsDiv.id = 'results';
@@ -332,16 +333,21 @@ h1 {
 }
 
 label {
-    display: block;
-    margin-top: 10px;
+    margin-right: 10px;
     font-weight: bold;
 }
 
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
 select, input[type="date"] {
-    display: block;
-    margin-top: 5px;
     padding: 5px;
     font-size: 1em;
+    width: auto;
 }
 
 #results {
@@ -351,8 +357,6 @@ select, input[type="date"] {
 .result-heading {
     font-size: 1.5em;
     margin-top: 20px;
-    padding-bottom: 5px;
-    border-bottom: 2px solid #006400;
 }
 
 .result-item {

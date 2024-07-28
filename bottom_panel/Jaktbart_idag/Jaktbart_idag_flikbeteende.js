@@ -1,4 +1,3 @@
-// Skapa och lägg till grundläggande HTML-element dynamiskt
 document.addEventListener("DOMContentLoaded", function () {
     const body = document.body;
     
@@ -167,7 +166,7 @@ const monthsReverse = {
     'Augusti': '08',
     'September': '09',
     'Oktober': '10',
-    'November': '11',
+    'November': '11'
     'December': '12'
 };
 

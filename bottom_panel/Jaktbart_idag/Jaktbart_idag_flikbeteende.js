@@ -285,7 +285,7 @@ async function getHuntingInfo() {
     let birdResults = '';
 
     results.forEach((result, index) => {
-        const isEven = index % 2 !== 0;
+        const isEven = index % 2 === 0; // Börja med mörkare bakgrundsfärg
         if (result['Grupp'] === 'Däggdjur') {
             if (mammalResults === '') {
                 mammalResults += '<h2 class="result-heading">Däggdjur:</h2>';
@@ -341,7 +341,7 @@ select, input[type="date"] {
     font-size: 1em;
     width: auto;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* Mindre radavstånd */
     max-width: 300px; /* Gör att menyn inte är bredare än nödvändigt */
 }
 

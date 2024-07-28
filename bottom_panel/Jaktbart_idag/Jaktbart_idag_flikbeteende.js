@@ -1,9 +1,8 @@
-// För att hålla reda på om tab3 är öppnad
+// Kontrollera om tab3 redan har initialiserats
 let tab3Initialized = false;
 
 // Funktion för att skapa HTML-strukturen för tab3
 function createTab3Content() {
-    // Skapa HTML-strukturen
     return `
         <h1>Jakttider</h1>
 
@@ -45,245 +44,230 @@ function createTab3Content() {
     `;
 }
 
-// Funktion för att skapa och initiera tab3-innehåll
-async function initTab3Content() {
-    if (tab3Initialized) return;
-
-    // Markera tab3 som initialiserad
-    tab3Initialized = true;
-
-    // Hämtar tab3-innehåll
-    const tab3Content = createTab3Content();
-    
-    // Lägg till innehåll till tab3
-    document.getElementById('tab3').innerHTML = tab3Content;
-
-    // Funktion för att hämta GeoJSON-data
-    async function fetchGeoJSON() {
-        try {
-            const response = await fetch('bottom_panel/Jaktbart_idag/Sveriges_lan.geojson');
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return await response.json();
-        } catch (error) {
-            console.error("Error fetching GeoJSON data:", error);
-            return null;
+// Funktion för att hämta GeoJSON-data
+async function fetchGeoJSON() {
+    try {
+        const response = await fetch('bottom_panel/Jaktbart_idag/Sveriges_lan.geojson');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching GeoJSON data:", error);
+        return null;
+    }
+}
+
+// Funktion för att hämta jaktdatan
+async function fetchHuntingData() {
+    try {
+        const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching hunting data:", error);
+        return [];
+    }
+}
+
+// Funktion för att kontrollera om en punkt ligger inom en polygon
+function isPointInPolygon(point, polygon) {
+    if (!polygon || polygon.length === 0 || polygon[0].length === 0) {
+        console.error('Polygon data is invalid.');
+        return false;
     }
 
-    // Funktion för att hämta jaktdatan
-    async function fetchHuntingData() {
-        try {
-            const response = await fetch('bottom_panel/Jaktbart_idag/jakttider.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return await response.json();
-        } catch (error) {
-            console.error("Error fetching hunting data:", error);
-            return [];
-        }
+    let x = point[0], y = point[1];
+    let inside = false;
+    for (let i = 0, j = polygon[0].length - 1; i < polygon[0].length; j = i++) {
+        let xi = polygon[0][i][0], yi = polygon[0][i][1];
+        let xj = polygon[0][j][0], yj = polygon[0][j][1];
+
+        let intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
     }
+    return inside;
+}
 
-    // Funktion för att kontrollera om en punkt ligger inom en polygon
-    function isPointInPolygon(point, polygon) {
-        if (!polygon || polygon.length === 0 || polygon[0].length === 0) {
-            console.error('Polygon data is invalid.');
-            return false;
-        }
-
-        let x = point[0], y = point[1];
-        let inside = false;
-        for (let i = 0, j = polygon[0].length - 1; i < polygon[0].length; j = i++) {
-            let xi = polygon[0][i][0], yi = polygon[0][i][1];
-            let xj = polygon[0][j][0], yj = polygon[0][j][1];
-
-            let intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-            if (intersect) inside = !inside;
-        }
-        return inside;
-    }
-
-    // Funktion för att hitta län baserat på koordinater
-    async function findCountyForCoordinates(latitude, longitude, geojson) {
-        if (!geojson || !geojson.features) {
-            console.error('GeoJSON data is invalid.');
-            return 'Okänt län';
-        }
-
-        for (let feature of geojson.features) {
-            if (feature.geometry && feature.geometry.type === 'MultiPolygon') {
-                for (let polygon of feature.geometry.coordinates) {
-                    if (isPointInPolygon([longitude, latitude], polygon)) {
-                        return feature.properties["LÄN"];
-                    }
-                }
-            }
-        }
+// Funktion för att hitta län baserat på koordinater
+async function findCountyForCoordinates(latitude, longitude, geojson) {
+    if (!geojson || !geojson.features) {
+        console.error('GeoJSON data is invalid.');
         return 'Okänt län';
     }
 
-    // Månader på svenska och engelska för översättning
-    const months = {
-        'January': 'Januari',
-        'February': 'Februari',
-        'March': 'Mars',
-        'April': 'April',
-        'May': 'Maj',
-        'June': 'Juni',
-        'July': 'Juli',
-        'August': 'Augusti',
-        'September': 'September',
-        'October': 'Oktober',
-        'November': 'November',
-        'December': 'December'
-    };
-
-    const monthsReverse = {
-        'Januari': '01',
-        'Februari': '02',
-        'Mars': '03',
-        'April': '04',
-        'Maj': '05',
-        'Juni': '06',
-        'Juli': '07',
-        'Augusti': '08',
-        'September': '09',
-        'Oktober': '10',
-        'November': '11',
-        'December': '12'
-    };
-
-    // Funktion för att översätta månadsnamn
-    function translateMonth(monthName) {
-        return months[monthName] || Object.keys(monthsReverse).find(key => monthsReverse[key] === monthName);
-    }
-
-    // Funktion för att formatera datum
-    function formatDateForDisplay(dateString) {
-        const [day, month] = dateString.split(' ');
-        const translatedMonth = translateMonth(month);
-        return `${parseInt(day)} ${translatedMonth}`;
-    }
-
-    // Funktion för att kontrollera om ett datum är inom ett intervall
-    function isWithinDateRange(startDate, endDate, checkDate) {
-        const check = new Date(checkDate);
-        const checkMonthDay = `${(check.getMonth() + 1).toString().padStart(2, '0')}-${check.getDate().toString().padStart(2, '0')}`;
-
-        const [startDay, startMonth] = startDate.split(' ');
-        const [endDay, endMonth] = endDate.split(' ');
-
-        const startMonthDay = `${monthsReverse[translateMonth(startMonth)]}-${startDay.padStart(2, '0')}`;
-        const endMonthDay = `${monthsReverse[translateMonth(endMonth)]}-${endDay.padStart(2, '0')}`;
-
-        if (startMonthDay <= endMonthDay) {
-            return startMonthDay <= checkMonthDay && checkMonthDay <= endMonthDay;
-        } else {
-            return startMonthDay <= checkMonthDay || checkMonthDay <= endMonthDay;
-        }
-    }
-
-    // Funktion för att formatera resultatet
-    function formatResult(result, county) {
-        let extraInfo = result['Upplysning'];
-        if (county !== 'Norrbottens län' && extraInfo.includes('Gäller utom gränsälvsområdet')) {
-            extraInfo = '';
-        }
-        if (county !== 'Dalarnas län' && extraInfo.includes('Gäller ej Älvdalens kommun, se separat jakttid')) {
-            extraInfo = '';
-        }
-
-        return `
-            <div class="result-item">
-                <h3>${result['Slag av vilt']}</h3>
-                <p><strong>Starttid:</strong> ${formatDateForDisplay(result['Starttid'])}</p>
-                <p><strong>Sluttid:</strong> ${formatDateForDisplay(result['Sluttid'])}</p>
-                ${extraInfo ? `<p><strong>Upplysning:</strong> ${extraInfo}</p>` : ''}
-            </div>
-        `;
-    }
-
-    // Funktion för att hämta och visa jakttider
-    async function getHuntingInfo() {
-        const county = document.getElementById('county').value.trim();
-        const date = document.getElementById('date').value;
-
-        if (!county || !date) {
-            document.getElementById('results').innerHTML = "Vänligen välj både län och datum.";
-            return;
-        }
-
-        const data = await fetchHuntingData();
-
-        if (data.length === 0) {
-            document.getElementById('results').innerHTML = "Inga resultat funna.";
-            return;
-        }
-
-        const results = data.filter(entry => {
-            const areas = entry['Område'].split(',');
-            const isInCounty = areas.some(area => area.trim() === county || area.trim() === "Alla län");
-            const isInDateRange = isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
-            return isInCounty && isInDateRange;
-        });
-
-        results.sort((a, b) => {
-            if (a['Grupp'] === b['Grupp']) {
-                return a['Slag av vilt'].localeCompare(b['Slag av vilt']);
-            } else {
-                const groupOrder = ['Däggdjur', 'Fågelarter'];
-                return groupOrder.indexOf(a['Grupp']) - groupOrder.indexOf(b['Grupp']);
-            }
-        });
-
-        let mammalResults = '';
-        let birdResults = '';
-
-        results.forEach(result => {
-            if (result['Grupp'] === 'Däggdjur') {
-                if (mammalResults === '') {
-                    mammalResults += '<h2>Däggdjur:</h2>';
+    for (let feature of geojson.features) {
+        if (feature.geometry && feature.geometry.type === 'MultiPolygon') {
+            for (let polygon of feature.geometry.coordinates) {
+                if (isPointInPolygon([longitude, latitude], polygon)) {
+                    return feature.properties["LÄN"];
                 }
-                mammalResults += formatResult(result, county);
-            } else if (result['Grupp'] === 'Fågelarter') {
-                if (birdResults === '') {
-                    birdResults += '<h2>Fågelarter:</h2>';
-                }
-                birdResults += formatResult(result, county);
             }
-        });
-
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = mammalResults + birdResults || "Inga resultat funna.";
-
-        const resultItems = resultsDiv.querySelectorAll('.result-item');
-        resultItems.forEach(item => {
-            item.classList.add('slide-down');
-        });
+        }
     }
-
-    // Funktion för att initiera tab3 när den öppnas
-    async function initializeTab3() {
-        const geojson = await fetchGeoJSON();
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').value = today;
-
-        const latitude = 59.3293; // Exempelkoordinater (Stockholm)
-        const longitude = 18.0686;
-
-        const county = await findCountyForCoordinates(latitude, longitude, geojson);
-        document.getElementById('county').value = county;
-
-        getHuntingInfo();
-    }
-
-    // Lägg till eventlyssnare för att initiera tab3 när den öppnas
-    document.getElementById('tab3-button').addEventListener('click', initializeTab3);
+    return 'Okänt län';
 }
 
-// Kör initieringen av tab3 när dokumentet är redo
-document.addEventListener('DOMContentLoaded', () => {
-    initializeTab3();
-});
+// Månader på svenska och engelska för översättning
+const months = {
+    'January': 'Januari',
+    'February': 'Februari',
+    'March': 'Mars',
+    'April': 'April',
+    'May': 'Maj',
+    'June': 'Juni',
+    'July': 'Juli',
+    'August': 'Augusti',
+    'September': 'September',
+    'October': 'Oktober',
+    'November': 'November',
+    'December': 'December'
+};
+
+const monthsReverse = {
+    'Januari': '01',
+    'Februari': '02',
+    'Mars': '03',
+    'April': '04',
+    'Maj': '05',
+    'Juni': '06',
+    'Juli': '07',
+    'Augusti': '08',
+    'September': '09',
+    'Oktober': '10',
+    'November': '11',
+    'December': '12'
+};
+
+// Funktion för att översätta månadsnamn
+function translateMonth(monthName) {
+    return months[monthName] || Object.keys(monthsReverse).find(key => monthsReverse[key] === monthName);
+}
+
+// Funktion för att formatera datum
+function formatDateForDisplay(dateString) {
+    const [day, month] = dateString.split(' ');
+    const translatedMonth = translateMonth(month);
+    return `${parseInt(day)} ${translatedMonth}`;
+}
+
+// Funktion för att kontrollera om ett datum är inom ett intervall
+function isWithinDateRange(startDate, endDate, checkDate) {
+    const check = new Date(checkDate);
+    const checkMonthDay = `${(check.getMonth() + 1).toString().padStart(2, '0')}-${check.getDate().toString().padStart(2, '0')}`;
+
+    const [startDay, startMonth] = startDate.split(' ');
+    const [endDay, endMonth] = endDate.split(' ');
+
+    const startMonthDay = `${monthsReverse[translateMonth(startMonth)]}-${startDay.padStart(2, '0')}`;
+    const endMonthDay = `${monthsReverse[translateMonth(endMonth)]}-${endDay.padStart(2, '0')}`;
+
+    if (startMonthDay <= endMonthDay) {
+        return startMonthDay <= checkMonthDay && checkMonthDay <= endMonthDay;
+    } else {
+        return startMonthDay <= checkMonthDay || checkMonthDay <= endMonthDay;
+    }
+}
+
+// Funktion för att formatera resultatet
+function formatResult(result, county) {
+    let extraInfo = result['Upplysning'];
+    if (county !== 'Norrbottens län' && extraInfo.includes('Gäller utom gränsälvsområdet')) {
+        extraInfo = '';
+    }
+    if (county !== 'Dalarnas län' && extraInfo.includes('Gäller ej Älvdalens kommun, se separat jakttid')) {
+        extraInfo = '';
+    }
+
+    return `
+        <div class="result-item">
+            <h3>${result['Slag av vilt']}</h3>
+            <p><strong>Starttid:</strong> ${formatDateForDisplay(result['Starttid'])}</p>
+            <p><strong>Sluttid:</strong> ${formatDateForDisplay(result['Sluttid'])}</p>
+            ${extraInfo ? `<p><strong>Upplysning:</strong> ${extraInfo}</p>` : ''}
+        </div>
+    `;
+}
+
+// Funktion för att hämta och visa jakttider
+async function getHuntingInfo() {
+    const county = document.getElementById('county').value.trim();
+    const date = document.getElementById('date').value;
+
+    if (!county || !date) {
+        document.getElementById('results').innerHTML = "Vänligen välj både län och datum.";
+        return;
+    }
+
+    const data = await fetchHuntingData();
+
+    if (data.length === 0) {
+        document.getElementById('results').innerHTML = "Inga resultat funna.";
+        return;
+    }
+
+    const results = data.filter(entry => {
+        const areas = entry['Område'].split(',');
+        const isInCounty = areas.some(area => area.trim() === county || area.trim() === "Alla län");
+        const isInDateRange = isWithinDateRange(entry['Starttid'], entry['Sluttid'], date);
+        return isInCounty && isInDateRange;
+    });
+
+    results.sort((a, b) => {
+        if (a['Grupp'] === b['Grupp']) {
+            return a['Slag av vilt'].localeCompare(b['Slag av vilt']);
+        } else {
+            const groupOrder = ['Däggdjur', 'Fågelarter'];
+            return groupOrder.indexOf(a['Grupp']) - groupOrder.indexOf(b['Grupp']);
+        }
+    });
+
+    let mammalResults = '';
+    let birdResults = '';
+
+    results.forEach(result => {
+        if (result['Grupp'] === 'Däggdjur') {
+            if (mammalResults === '') {
+                mammalResults += '<h2>Däggdjur:</h2>';
+            }
+            mammalResults += formatResult(result, county);
+        } else if (result['Grupp'] === 'Fågelarter') {
+            if (birdResults === '') {
+                birdResults += '<h2>Fågelarter:</h2>';
+            }
+            birdResults += formatResult(result, county);
+        }
+    });
+
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = mammalResults + birdResults || "Inga resultat funna.";
+
+    const resultItems = resultsDiv.querySelectorAll('.result-item');
+    resultItems.forEach(item => {
+        item.classList.add('slide-down');
+    });
+}
+
+// Funktion för att initiera tab3
+async function initializeTab3() {
+    if (tab3Initialized) return; // Kontrollera om tab3 redan har initialiserats
+
+    const geojson = await fetchGeoJSON();
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+
+    const latitude = 59.3293; // Exempelkoordinater (Stockholm)
+    const longitude = 18.0686;
+
+    const county = await findCountyForCoordinates(latitude, longitude, geojson);
+    document.getElementById('county').value = county;
+
+    await getHuntingInfo();
+
+    tab3Initialized = true; // Sätt flaggan till true för att indikera att tab3 har initierats
+}
+
+// Lägg till eventlyssnare för att initiera tab3 när knappen klickas
+document.getElementById('tab3-button').addEventListener('click', initializeTab3);

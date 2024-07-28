@@ -1,6 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+// För att hålla reda på om tab3 är öppnad
+let tab3Initialized = false;
+
+// Funktion för att skapa HTML-strukturen för tab3
+function createTab3Content() {
     // Skapa HTML-strukturen
-    document.body.innerHTML = `
+    return `
         <h1>Jakttider</h1>
 
         <div id="disclaimer">
@@ -39,6 +43,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div id="results"></div>
     `;
+}
+
+// Funktion för att skapa och initiera tab3-innehåll
+async function initTab3Content() {
+    if (tab3Initialized) return;
+
+    // Markera tab3 som initialiserad
+    tab3Initialized = true;
+
+    // Hämtar tab3-innehåll
+    const tab3Content = createTab3Content();
+    
+    // Lägg till innehåll till tab3
+    document.getElementById('tab3').innerHTML = tab3Content;
 
     // Funktion för att hämta GeoJSON-data
     async function fetchGeoJSON() {
@@ -105,6 +123,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return 'Okänt län';
     }
+
+    // Månader på svenska och engelska för översättning
+    const months = {
+        'January': 'Januari',
+        'February': 'Februari',
+        'March': 'Mars',
+        'April': 'April',
+        'May': 'Maj',
+        'June': 'Juni',
+        'July': 'Juli',
+        'August': 'Augusti',
+        'September': 'September',
+        'October': 'Oktober',
+        'November': 'November',
+        'December': 'December'
+    };
+
+    const monthsReverse = {
+        'Januari': '01',
+        'Februari': '02',
+        'Mars': '03',
+        'April': '04',
+        'Maj': '05',
+        'Juni': '06',
+        'Juli': '07',
+        'Augusti': '08',
+        'September': '09',
+        'Oktober': '10',
+        'November': '11',
+        'December': '12'
+    };
 
     // Funktion för att översätta månadsnamn
     function translateMonth(monthName) {
@@ -215,13 +264,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Funktion för att initiera sidan
-    async function initializePage() {
+    // Funktion för att initiera tab3 när den öppnas
+    async function initializeTab3() {
         const geojson = await fetchGeoJSON();
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('date').value = today;
 
-        // Simulerad koordinat för att hitta län (ersätt med användarens aktuella plats)
         const latitude = 59.3293; // Exempelkoordinater (Stockholm)
         const longitude = 18.0686;
 
@@ -231,10 +279,11 @@ document.addEventListener('DOMContentLoaded', () => {
         getHuntingInfo();
     }
 
-    // Starta sidan
-    initializePage();
+    // Lägg till eventlyssnare för att initiera tab3 när den öppnas
+    document.getElementById('tab3-button').addEventListener('click', initializeTab3);
+}
 
-    // Lägg till eventlyssnare för ändringar i dropdown och datumfält
-    document.getElementById('county').addEventListener('change', getHuntingInfo);
-    document.getElementById('date').addEventListener('change', getHuntingInfo);
+// Kör initieringen av tab3 när dokumentet är redo
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTab3();
 });

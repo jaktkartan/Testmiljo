@@ -20,44 +20,40 @@ document.getElementById('tab2').addEventListener('click', function() {
 function resetTabs() {
     var tabs = document.getElementsByClassName('tab-pane');
     for (var i = 0; i < tabs.length; i++) {
-        // Se till att rensa varje flik
         clearTabPaneContent(tabs[i]);
-        tabs[i].style.display = 'none'; // Döljer alla flikar
+        tabs[i].style.display = 'none';
     }
     var tabContent = document.getElementById('tab-content');
-    tabContent.style.display = 'none'; // Döljer tab-content behållaren
+    tabContent.style.display = 'none';
 }
 
 // Funktion för att öppna en flik
 function openTab(tabId, url) {
-    resetTabs(); // Rensa tidigare flikar
+    resetTabs();
     var tab = document.getElementById(tabId);
-    tab.style.display = 'block'; // Visa den valda fliken
+    tab.style.display = 'block';
     var tabContent = document.getElementById('tab-content');
-    tabContent.style.display = 'block'; // Visa tab-content behållaren
+    tabContent.style.display = 'block';
 
-    // Fyll fliken baserat på tabId
     if (tabId === 'tab1') {
-        openUpptack(); // Anropar funktion för tab1
+        openUpptack();
     } else if (tabId === 'tab2') {
-        openKartor(); // Anropar funktion för tab2
+        openKartor();
     } else if (tabId === 'tab3') {
-        populateTab3(); // Anropar funktion för tab3
+        displaySavedUserPosition(); // Anropar funktion för att visa position
     } else if (tabId === 'tab4') {
-        populateTab4(); // Anropar funktion för tab4
+        populateTab4();
     } else if (tabId === 'tab5') {
-        fetchTab5Content(url); // Anropar funktion för tab5
+        fetchTab5Content(url);
     }
 }
 
-// Funktion för att rensa innehållet i en tab-pane på ett säkert sätt
 function clearTabPaneContent(tabPane) {
     while (tabPane.firstChild) {
         tabPane.removeChild(tabPane.firstChild);
     }
 }
 
-// Funktion för att öppna Kaliberkrav-fliken
 function openKaliberkravTab(url) {
     var tabContent = document.getElementById('tab-content');
     var tab = document.createElement('div');
@@ -75,23 +71,6 @@ function openKaliberkravTab(url) {
         });
 }
 
-// Funktion för att fylla tab3
-function populateTab3() {
-    var tab = document.getElementById('tab3');
-    tab.innerHTML = ''; // Rensar innehållet i tab3
-
-    var heading = document.createElement('h2');
-    heading.textContent = 'Jaktbart idag';
-    tab.appendChild(heading);
-
-    var paragraph = document.createElement('p');
-    paragraph.textContent = 'Senaste lagrade position:';
-    tab.appendChild(paragraph);
-
-    displaySavedUserPosition(); // Anropar funktion för att visa position
-}
-
-// Funktion för att fylla tab4
 function populateTab4() {
     var tab = document.getElementById('tab4');
     tab.innerHTML = '';
@@ -108,8 +87,8 @@ function populateTab4() {
     var img1 = document.createElement('img');
     img1.src = 'bottom_panel/Kartor/bilder/daggdjurikon.png';
     img1.alt = 'Kaliberkrav: Däggdjur';
-    img1.style.width = '90px';  // Justera storlek efter behov
-    img1.style.height = '90px'; // Justera storlek efter behov
+    img1.style.width = '90px';
+    img1.style.height = '90px';
     button1.appendChild(img1);
     button1.onclick = function() {
         openKaliberkravTab('bottom_panel/Kaliberkrav/Kaliberkrav_Daggdjur.html');
@@ -120,8 +99,8 @@ function populateTab4() {
     var img2 = document.createElement('img');
     img2.src = 'bottom_panel/Kartor/bilder/fagelikon.png';
     img2.alt = 'Kaliberkrav: Fågel';
-    img2.style.width = '90px';  // Justera storlek efter behov
-    img2.style.height = '90px'; // Justera storlek efter behov
+    img2.style.width = '90px';
+    img2.style.height = '90px';
     button2.appendChild(img2);
     button2.onclick = function() {
         openKaliberkravTab('bottom_panel/Kaliberkrav/Kaliberkrav_Fagel.html');
@@ -129,21 +108,18 @@ function populateTab4() {
     tab.appendChild(button2);
 }
 
-// Funktion för att hämta innehållet för tab5
 function fetchTab5Content(url) {
     var tab = document.getElementById('tab5');
     fetch(url)
         .then(response => response.text())
         .then(html => {
-            tab.innerHTML = html; // Lägg till innehållet för tab5
+            tab.innerHTML = html;
         })
         .catch(error => {
             console.error('Error fetching tab content:', error);
         });
 }
 
-
-// Lyssnare för klick utanför flikar och panelknappar
 document.addEventListener('click', function(event) {
     var tabContent = document.getElementById('tab-content');
     if (!tabContent.contains(event.target) && !event.target.matches('.panel-button img')) {
@@ -151,14 +127,11 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Funktion för att stänga flikinnehåll
 function closeTabContent() {
     var tabContent = document.getElementById('tab-content');
     tabContent.style.display = 'none';
 }
 
-
-// Lyssnare för när sidan laddas
 document.addEventListener('DOMContentLoaded', function() {
     displaySavedUserPosition(); // Visa sparade positionen när sidan laddas
 });

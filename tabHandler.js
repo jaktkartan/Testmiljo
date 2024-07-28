@@ -40,7 +40,7 @@ function openTab(tabId, url) {
     } else if (tabId === 'tab2') {
         openKartor();
     } else if (tabId === 'tab3') {
-        displaySavedUserPosition(); // Anropar funktion för att visa position
+        openJaktbartIdag();
     } else if (tabId === 'tab4') {
         populateTab4();
     } else if (tabId === 'tab5') {
@@ -69,6 +69,19 @@ function openKaliberkravTab(url) {
         .catch(error => {
             console.error('Error fetching Kaliberkrav content:', error);
         });
+}
+
+function openJaktbartIdag() {
+    var tab = document.getElementById('tab3');
+    if (!tab) {
+        console.error('Tab pane for Jaktbart idag not found.');
+        return;
+    }
+
+    tab.innerHTML = ''; // Rensar innehållet i tab3
+
+    // Här kan vi kalla den funktion som initialiserar och fyller innehållet för tab3
+    initializePage(); // Anropar funktionen från Jaktbart_idag_flikbeteende.js
 }
 
 function populateTab4() {

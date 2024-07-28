@@ -28,13 +28,10 @@ function openJaktbartIdag() {
     disclaimer.innerHTML = '<p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>';
     tabPane.appendChild(disclaimer);
 
-    const filterDiv = document.createElement('div');
-    filterDiv.className = 'filter-container';
-
     const countyLabel = document.createElement('label');
     countyLabel.htmlFor = 'county';
     countyLabel.textContent = 'Välj annat län:';
-    filterDiv.appendChild(countyLabel);
+    tabPane.appendChild(countyLabel);
 
     const countySelect = document.createElement('select');
     countySelect.id = 'county';
@@ -46,21 +43,23 @@ function openJaktbartIdag() {
         option.textContent = county;
         countySelect.appendChild(option);
     });
-    filterDiv.appendChild(countySelect);
+    tabPane.appendChild(countySelect);
+
+    tabPane.appendChild(document.createElement('br'));
 
     const dateLabel = document.createElement('label');
     dateLabel.htmlFor = 'date';
     dateLabel.textContent = 'Välj annat datum:';
-    filterDiv.appendChild(dateLabel);
+    tabPane.appendChild(dateLabel);
 
     const dateInput = document.createElement('input');
     dateInput.type = 'date';
     dateInput.id = 'date';
     dateInput.name = 'date';
     dateInput.onchange = getHuntingInfo;
-    filterDiv.appendChild(dateInput);
+    tabPane.appendChild(dateInput);
 
-    tabPane.appendChild(filterDiv);
+    tabPane.appendChild(document.createElement('br'));
 
     const resultsDiv = document.createElement('div');
     resultsDiv.id = 'results';
@@ -238,7 +237,7 @@ function formatResult(result, county, isEven) {
         extraInfo = '';
     }
 
-    const backgroundColor = isEven ? 'lightgray' : 'white';
+    const backgroundColor = isEven ? '#f9f9f9' : 'lightgray';
 
     return `
         <div class="result-item" style="background-color: ${backgroundColor};">
@@ -337,17 +336,12 @@ label {
     font-weight: bold;
 }
 
-.filter-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
 select, input[type="date"] {
     padding: 5px;
     font-size: 1em;
     width: auto;
+    display: block;
+    margin-bottom: 10px;
 }
 
 #results {

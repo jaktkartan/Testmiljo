@@ -49,7 +49,7 @@ function openJaktbartIdag() {
 
     const dateLabel = document.createElement('label');
     dateLabel.htmlFor = 'date';
-    dateLabel.textContent = 'Välj datum:';
+    dateLabel.textContent = 'Välj annat datum:';
     tabPane.appendChild(dateLabel);
 
     const dateInput = document.createElement('input');

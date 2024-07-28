@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Skapa och lägg till grundläggande HTML-element dynamiskt
     const body = document.body;
     
     const h1 = document.createElement('h1');
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializePage();
 });
 
+// Jämför användarens sparade position med länspolygoner
 function findCountyForCoordinates(latitude, longitude, geojson) {
     if (!geojson || !geojson.features) {
         console.error('GeoJSON data is invalid.');
@@ -166,7 +168,7 @@ const monthsReverse = {
     'Augusti': '08',
     'September': '09',
     'Oktober': '10',
-    'November': '11'
+    'November': '11',
     'December': '12'
 };
 

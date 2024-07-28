@@ -237,7 +237,7 @@ function formatResult(result, county, isEven) {
         extraInfo = '';
     }
 
-    const backgroundColor = isEven ? '#f9f9f9' : 'lightgray';
+    const backgroundColor = isEven ? 'lightgray' : '#f9f9f9';
 
     return `
         <div class="result-item" style="background-color: ${backgroundColor};">
@@ -285,7 +285,7 @@ async function getHuntingInfo() {
     let birdResults = '';
 
     results.forEach((result, index) => {
-        const isEven = index % 2 === 0;
+        const isEven = index % 2 !== 0;
         if (result['Grupp'] === 'Däggdjur') {
             if (mammalResults === '') {
                 mammalResults += '<h2 class="result-heading">Däggdjur:</h2>';
@@ -342,6 +342,7 @@ select, input[type="date"] {
     width: auto;
     display: block;
     margin-bottom: 10px;
+    max-width: 300px; /* Gör att menyn inte är bredare än nödvändigt */
 }
 
 #results {

@@ -228,7 +228,7 @@ function isWithinDateRange(startDate, endDate, checkDate) {
     }
 }
 
-function formatResult(result, county) {
+function formatResult(result, county, isEven) {
     let extraInfo = result['Upplysning'];
     if (county !== 'Norrbottens län' && extraInfo.includes('Gäller utom gränsälvsområdet')) {
         extraInfo = '';
@@ -237,8 +237,10 @@ function formatResult(result, county) {
         extraInfo = '';
     }
 
+    const backgroundColor = isEven ? 'lightgray' : 'white';
+
     return `
-        <div class="result-item">
+        <div class="result-item" style="background-color: ${backgroundColor};">
             <h3>${result['Slag av vilt']}</h3>
             <p><strong>Starttid:</strong> ${formatDateForDisplay(result['Starttid'])}</p>
             <p><strong>Sluttid:</strong> ${formatDateForDisplay(result['Sluttid'])}</p>
@@ -282,17 +284,18 @@ async function getHuntingInfo() {
     let mammalResults = '';
     let birdResults = '';
 
-    results.forEach(result => {
+    results.forEach((result, index) => {
+        const isEven = index % 2 === 0;
         if (result['Grupp'] === 'Däggdjur') {
             if (mammalResults === '') {
                 mammalResults += '<h2>Däggdjur:</h2>';
             }
-            mammalResults += formatResult(result, county);
+            mammalResults += formatResult(result, county, isEven);
         } else if (result['Grupp'] === 'Fågelarter') {
             if (birdResults === '') {
                 birdResults += '<h2>Fågelarter:</h2>';
             }
-            birdResults += formatResult(result, county);
+            birdResults += formatResult(result, county, isEven);
         }
     });
 

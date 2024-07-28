@@ -1,20 +1,37 @@
-document.addEventListener("DOMContentLoaded", function () {
+function openJaktbartIdag() {
+    // Dölj andra flikar
+    document.getElementById('tab1').style.display = 'none';
+    document.getElementById('tab2').style.display = 'none';
+    document.getElementById('tab4').style.display = 'none';
+    document.getElementById('tab5').style.display = 'none';
+
+    // Hitta tab-pane för jaktbart idag
+    const tabPane = document.getElementById('tab3');
+    if (!tabPane) {
+        console.error('Tab pane for jaktbart idag not found.');
+        return;
+    }
+
+    // Visa tab3
+    tabPane.style.display = 'flex';
+
+    // Rensa tidigare innehåll
+    tabPane.innerHTML = '';
+
     // Skapa och lägg till grundläggande HTML-element dynamiskt
-    const body = document.body;
-    
     const h1 = document.createElement('h1');
     h1.textContent = 'Jakttider';
-    body.appendChild(h1);
+    tabPane.appendChild(h1);
 
     const disclaimer = document.createElement('div');
     disclaimer.id = 'disclaimer';
     disclaimer.innerHTML = '<p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>';
-    body.appendChild(disclaimer);
+    tabPane.appendChild(disclaimer);
 
     const countyLabel = document.createElement('label');
     countyLabel.htmlFor = 'county';
     countyLabel.textContent = 'Välj län:';
-    body.appendChild(countyLabel);
+    tabPane.appendChild(countyLabel);
 
     const countySelect = document.createElement('select');
     countySelect.id = 'county';
@@ -26,31 +43,33 @@ document.addEventListener("DOMContentLoaded", function () {
         option.textContent = county;
         countySelect.appendChild(option);
     });
-    body.appendChild(countySelect);
+    tabPane.appendChild(countySelect);
 
-    body.appendChild(document.createElement('br'));
+    tabPane.appendChild(document.createElement('br'));
 
     const dateLabel = document.createElement('label');
     dateLabel.htmlFor = 'date';
     dateLabel.textContent = 'Välj datum:';
-    body.appendChild(dateLabel);
+    tabPane.appendChild(dateLabel);
 
     const dateInput = document.createElement('input');
     dateInput.type = 'date';
     dateInput.id = 'date';
     dateInput.name = 'date';
     dateInput.onchange = getHuntingInfo;
-    body.appendChild(dateInput);
+    tabPane.appendChild(dateInput);
 
-    body.appendChild(document.createElement('br'));
+    tabPane.appendChild(document.createElement('br'));
 
     const resultsDiv = document.createElement('div');
     resultsDiv.id = 'results';
-    body.appendChild(resultsDiv);
+    tabPane.appendChild(resultsDiv);
 
     // Starta sidan med dagens datum
-    initializePage();
-});
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+    displaySavedUserPosition().then(getHuntingInfo);
+}
 
 // Jämför användarens sparade position med länspolygoner
 function findCountyForCoordinates(latitude, longitude, geojson) {

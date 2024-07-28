@@ -288,12 +288,12 @@ async function getHuntingInfo() {
         const isEven = index % 2 === 0;
         if (result['Grupp'] === 'Däggdjur') {
             if (mammalResults === '') {
-                mammalResults += '<h2>Däggdjur:</h2>';
+                mammalResults += '<h2 class="result-heading">Däggdjur:</h2>';
             }
             mammalResults += formatResult(result, county, isEven);
         } else if (result['Grupp'] === 'Fågelarter') {
             if (birdResults === '') {
-                birdResults += '<h2>Fågelarter:</h2>';
+                birdResults += '<h2 class="result-heading">Fågelarter:</h2>';
             }
             birdResults += formatResult(result, county, isEven);
         }
@@ -313,3 +313,72 @@ function initializePage() {
     document.getElementById('date').value = today;
     displaySavedUserPosition().then(getHuntingInfo);
 }
+
+// Lägg till CSS-stilar
+const style = document.createElement('style');
+style.innerHTML = `
+h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#disclaimer {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+select, input[type="date"] {
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+.result-heading {
+    font-size: 1.5em;
+    margin-top: 20px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #006400;
+}
+
+.result-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.result-item h3 {
+    margin-top: 0;
+}
+
+.slide-down {
+    animation: slideDown 0.5s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+`;
+document.head.appendChild(style);

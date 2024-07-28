@@ -318,8 +318,7 @@ function initializePage() {
 const style = document.createElement('style');
 style.innerHTML = `
 h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     text-align: center;
 }
 

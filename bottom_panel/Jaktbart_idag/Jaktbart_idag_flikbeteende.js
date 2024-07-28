@@ -63,7 +63,7 @@ function displaySavedUserPosition() {
         tab.innerHTML = '';
 
         // Ladda GeoJSON-filen och avgör län baserat på sparade koordinater
-        loadGeoJSON('bottom_panel/Jaktbart_idag/Corrected_Sveriges_lan.geojson')
+        loadGeoJSON('bottom_panel/Jaktbart_idag/Sveriges_lan.geojson')
             .then(geojson => {
                 if (!geojson) {
                     console.error('GeoJSON is null or undefined.');

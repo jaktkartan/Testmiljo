@@ -1,10 +1,13 @@
 // Funktion för att toggle väderpanelen
 function togglePanel() {
     console.log("Toggling weather panel...");
+    var weatherInfoWrapper = document.getElementById('weather-info-wrapper');
     var weatherInfo = document.getElementById('weather-info');
-    if (weatherInfo.style.display === 'none') {
+
+    if (weatherInfoWrapper.style.height === '0px' || weatherInfoWrapper.style.height === '') {
         console.log("Showing weather panel...");
         weatherInfo.style.display = 'block';
+        weatherInfoWrapper.style.height = weatherInfo.scrollHeight + 'px';
         getUserPosition(function(lat, lon) {
             console.log("Current position:", lat, lon);
             getWeatherForecast(lat, lon);
@@ -13,10 +16,27 @@ function togglePanel() {
         });
     } else {
         console.log("Hiding weather panel...");
-        weatherInfo.style.display = 'none';
+        weatherInfoWrapper.style.height = '0';
+        setTimeout(() => {
+            weatherInfo.style.display = 'none';
+        }, 500); // Match the duration of the CSS transition
     }
 }
 
+// Lägg till en händelselyssnare för att stänga väderpanelen när man klickar utanför
+document.addEventListener('click', function(event) {
+    var topPanel = document.getElementById('top-panel');
+    var weatherInfoWrapper = document.getElementById('weather-info-wrapper');
+    var weatherInfo = document.getElementById('weather-info');
+
+    if (!topPanel.contains(event.target) && weatherInfoWrapper.style.height !== '0px') {
+        console.log("Click outside top-panel, hiding weather panel...");
+        weatherInfoWrapper.style.height = '0';
+        setTimeout(() => {
+            weatherInfo.style.display = 'none';
+        }, 500); // Match the duration of the CSS transition
+    }
+});
 
 // Funktion som översätter vädersymbolkoder till förståeliga strängar på svenska.
 const translateWeatherSymbol = (symbolCode) => {
@@ -71,13 +91,14 @@ const translateWeatherSymbol = (symbolCode) => {
             return 'dimma';
         case 'rainshowers_day':
             return 'regnskurar';
+        case 'rainshowersandthunder_day':
+            return 'regnskurar och åska';
         case 'heavyrainandthunder':
             return 'kraftigt regn och åska';
         default:
             return symbolCode ? `okänt väder (${symbolCode})` : 'okänt väder';
     }
 }
-
 
 // Funktion för att hämta väderprognosen från en väder-API baserat på givna latitud- och longitudvärden.
 const getWeatherForecast = (latitude, longitude) => {

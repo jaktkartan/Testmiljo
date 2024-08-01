@@ -24,6 +24,17 @@ styleTag.innerHTML = `
         transition: transform 0.5s ease-in-out;
     }
 
+    #close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
     @keyframes slideIn {
         from {
             transform: translateY(100%);
@@ -62,8 +73,18 @@ document.head.appendChild(styleTag);
 var popupPanel = document.getElementById('popup-panel');
 var popupPanelVisible = false;
 
+// Skapa och lägg till stäng-knappen
+var closeButton = document.createElement('button');
+closeButton.id = 'close-button';
+closeButton.innerHTML = '&times;';
+closeButton.addEventListener('click', function(event) {
+    event.stopPropagation(); // Förhindra att klicket bubblar upp till panelen
+    hidePopupPanel();
+});
+popupPanel.appendChild(closeButton);
+
 function isImageUrl(url) {
-    return typeof url === 'string' && (url.match(/\.(jpeg|jpg|png|webp|gif)$/i) || (url.includes('github.com') && url.includes('?raw=true')));
+    return typeof url === 'string' && url.match(/\.(jpeg|jpg|png|webp|gif)$/i);
 }
 
 function translateKey(key) {
@@ -76,6 +97,7 @@ function showPopupPanel(properties) {
     popupPanel.classList.remove('hide');
     popupPanel.classList.add('show');
     popupPanelVisible = true;
+    console.log('Popup panel shown');
 
     requestAnimationFrame(function() {
         setTimeout(function() {
@@ -92,6 +114,7 @@ function hidePopupPanel() {
     popupPanel.classList.remove('show');
     popupPanel.classList.add('hide');
     popupPanelVisible = false;
+    console.log('Popup panel hidden');
 }
 
 function updatePopupPanelContent(properties) {
@@ -116,6 +139,12 @@ function updatePopupPanelContent(properties) {
             if (isImageUrl(value)) {
                 content += '<p><img src="' + value + '" alt="Bild"></p>';
                 console.log('Bild URL:', value);
+            } else if (key.toLowerCase() === 'link' && value) {
+                content += '<p><a href="' + value + '" target="_blank">Länk</a></p>';
+                console.log('Länk URL:', value);
+            } else if (key.toLowerCase() === 'lokala_tid' && value) {
+                content += '<p><a href="' + value + '" target="_blank">Länk</a></p>';
+                console.log('Länk URL:', value);
             } else {
                 var translatedKey = translateKey(key);
                 content += '<p><strong>' + translatedKey + ':</strong> ' + (value ? value : '') + '</p>';
@@ -140,6 +169,7 @@ function addClickHandlerToLayer(layer) {
         try {
             if (e.originalEvent) {
                 e.originalEvent.stopPropagation();
+                console.log('Klick på kartobjekt stoppat från att bubbla');
             }
 
             if (e.target && e.target.feature && e.target.feature.properties) {
@@ -163,6 +193,8 @@ function addClickHandlerToLayer(layer) {
 document.addEventListener('click', function(event) {
     if (popupPanelVisible && !popupPanel.contains(event.target)) {
         hidePopupPanel();
+    } else {
+        console.log('Klick inträffade men popup-panelen var antingen inte synlig eller klickade inuti panelen');
     }
 });
 

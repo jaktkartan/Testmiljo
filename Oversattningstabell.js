@@ -326,6 +326,5 @@ var translationTable = {
     "kalv_tid": "Jakttid kalv på oregistrerad mark",
     "namn_afo": "Älgförvaltningsområde",
     "forvaltare": "Förvaltare:",
-    "lokala_tid": "För lokala jakttider, se",
     "afo_id": "Älgförvaltningsområde ID"
 };

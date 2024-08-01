@@ -320,6 +320,31 @@ var Kartor_geojsonHandler = (function() {
         return url.substring(url.lastIndexOf('/') + 1);
     }
 
+    function generatePopupContent(properties) {
+        var content = '<div style="max-width: 300px; overflow-y: auto;">';
+
+        for (var prop in properties) {
+            if (properties.hasOwnProperty(prop)) {
+                var value = properties[prop];
+
+                if (prop === 'BILD' && value && isImageUrl(value)) {
+                    content += '<p><img src="' + value + '" style="max-width: 100%;" alt="Bild"></p>';
+                }
+                // Kontrollera om egenskapen är en länk och heter "För lokala jakttider, se"
+                else if ((prop === 'lokala_tid' || prop.toLowerCase() === 'lokala_tid') && value) {
+                    content += '<p>För lokala jakttider, se: <a href="' + value + '" target="_blank">Länk</a></p>';
+                }
+                // Annars, visa egenskapen som text
+                else if (value) {
+                    content += '<p><strong>' + prop + ':</strong> ' + value + '</p>';
+                }
+            }
+        }
+
+        content += '</div>';
+        return content;
+    }
+
     return {
         toggleLayer: toggleLayer,
         loadElgjaktsomradenWMS: loadElgjaktsomradenWMS,

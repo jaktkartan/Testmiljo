@@ -14,24 +14,31 @@ function openJaktbartIdag() {
 
     // Visa tab3
     tabPane.style.display = 'flex';
+    tabPane.style.flexDirection = 'column';
+    tabPane.style.alignItems = 'center'; // Centrera innehållet horisontellt
 
     // Rensa tidigare innehåll
     tabPane.innerHTML = '';
 
-    // Skapa och lägg till grundläggande HTML-element dynamiskt
-    const h1 = document.createElement('h1');
-    h1.textContent = 'Jaktbart idag!';
-    tabPane.appendChild(h1);
+    // Skapa och lägg till en rubrik högst upp
+    const header = document.createElement('h1');
+    header.textContent = 'Jaktbart idag!';
+    header.className = 'tab3-header-title';
+    tabPane.appendChild(header);
 
-    const disclaimer = document.createElement('div');
-    disclaimer.id = 'disclaimer';
-    disclaimer.innerHTML = '<p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>';
-    tabPane.appendChild(disclaimer);
+    // Skapa en container för län och datum val
+    const selectionContainer = document.createElement('div');
+    selectionContainer.className = 'selection-container';
+    tabPane.appendChild(selectionContainer);
+
+    const countyContainer = document.createElement('div');
+    countyContainer.className = 'county-container';
+    selectionContainer.appendChild(countyContainer);
 
     const countyLabel = document.createElement('label');
     countyLabel.htmlFor = 'county';
-    countyLabel.textContent = 'Välj annat län:';
-    tabPane.appendChild(countyLabel);
+    countyLabel.textContent = 'Välj län:';
+    countyContainer.appendChild(countyLabel);
 
     const countySelect = document.createElement('select');
     countySelect.id = 'county';
@@ -43,30 +50,36 @@ function openJaktbartIdag() {
         option.textContent = county;
         countySelect.appendChild(option);
     });
-    tabPane.appendChild(countySelect);
+    countyContainer.appendChild(countySelect);
 
-    tabPane.appendChild(document.createElement('br'));
+    const dateContainer = document.createElement('div');
+    dateContainer.className = 'date-container';
+    selectionContainer.appendChild(dateContainer);
 
     const dateLabel = document.createElement('label');
     dateLabel.htmlFor = 'date';
-    dateLabel.textContent = 'Välj annat datum:';
-    tabPane.appendChild(dateLabel);
+    dateLabel.textContent = 'Välj datum:';
+    dateContainer.appendChild(dateLabel);
 
     const dateInput = document.createElement('input');
     dateInput.type = 'date';
     dateInput.id = 'date';
     dateInput.name = 'date';
     dateInput.onchange = getHuntingInfo;
-    tabPane.appendChild(dateInput);
-
-    tabPane.appendChild(document.createElement('br'));
+    dateContainer.appendChild(dateInput);
 
     const resultsDiv = document.createElement('div');
     resultsDiv.id = 'results';
     tabPane.appendChild(resultsDiv);
 
-    // Starta sidan med dagens datum
-    const today = new Date().toISOString().split('T')[0];
+    // Flytta disclaimer till slutet av funktionen
+    const disclaimer = document.createElement('div');
+    disclaimer.id = 'disclaimer';
+    disclaimer.innerHTML = '<p>Observera: Försäkra dig alltid om att informationen stämmer genom att kontrollera <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jaktforordning-1987905_sfs-1987-905/" target="_blank">Bilaga 1 i Jaktförordningen (1987:905)</a>.</p>';
+    tabPane.appendChild(disclaimer);
+
+    // Starta sidan med dagens datum i svensk tid
+    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' }).split('T')[0];
     dateInput.value = today;
     displaySavedUserPosition().then(getHuntingInfo);
 }
@@ -314,20 +327,14 @@ function initializePage() {
     displaySavedUserPosition().then(getHuntingInfo);
 }
 
-// Lägg till CSS-stilar
 const style = document.createElement('style');
 style.innerHTML = `
-h1 {
-    margin-bottom: 4px;
-    text-align: center;
-}
-
 #disclaimer {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 5px;
-    margin-bottom: 20px;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 label {
@@ -339,13 +346,22 @@ select, input[type="date"] {
     padding: 5px;
     font-size: 1em;
     width: auto;
-    display: block;
     margin-bottom: 5px; /* Mindre radavstånd */
-    max-width: 300px; /* Gör att menyn inte är bredare än nödvändigt */
+    max-width: 150px; /* Gör att menyn inte är bredare än nödvändigt */
+}
+
+.tab3-header-title {
+    position: relative;
+    margin-top: 20px;
+    padding: 0;
+    font-size: 24px;
+    color: rgb(50, 94, 88);
+    text-align: center;
 }
 
 #results {
-    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .result-heading {
@@ -364,6 +380,11 @@ select, input[type="date"] {
     margin-top: 0;
 }
 
+.result-item p {
+    margin: 2px 0;
+    padding: 0;
+}
+
 .slide-down {
     animation: slideDown 0.5s ease-in-out;
 }
@@ -377,6 +398,20 @@ select, input[type="date"] {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.selection-container {
+    display: flex;
+    justify-content: center; /* Centrera innehållet horisontellt */
+    width: 100%;
+    padding: 10px 0;
+    gap: 20px; /* Lägg till utrymme mellan containerna */
+}
+
+.county-container, .date-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrera innehållet vertikalt inom containerna */
 }
 `;
 document.head.appendChild(style);

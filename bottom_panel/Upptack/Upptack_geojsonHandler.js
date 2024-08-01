@@ -38,7 +38,7 @@ setTimeout(function() {
                 }
             },
             'Jaktskyttebanor': {
-                iconUrl: 'https://github.com/jaktkartan/jaktkartan/blob/main/bilder/ikon_jaktskyttebanor.png?raw=true',
+                iconUrl: 'bottom_panel/Upptack/bilder/jaktskyttebanor_ikon.png',
                 iconSize: [40, 40],
                 fallbackStyle: {
                     fallbackIconUrl: 'bottom_panel/Upptack/bilder/punkt_jaktskyttebanor.png',
@@ -47,39 +47,36 @@ setTimeout(function() {
             }
         };
 
-        function fetchGeoJSONDataAndCreateLayer(layerName, geojsonURLs) {
-            geojsonURLs.forEach(function(geojsonURL) {
-                axios.get(geojsonURL)
-                    .then(function(response) {
-                        var geojson = response.data;
-
-                        var layer = L.geoJSON(geojson, {
-                            pointToLayer: function(feature, latlng) {
-                                var style = getMarkerStyle(layerName);
-                                return L.marker(latlng, { icon: style.icon });
-                            },
-                            style: function(feature) {
-                                return getFallbackStyle(layerName);
-                            },
-                            onEachFeature: function(feature, layer) {
-                                var popupContent = generatePopupContent(feature, layerName);
-                                layer.bindPopup(popupContent);
-                            }
-                        });
-
-                        geojsonLayers[layerName].push(layer);
-
-                        if (layerIsActive[layerName]) {
-                            layer.addTo(map);
+        async function fetchGeoJSONDataAndCreateLayer(layerName, geojsonURLs) {
+            for (const geojsonURL of geojsonURLs) {
+                try {
+                    const response = await axios.get(geojsonURL);
+                    const geojson = response.data;
+                    const layer = L.geoJSON(geojson, {
+                        pointToLayer: function(feature, latlng) {
+                            var style = getMarkerStyle(layerName);
+                            return L.marker(latlng, { icon: style.icon });
+                        },
+                        style: function(feature) {
+                            return getFallbackStyle(layerName);
+                        },
+                        onEachFeature: function(feature, layer) {
+                            addClickHandlerToLayer(layer, layerName);
                         }
-
-                        console.log(`Layer ${layerName} fetched and created.`);
-                        updateFabUpptackVisibility(); // Uppdatera FAB-knappen när lager skapas
-                    })
-                    .catch(function(error) {
-                        console.log("Error fetching GeoJSON data for " + layerName + ":", error.message);
                     });
-            });
+
+                    geojsonLayers[layerName].push(layer);
+
+                    if (layerIsActive[layerName]) {
+                        layer.addTo(map);
+                    }
+
+                    console.log(`Layer ${layerName} fetched and created.`);
+                    updateFabUpptackVisibility(); // Uppdatera FAB-knappen när lager skapas
+                } catch (error) {
+                    console.log("Error fetching GeoJSON data for " + layerName + ":", error.message);
+                }
+            }
         }
 
         function toggleLayer(layerName) {
@@ -145,41 +142,56 @@ setTimeout(function() {
             activateLayer(layerName);
         }
 
-        function generatePopupContent(feature, layerName) {
-            var popupContent = '<div style="max-width: 300px; overflow-y: auto;">';
+function generatePanelContent(properties, layerName) {
+    var content = '<div style="max-width: 300px; overflow-y: auto;">';
 
-            var fields = {
-                'Mässor': ['NAMN', 'INFO', 'LINK', 'VAGBESKRIV'],
-                'Jaktkort': ['Rubrik', 'Info', 'Link', 'VAGBESKRIV']
-            };
+    // Definiera vilka fält som ska visas för olika lager
+    var fields = {
+        'Mässor': ['NAMN', 'INFO', 'LINK', 'VAGBESKRIV'],
+        'Jaktkort': ['Rubrik', 'Info', 'Link', 'VAGBESKRIV']
+    };
 
-            var hideProperties = [];
-            var hideNameOnlyProperties = fields[layerName] || [];
+    // Definiera egenskaper som ska döljas eller bara visas med namn
+    var hideProperties = [];
+    var hideNameOnlyProperties = fields[layerName] || [];
 
-            for (var prop in feature.properties) {
-                if (hideProperties.includes(prop)) continue;
-                var value = feature.properties[prop];
+    // Iterera genom alla egenskaper i GeoJSON-funktionen
+    for (var prop in properties) {
+        // Hoppa över dolda egenskaper
+        if (hideProperties.includes(prop)) continue;
+        
+        var value = properties[prop];
 
-                if (prop === 'BILD' && value) {
-                    popupContent += '<p><img src="' + value + '" style="max-width: 100%;" alt="Bild"></p>';
-                } else if (prop === 'LINK' || prop === 'Link') {
-                    if (value) {
-                        popupContent += '<p><a href="' + value + '" target="_blank">Länk</a></p>';
-                    }
-                } else if (prop === 'VAGBESKRIV' || prop === 'VägBeskrivning') {
-                    if (value) {
-                        popupContent += '<p><a href="' + value + '" target="_blank">Vägbeskrivning</a></p>';
-                    }
-                } else if (hideNameOnlyProperties.includes(prop) && value) {
-                    popupContent += '<p>' + value + '</p>';
-                } else if (value) {
-                    popupContent += '<p><strong>' + prop + ':</strong> ' + value + '</p>';
-                }
-            }
-
-            popupContent += '</div>';
-            return popupContent;
+        // Kontrollera om egenskapen är en bild-URL
+        if (prop === 'BILD' && value && isImageUrl(value)) {
+            content += '<p><img src="' + value + '" style="max-width: 100%;" alt="Bild"></p>';
         }
+        // Kontrollera om egenskapen är en länk
+        else if ((prop === 'LINK' || prop === 'Link') && value) {
+            // Lägg till en hyperlänk med texten "Länk" som länkar till URL:en
+            content += '<p><a href="' + value + '" target="_blank">Länk</a></p>';
+        }
+        // Kontrollera om egenskapen är en vägbeskrivning
+        else if ((prop === 'VAGBESKRIV' || prop === 'VägBeskrivning') && value) {
+            // Lägg till en hyperlänk med texten "Vägbeskrivning" som länkar till URL:en
+            content += '<p><a href="' + value + '" target="_blank">Vägbeskrivning</a></p>';
+        }
+        // Kontrollera om egenskapen ska visas endast med namn
+        else if (hideNameOnlyProperties.includes(prop) && value) {
+            content += '<p>' + value + '</p>';
+        }
+        // Annars, visa egenskapen som text
+        else if (value) {
+            // Visa egenskapens namn och värde
+            content += '<p><strong>' + prop + ':</strong> ' + value + '</p>';
+        }
+    }
+
+    content += '</div>';
+    return content;
+}
+
+
 
         function getIconAnchor(iconSize) {
             return [iconSize[0] / 2, iconSize[1] / 2];
@@ -250,6 +262,21 @@ setTimeout(function() {
             var modal = document.getElementById('modal-upptack');
             modal.classList.toggle('show');
         });
+
+        function addClickHandlerToLayer(layer, layerName) {
+            layer.on('click', function(e) {
+                if (e.originalEvent) {
+                    e.originalEvent.stopPropagation();
+                }
+                var properties = e.target.feature.properties;
+                console.log('Klickade på ett geojson-objekt med egenskaper:', properties);
+                if (!popupPanelVisible) {
+                    showPopupPanel(properties);
+                } else {
+                    updatePopupPanelContent(properties);
+                }
+            });
+        }
 
         return {
             toggleLayer: toggleLayer,

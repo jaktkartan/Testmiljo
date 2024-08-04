@@ -9,7 +9,7 @@ var Kartor_geojsonHandler = (function() {
     var geojsonLayers = {
         'Allmän jakt: Däggdjur': [],
         'Allmän jakt: Fågel': [],
-        'Älgjaktskartan': [],
+        'Älgjaktskartan': null, // Ändrat till null
         'Älgjaktsområden': null
     };
 
@@ -25,28 +25,8 @@ var Kartor_geojsonHandler = (function() {
             'NedanfrLappmarksgrnsen_3.geojson': { fillColor: '#fdae61', color: '#edf8e9', weight: 2, fillOpacity: 0.5, dashArray: '5, 10' },
             'OvanfrLapplandsgrnsen_4.geojson': { fillColor: '#a6d96a', color: '#edf8e9', weight: 2, fillOpacity: 0.5 }
         },
-        'Älgjaktskartan': {
-            'lgjaktJakttider_1.geojson': {
-                style: (function() {
-                    var colorScale = [
-                        '#ffd54f', '#72d572', '#ff7043', '#1ba01b', '#20beea',
-                        '#81d4fa', '#ab47bc', '#e9a6f4', '#78909c', '#9c8019', '#b5f2b5'
-                    ];
-                    var jakttidToColor = {};
-                    var currentIndex = 0;
-
-                    return function(feature) {
-                        var jakttid = feature.properties['jakttid'];
-                        if (!jakttidToColor[jakttid]) {
-                            jakttidToColor[jakttid] = colorScale[currentIndex];
-                            currentIndex = (currentIndex + 1) % colorScale.length;
-                        }
-                        return { fillColor: jakttidToColor[jakttid], color: 'rgb(50, 94, 88)', weight: 2, fillOpacity: 0.5 };
-                    };
-                })()
-            },
-            'Omrdemedbrunstuppehll_2.geojson': { fill: false, color: 'black', weight: 7, dashArray: '5, 10' }
-        }
+        'Älgjaktskartan': null, // Ändrat till null och ta bort tidigare GeoJSON-lager
+        'Älgjaktsområden': null
     };
 
     var currentWMSLayer = null;
@@ -130,6 +110,8 @@ var Kartor_geojsonHandler = (function() {
             fetchGeoJSONDataAndCreateLayer(layerName, geojsonURLs);
         } else if (layerName === 'Älgjaktsområden') {
             loadElgjaktWMS(true);
+        } else if (layerName === 'Älgjaktskartan') {
+            loadAlgjaktskartanWMS(true); // Lägg till detta anrop
         }
     }
 
@@ -169,6 +151,46 @@ var Kartor_geojsonHandler = (function() {
                 hideZoomMessage(); // Dölj meddelandet när lagret tas bort
                 map.off('zoomend', checkZoomLevel); // Ta bort händelsen för zoomnivån
                 updateFAB('Älgjaktsområden', false); // Säkerställ att FAB-knappen döljs
+            }
+        }
+    }
+
+    function loadAlgjaktskartanWMS(add) {
+        if (add) {
+            if (currentWMSLayer) {
+                console.log('Layer is already added. No action taken.');
+                return;
+            }
+            checkZoomLevel();
+            console.log('Adding Älgjaktskartan layer.');
+            currentWMSLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
+                layers: '1',
+                format: 'image/png',
+                transparent: true,
+                attribution: 'Länsstyrelsen',
+                opacity: 0.5
+            }).addTo(map);
+
+            wmsClickHandler = function(e) {
+                handleWMSClick(e);
+            };
+            map.on('click', wmsClickHandler);
+
+            // Lägg till händelse för att övervaka zoomnivån
+            map.on('zoomend', checkZoomLevel);
+
+            console.log("WMS layer added to map:", currentWMSLayer);
+            updateFAB('Älgjaktskartan', true); // Säkerställ att FAB-knappen visas
+        } else {
+            if (currentWMSLayer) {
+                console.log('Removing Älgjaktskartan layer.');
+                map.off('click', wmsClickHandler);
+                map.removeLayer(currentWMSLayer);
+                currentWMSLayer = null;
+                wmsClickHandler = null;
+                hideZoomMessage(); // Dölj meddelandet när lagret tas bort
+                map.off('zoomend', checkZoomLevel); // Ta bort händelsen för zoomnivån
+                updateFAB('Älgjaktskartan', false); // Säkerställ att FAB-knappen döljs
             }
         }
     }
@@ -275,8 +297,8 @@ var Kartor_geojsonHandler = (function() {
         }
 
         // Specifically handle WMS layer deactivation
-        if (layerName === 'Älgjaktsområden' && currentWMSLayer) {
-            console.log('Specifically removing Älgjaktsområden layer.');
+        if ((layerName === 'Älgjaktsområden' || layerName === 'Älgjaktskartan') && currentWMSLayer) {
+            console.log('Specifically removing ' + layerName + ' layer.');
             map.off('click', wmsClickHandler);
             map.removeLayer(currentWMSLayer);
             currentWMSLayer = null;
@@ -348,7 +370,8 @@ var Kartor_geojsonHandler = (function() {
     return {
         toggleLayer: toggleLayer,
         loadElgjaktWMS: loadElgjaktWMS,
-        deactivateAllLayersKartor: deactivateAllLayersKartor // Lägg till denna rad för att exportera funktionen
+        loadAlgjaktskartanWMS: loadAlgjaktskartanWMS, // Lägg till denna export
+        deactivateAllLayersKartor: deactivateAllLayersKartor
     };
 })();
 

@@ -100,7 +100,7 @@ function openKartor() {
         showElkMapOptions();
     });
 
-    // Funktion för att visa alternativ för Älgjaktskartan
+    // Funktion för att visa alternativ för Algforvaltningsomrade
     function showElkMapOptions() {
         buttonContainer.innerHTML = ''; // Rensa knappcontainern
 
@@ -114,10 +114,10 @@ function openKartor() {
 
         const elkAlternativButton = document.createElement('button');
         elkAlternativButton.className = 'styled-button';
-        elkAlternativButton.textContent = 'Älgjaktskartan'; // Lägg till texten direkt
+        elkAlternativButton.textContent = 'Algforvaltningsomrade'; // Lägg till texten direkt
         elkAlternativButton.onclick = function() {
-            // Ladda WMS-lager för Älgjaktskartan
-            Kartor_geojsonHandler.toggleLayer('Älgjaktskartan');
+            // Ladda WMS-lager för Algforvaltningsomrade
+            Kartor_geojsonHandler.toggleLayer('Algforvaltningsomrade');
             restoreOriginalButtons();
         };
 

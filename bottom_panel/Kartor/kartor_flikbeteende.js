@@ -114,18 +114,12 @@ function openKartor() {
 
         const elkAlternativButton = document.createElement('button');
         elkAlternativButton.className = 'styled-button';
+        elkAlternativButton.textContent = 'Älgjaktskartan'; // Lägg till texten direkt
         elkAlternativButton.onclick = function() {
-            Kartor_geojsonHandler.toggleLayer('Älgjaktskartan', [
-                'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Algjaktskartan/geojsonfiler/lgjaktJakttider_1.geojson',
-                'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Algjaktskartan/geojsonfiler/Omrdemedbrunstuppehll_2.geojson'
-            ]);
+            // Ladda WMS-lager för Älgjaktskartan
+            Kartor_geojsonHandler.toggleLayer('Älgjaktskartan');
             restoreOriginalButtons();
         };
-
-        const alternativImg = document.createElement('img');
-        alternativImg.src = 'bottom_panel/Kartor/bilder/Algjaktskartan_ikon.png';
-        alternativImg.alt = 'Älgjaktskartan'; // Ändrad imgAlt
-        elkAlternativButton.appendChild(alternativImg);
 
         buttonContainer.appendChild(elkJaktsomradenButton);
         buttonContainer.appendChild(elkAlternativButton);

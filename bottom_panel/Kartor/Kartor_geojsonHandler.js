@@ -2,14 +2,14 @@ var Kartor_geojsonHandler = (function() {
     var layerIsActive = {
         'Allmän jakt: Däggdjur': false,
         'Allmän jakt: Fågel': false,
-        'Älgjaktskartan': false,
+        'Algforvaltningsomrade': false,
         'Älgjaktsområden': false
     };
 
     var geojsonLayers = {
         'Allmän jakt: Däggdjur': [],
         'Allmän jakt: Fågel': [],
-        'Älgjaktskartan': null, // Ändrat till null
+        'Algforvaltningsomrade': null, // Ändrat till null
         'Älgjaktsområden': null
     };
 
@@ -108,8 +108,8 @@ var Kartor_geojsonHandler = (function() {
             fetchGeoJSONDataAndCreateLayer(layerName, geojsonURLs);
         } else if (layerName === 'Älgjaktsområden') {
             loadElgjaktWMS(true);
-        } else if (layerName === 'Älgjaktskartan') {
-            loadAlgjaktskartanWMS(true); // Lägg till detta anrop
+        } else if (layerName === 'Algforvaltningsomrade') {
+            loadAlgforvaltningsomradeWMS(true); // Lägg till detta anrop
         }
     }
 
@@ -153,14 +153,14 @@ var Kartor_geojsonHandler = (function() {
         }
     }
 
-    function loadAlgjaktskartanWMS(add) {
+    function loadAlgforvaltningsomradeWMS(add) {
         if (add) {
             if (currentWMSLayer) {
                 console.log('Layer is already added. No action taken.');
                 return;
             }
             checkZoomLevel();
-            console.log('Adding Älgjaktskartan layer.');
+            console.log('Adding Algforvaltningsomrade layer.');
             currentWMSLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
                 layers: '1',
                 format: 'image/png',
@@ -178,17 +178,17 @@ var Kartor_geojsonHandler = (function() {
             map.on('zoomend', checkZoomLevel);
 
             console.log("WMS layer added to map:", currentWMSLayer);
-            updateFAB('Älgjaktskartan', true); // Säkerställ att FAB-knappen visas
+            updateFAB('Algforvaltningsomrade', true); // Säkerställ att FAB-knappen visas
         } else {
             if (currentWMSLayer) {
-                console.log('Removing Älgjaktskartan layer.');
+                console.log('Removing Algforvaltningsomrade layer.');
                 map.off('click', wmsClickHandler);
                 map.removeLayer(currentWMSLayer);
                 currentWMSLayer = null;
                 wmsClickHandler = null;
                 hideZoomMessage(); // Dölj meddelandet när lagret tas bort
                 map.off('zoomend', checkZoomLevel); // Ta bort händelsen för zoomnivån
-                updateFAB('Älgjaktskartan', false); // Säkerställ att FAB-knappen döljs
+                updateFAB('Algforvaltningsomrade', false); // Säkerställ att FAB-knappen döljs
             }
         }
     }
@@ -295,7 +295,7 @@ var Kartor_geojsonHandler = (function() {
         }
 
         // Specifically handle WMS layer deactivation
-        if ((layerName === 'Älgjaktsområden' || layerName === 'Älgjaktskartan') && currentWMSLayer) {
+        if ((layerName === 'Älgjaktsområden' || layerName === 'Algforvaltningsomrade') && currentWMSLayer) {
             console.log('Specifically removing ' + layerName + ' layer.');
             map.off('click', wmsClickHandler);
             map.removeLayer(currentWMSLayer);
@@ -327,7 +327,7 @@ var Kartor_geojsonHandler = (function() {
                 return 'fab-daggdjur';
             case 'Allmän jakt: Fågel':
                 return 'fab-fagel';
-            case 'Älgjaktskartan':
+            case 'Algforvaltningsomrade':
                 return 'fab-alg';
             case 'Älgjaktsområden':
                 return 'fab-alg-omraden';
@@ -368,7 +368,7 @@ var Kartor_geojsonHandler = (function() {
     return {
         toggleLayer: toggleLayer,
         loadElgjaktWMS: loadElgjaktWMS,
-        loadAlgjaktskartanWMS: loadAlgjaktskartanWMS, // Lägg till denna export
+        loadAlgforvaltningsomradeWMS: loadAlgforvaltningsomradeWMS, // Lägg till denna export
         deactivateAllLayersKartor: deactivateAllLayersKartor
     };
 })();

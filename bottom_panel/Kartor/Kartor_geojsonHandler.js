@@ -24,9 +24,7 @@ var Kartor_geojsonHandler = (function() {
             'GrnslvsomrdetillFinland_5.geojson': { fillColor: 'blue', color: 'blue', weight: 8, fillOpacity: 0.5, dashArray: '5, 10' },
             'NedanfrLappmarksgrnsen_3.geojson': { fillColor: '#fdae61', color: '#edf8e9', weight: 2, fillOpacity: 0.5, dashArray: '5, 10' },
             'OvanfrLapplandsgrnsen_4.geojson': { fillColor: '#a6d96a', color: '#edf8e9', weight: 2, fillOpacity: 0.5 }
-        },
-        'Älgjaktskartan': null, // Ändrat till null och ta bort tidigare GeoJSON-lager
-        'Älgjaktsområden': null
+        }
     };
 
     var currentWMSLayer = null;

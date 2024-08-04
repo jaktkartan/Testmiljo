@@ -38,14 +38,14 @@ function loadElgjaktWMS(add) {
     }
 }
 
-function loadAlgjaktskartanWMS(add) {
+function loadAlgforvaltningsomradeWMS(add) {
     if (add) {
         if (currentWMSLayer) {
             console.log('Layer is already added. No action taken.');
             return;
         }
         checkZoomLevel();
-        console.log('Adding Älgjaktskartan layer.');
+        console.log('Adding Algforvaltningsomrade layer.');
         currentWMSLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
             layers: '1',
             format: 'image/png',
@@ -63,17 +63,17 @@ function loadAlgjaktskartanWMS(add) {
         map.on('zoomend', checkZoomLevel);
 
         console.log("WMS layer added to map:", currentWMSLayer);
-        updateFAB('Älgjaktskartan', true); // Säkerställ att FAB-knappen visas
+        updateFAB('Algforvaltningsomrade', true); // Säkerställ att FAB-knappen visas
     } else {
         if (currentWMSLayer) {
-            console.log('Removing Älgjaktskartan layer.');
+            console.log('Removing Algforvaltningsomrade layer.');
             map.off('click', wmsClickHandler);
             map.removeLayer(currentWMSLayer);
             currentWMSLayer = null;
             wmsClickHandler = null;
             hideZoomMessage(); // Dölj meddelandet när lagret tas bort
             map.off('zoomend', checkZoomLevel); // Ta bort händelsen för zoomnivån
-            updateFAB('Älgjaktskartan', false); // Säkerställ att FAB-knappen döljs
+            updateFAB('Algforvaltningsomrade', false); // Säkerställ att FAB-knappen döljs
         }
     }
 }

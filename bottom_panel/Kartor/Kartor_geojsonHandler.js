@@ -129,11 +129,11 @@ var Kartor_geojsonHandler = (function() {
         if (geojsonURLs) {
             fetchGeoJSONDataAndCreateLayer(layerName, geojsonURLs);
         } else if (layerName === 'Älgjaktsområden') {
-            loadElgjaktsomradenWMS(true);
+            loadElgjaktWMS(true);
         }
     }
 
-    function loadElgjaktsomradenWMS(add) {
+    function loadElgjaktWMS(add) {
         if (add) {
             if (currentWMSLayer) {
                 console.log('Layer is already added. No action taken.');
@@ -347,7 +347,7 @@ var Kartor_geojsonHandler = (function() {
 
     return {
         toggleLayer: toggleLayer,
-        loadElgjaktsomradenWMS: loadElgjaktsomradenWMS,
+        loadElgjaktWMS: loadElgjaktWMS,
         deactivateAllLayersKartor: deactivateAllLayersKartor // Lägg till denna rad för att exportera funktionen
     };
 })();

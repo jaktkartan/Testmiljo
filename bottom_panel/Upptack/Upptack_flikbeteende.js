@@ -9,6 +9,41 @@ function openUpptack() {
     // Rensa tidigare innehåll
     tabPane.innerHTML = '';
 
+    // Definiera CSS
+    const style = document.createElement('style');
+    style.textContent = `
+        .tabs {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            background-color: #f1f1f1;
+        }
+        .tab-button {
+            flex: 1;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            background-color: #ddd;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+        .tab-button.active {
+            background-color: #bbb;
+        }
+        .tab-content-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .tab-content {
+            display: none;
+        }
+    `;
+    document.head.appendChild(style);
+
     // Skapa en container för flikarna
     const tabsContainer = document.createElement('div');
     tabsContainer.className = 'tabs';
@@ -28,7 +63,9 @@ function openUpptack() {
         button.id = tab.id;
         button.className = 'tab-button';
         button.textContent = tab.text;
-        button.onclick = function() { openTabContent(tab.contentId); };
+        button.onclick = function() {
+            openTabContent(tab.contentId, tab.id);
+        };
         tabsContainer.appendChild(button);
     });
 
@@ -52,14 +89,20 @@ function openUpptack() {
     });
 
     // Visa första fliken som standard
-    openTabContent('upptackContent');
+    openTabContent('upptackContent', 'upptackTab');
 
-    function openTabContent(contentId) {
+    function openTabContent(contentId, tabId) {
         const contents = document.getElementsByClassName('tab-content');
         for (let content of contents) {
             content.style.display = 'none';
         }
         document.getElementById(contentId).style.display = 'block';
+
+        const buttons = document.getElementsByClassName('tab-button');
+        for (let button of buttons) {
+            button.classList.remove('active');
+        }
+        document.getElementById(tabId).classList.add('active');
     }
 
     function createUpptackContent(contentDiv) {

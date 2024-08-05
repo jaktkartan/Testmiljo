@@ -1,4 +1,4 @@
-// CSS för popup-panelen
+// CSS för popup-panelen och knappen
 var styleTag = document.createElement('style');
 styleTag.type = 'text/css';
 styleTag.innerHTML = `
@@ -11,7 +11,7 @@ styleTag.innerHTML = `
         border-top: 5px solid #fff;
         border-left: 5px solid #fff;
         border-right: 5px solid #fff;
-        padding: 10px;
+        padding: 0px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
         z-index: 1000;
         overflow-y: auto;
@@ -24,10 +24,19 @@ styleTag.innerHTML = `
         transition: transform 0.5s ease-in-out;
     }
 
+    #popup-panel-content {
+        margin: 0;
+        padding: 0;
+    }
+
+    #popup-panel p {
+        margin: 0 0 2px 0; /* Marginal endast nedåt */
+    }
+
     #close-button {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 5px;
+        right: 5px;
         background-color: transparent;
         border: none;
         font-size: 20px;
@@ -65,6 +74,51 @@ styleTag.innerHTML = `
         max-width: 100%;
         border-radius: 10px; /* Rundade hörn för bilder */
     }
+
+    .link-button {
+        display: inline-flex;
+        align-items: center;
+        background-color: rgb(50, 94, 88); /* Färg på knappen */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+        max-height: 50px; /* Begränsar höjden */
+        overflow: hidden;
+    }
+
+    .link-button img {
+        max-height: 20px; /* Ändrar storlek på bilden */
+        margin-left: 10px;
+        border-radius: 0 !important; /* Tar bort rundade hörn med !important */
+    }
+
+    .link-button .custom-image {
+        border-radius: 0 !important; /* Tar bort rundade hörn specifikt för denna bild */
+    }
+
+    .bold-center {
+        font-weight: bold;
+        font-size: 1.2em; /* Ändrar textstorleken */
+    }
+
+    /* Anpassa bredden på popup-panelen för större skärmar */
+    @media (min-width: 768px) {
+        #popup-panel {
+            width: 50%;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        #popup-panel {
+            width: 30%;
+        }
+    }
 `;
 
 // Lägg till style-taggen till <head>
@@ -91,20 +145,100 @@ function translateKey(key) {
     return translationTable[key] || key;
 }
 
+// Tabell som matchar "Förvaltandelän" med motsvarande URL
+var länURLTabell = {
+    'Länsstyrelsen i Blekinge län': 'https://www.lansstyrelsen.se/blekinge/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen  Dalarnas län': 'https://www.lansstyrelsen.se/dalarna/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Gävleborgs län': 'https://www.lansstyrelsen.se/gavleborg/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Hallands län': 'https://www.lansstyrelsen.se/halland/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Jämtlands län': 'https://www.lansstyrelsen.se/jamtland/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Jönköpings län': 'https://www.lansstyrelsen.se/jonkoping/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Kalmar län': 'https://www.lansstyrelsen.se/kalmar/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Kronobergs län': 'https://www.lansstyrelsen.se/kronoberg/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Norrbottens Län': 'https://www.lansstyrelsen.se/norrbotten/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Skåne län': 'https://www.lansstyrelsen.se/skane/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Stockholm': 'https://www.lansstyrelsen.se/stockholm/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen Södermanland': 'https://www.lansstyrelsen.se/sodermanland/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Uppsala län': 'https://www.lansstyrelsen.se/uppsala/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Värmlands län': 'https://www.lansstyrelsen.se/varmland/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Västerbottens län': 'https://www.lansstyrelsen.se/vasterbotten/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen Västra Götalands län': 'https://www.lansstyrelsen.se/vastragotaland/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Västernorrlands län': 'https://www.lansstyrelsen.se/vasternorrland/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Västmanlands län': 'https://www.lansstyrelsen.se/vastmanland/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen i Örebro län': 'https://www.lansstyrelsen.se/orebro/djur/jakt-och-vilt/algjakt.html',
+    'Länsstyrelsen Östergötland': 'https://www.lansstyrelsen.se/ostergotland/djur/jakt-och-vilt/algjakt.html'
+};
+
+function generatePopupContent(properties) {
+    var content = '';
+    var förvaltandelän = null;
+
+    for (var key in properties) {
+        if (properties.hasOwnProperty(key)) {
+            var value = properties[key];
+
+            if (hideProperties.includes(key) || value == null || value === '') {
+                continue;
+            }
+
+            if (hideNameOnlyProperties.includes(key)) {
+                if (value) {
+                    if (key === 'NAMN' || key === 'Rubrik' || key === 'GRÄNSÄLVSOMR' || key === 'LÄN' || key === 'lan_namn') {
+                        content += '<p class="bold-center">' + value + '</p>';
+                    } else {
+                        content += '<p>' + value + '</p>';
+                    }
+                }
+                continue;
+            }
+
+            if (isImageUrl(value)) {
+                content += '<p><img src="' + value + '" alt="Bild"></p>';
+            } else if (key.toLowerCase() === 'link' && value) {
+                content += `
+                    <p>
+                        <button class="link-button" onclick="window.open('${value}', '_blank')">
+                            Besök sidan
+                            <img src="bilder/extern_link.png" alt="Extern länk" class="custom-image">
+                        </button>
+                    </p>`;
+            } else {
+                var translatedKey = translateKey(key);
+                content += '<p><strong>' + translatedKey + ':</strong> ' + (value ? value : '') + '</p>';
+            }
+
+            // Hämta länkar för Förvaltandelän
+            if (key === 'Förvaltandelän' && value) {
+                förvaltandelän = value;
+            }
+        }
+    }
+
+    if (förvaltandelän && länURLTabell[förvaltandelän]) {
+        content += `
+            <p>
+                <button class="link-button" onclick="window.open('${länURLTabell[förvaltandelän]}', '_blank')">
+                    Jakttid: ${förvaltandelän}
+                    <img src="bilder/extern_link.png" alt="Extern länk" class="custom-image">
+                </button>
+            </p>`;
+    }
+
+    return content;
+}
+
 function showPopupPanel(properties) {
     updatePopupPanelContent(properties);
 
     popupPanel.classList.remove('hide');
     popupPanel.classList.add('show');
     popupPanelVisible = true;
-    console.log('Popup panel shown');
 
     requestAnimationFrame(function() {
         setTimeout(function() {
             var panelContent = document.getElementById('popup-panel-content');
             if (panelContent) {
                 panelContent.scrollTop = 0;
-                console.log('Scroll position återställd till toppen när panelen visades');
             }
         }, 0);
     });
@@ -114,7 +248,6 @@ function hidePopupPanel() {
     popupPanel.classList.remove('show');
     popupPanel.classList.add('hide');
     popupPanelVisible = false;
-    console.log('Popup panel hidden');
 }
 
 function updatePopupPanelContent(properties) {
@@ -124,33 +257,7 @@ function updatePopupPanelContent(properties) {
         return;
     }
 
-    console.log('Egenskaper som skickas till popup-panelen:', properties);
-
-    var content = '';
-
-    for (var key in properties) {
-        if (properties.hasOwnProperty(key)) {
-            var value = properties[key];
-
-            if (hideProperties.includes(key) || (hideNameOnlyProperties.includes(key) && !value)) {
-                continue;
-            }
-
-            if (isImageUrl(value)) {
-                content += '<p><img src="' + value + '" alt="Bild"></p>';
-                console.log('Bild URL:', value);
-            } else if (key.toLowerCase() === 'link' && value) {
-                content += '<p><a href="' + value + '" target="_blank">Länk</a></p>';
-                console.log('Länk URL:', value);
-            } else if (key.toLowerCase() === 'lokala_tid' && value) {
-                content += '<p><a href="' + value + '" target="_blank">Länk</a></p>';
-                console.log('Länk URL:', value);
-            } else {
-                var translatedKey = translateKey(key);
-                content += '<p><strong>' + translatedKey + ':</strong> ' + (value ? value : '') + '</p>';
-            }
-        }
-    }
+    var content = generatePopupContent(properties);
 
     panelContent.innerHTML = '';
     setTimeout(function() {
@@ -158,7 +265,6 @@ function updatePopupPanelContent(properties) {
         requestAnimationFrame(function() {
             setTimeout(function() {
                 panelContent.scrollTop = 0;
-                console.log('Scroll position återställd till toppen efter att innehållet uppdaterats');
             }, 0);
         });
     }, 0);
@@ -169,12 +275,10 @@ function addClickHandlerToLayer(layer) {
         try {
             if (e.originalEvent) {
                 e.originalEvent.stopPropagation();
-                console.log('Klick på kartobjekt stoppat från att bubbla');
             }
 
             if (e.target && e.target.feature && e.target.feature.properties) {
                 var properties = e.target.feature.properties;
-                console.log('Klickade på ett geojson-objekt med egenskaper:', properties);
 
                 if (!popupPanelVisible) {
                     showPopupPanel(properties);
@@ -193,8 +297,6 @@ function addClickHandlerToLayer(layer) {
 document.addEventListener('click', function(event) {
     if (popupPanelVisible && !popupPanel.contains(event.target)) {
         hidePopupPanel();
-    } else {
-        console.log('Klick inträffade men popup-panelen var antingen inte synlig eller klickade inuti panelen');
     }
 });
 

@@ -167,7 +167,7 @@ html, body {
 }
 
 /* Specifika stilar för #tab1 och #tab2 */
-#tab1.tab-pane, #tab2.tab-pane {
+#tab2.tab-pane {
     height: 15vh; /* Specifik höjd för tab1 och tab2 */
     display: flex; /* Lägg till flexbox layout här också */
     flex-direction: column; /* Säkerställ att barnen ordnas i kolumner */
@@ -175,7 +175,7 @@ html, body {
     justify-content: flex-end; /* Placera innehållet längst ner */
 }
 
-.tab1-2-header-title {
+.tab2-header-title {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -185,7 +185,7 @@ html, body {
     color: rgb(50, 94, 88);
 }
 
-#tab1 .button-container, #tab2 .button-container {
+#tab2 .button-container {
     margin-top: 5vh; /* Glipa mellan knapparnas överkant och flikens överkant */
 }
 

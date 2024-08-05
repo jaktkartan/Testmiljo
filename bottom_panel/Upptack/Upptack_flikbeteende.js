@@ -62,6 +62,7 @@ function openUpptack() {
         document.getElementById(contentId).style.display = 'block';
     }
 
+    function createUpptackContent(contentDiv) {
         // Skapa en container div för att centrera innehållet
         const container = document.createElement('div');
         container.className = 'button-container';
@@ -183,6 +184,7 @@ function openUpptack() {
         }
     }
 
+    function createKommandeMassaContent(contentDiv) {
         // Skapa en container div för att centrera innehållet
         const container = document.createElement('div');
         container.className = 'button-container';
@@ -196,6 +198,7 @@ function openUpptack() {
         contentDiv.appendChild(container);
     }
 
+    function createRekommendationerContent(contentDiv) {
         // Skapa en container div för att centrera innehållet
         const container = document.createElement('div');
         container.className = 'button-container';

@@ -44,7 +44,6 @@ function loadAlgforvaltningsomradeWMS(add) {
             console.log('Layer is already added. No action taken.');
             return;
         }
-        checkZoomLevel();
         console.log('Adding Algforvaltningsomrade layer.');
         currentWMSLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
             layers: '1',
@@ -59,9 +58,6 @@ function loadAlgforvaltningsomradeWMS(add) {
         };
         map.on('click', wmsClickHandler);
 
-        // Lägg till händelse för att övervaka zoomnivån
-        map.on('zoomend', checkZoomLevel);
-
         console.log("WMS layer added to map:", currentWMSLayer);
         updateFAB('Algforvaltningsomrade', true); // Säkerställ att FAB-knappen visas
     } else {
@@ -71,8 +67,6 @@ function loadAlgforvaltningsomradeWMS(add) {
             map.removeLayer(currentWMSLayer);
             currentWMSLayer = null;
             wmsClickHandler = null;
-            hideZoomMessage(); // Dölj meddelandet när lagret tas bort
-            map.off('zoomend', checkZoomLevel); // Ta bort händelsen för zoomnivån
             updateFAB('Algforvaltningsomrade', false); // Säkerställ att FAB-knappen döljs
         }
     }

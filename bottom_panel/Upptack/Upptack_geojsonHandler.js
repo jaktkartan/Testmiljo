@@ -61,7 +61,7 @@ setTimeout(function() {
                             return getFallbackStyle(layerName);
                         },
                         onEachFeature: function(feature, layer) {
-                            addClickHandlerToLayer(layer, layerName);
+                            addClickHandlerToLayer(layer);
                         }
                     });
 
@@ -142,57 +142,6 @@ setTimeout(function() {
             activateLayer(layerName);
         }
 
-function generatePanelContent(properties, layerName) {
-    var content = '<div style="max-width: 300px; overflow-y: auto;">';
-
-    // Definiera vilka fält som ska visas för olika lager
-    var fields = {
-        'Mässor': ['NAMN', 'INFO', 'LINK', 'VAGBESKRIV'],
-        'Jaktkort': ['Rubrik', 'Info', 'Link', 'VAGBESKRIV']
-    };
-
-    // Definiera egenskaper som ska döljas eller bara visas med namn
-    var hideProperties = [];
-    var hideNameOnlyProperties = fields[layerName] || [];
-
-    // Iterera genom alla egenskaper i GeoJSON-funktionen
-    for (var prop in properties) {
-        // Hoppa över dolda egenskaper
-        if (hideProperties.includes(prop)) continue;
-        
-        var value = properties[prop];
-
-        // Kontrollera om egenskapen är en bild-URL
-        if (prop === 'BILD' && value && isImageUrl(value)) {
-            content += '<p><img src="' + value + '" style="max-width: 100%;" alt="Bild"></p>';
-        }
-        // Kontrollera om egenskapen är en länk
-        else if ((prop === 'LINK' || prop === 'Link') && value) {
-            // Lägg till en hyperlänk med texten "Länk" som länkar till URL:en
-            content += '<p><a href="' + value + '" target="_blank">Länk</a></p>';
-        }
-        // Kontrollera om egenskapen är en vägbeskrivning
-        else if ((prop === 'VAGBESKRIV' || prop === 'VägBeskrivning') && value) {
-            // Lägg till en hyperlänk med texten "Vägbeskrivning" som länkar till URL:en
-            content += '<p><a href="' + value + '" target="_blank">Vägbeskrivning</a></p>';
-        }
-        // Kontrollera om egenskapen ska visas endast med namn
-        else if (hideNameOnlyProperties.includes(prop) && value) {
-            content += '<p>' + value + '</p>';
-        }
-        // Annars, visa egenskapen som text
-        else if (value) {
-            // Visa egenskapens namn och värde
-            content += '<p><strong>' + prop + ':</strong> ' + value + '</p>';
-        }
-    }
-
-    content += '</div>';
-    return content;
-}
-
-
-
         function getIconAnchor(iconSize) {
             return [iconSize[0] / 2, iconSize[1] / 2];
         }
@@ -263,7 +212,7 @@ function generatePanelContent(properties, layerName) {
             modal.classList.toggle('show');
         });
 
-        function addClickHandlerToLayer(layer, layerName) {
+        function addClickHandlerToLayer(layer) {
             layer.on('click', function(e) {
                 if (e.originalEvent) {
                     e.originalEvent.stopPropagation();

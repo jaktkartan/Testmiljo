@@ -41,7 +41,7 @@ var Kartor_geojsonHandler = (function() {
     }
 
     function checkZoomLevel() {
-        if (map.getZoom() < 11) {
+        if (map.getZoom() < 11 && layerIsActive['Älgjaktsområden']) {
             showZoomMessage();
         } else {
             hideZoomMessage();
@@ -159,10 +159,9 @@ var Kartor_geojsonHandler = (function() {
                 console.log('Layer is already added. No action taken.');
                 return;
             }
-            checkZoomLevel();
             console.log('Adding Algforvaltningsomrade layer.');
             currentWMSLayer = L.tileLayer.wms('https://ext-geodata-applikationer.lansstyrelsen.se/arcgis/services/Jaktadm/lst_jaktadm_visning/MapServer/WMSServer', {
-                layers: '1',
+                layers: '0',
                 format: 'image/png',
                 transparent: true,
                 attribution: 'Länsstyrelsen',
@@ -174,9 +173,6 @@ var Kartor_geojsonHandler = (function() {
             };
             map.on('click', wmsClickHandler);
 
-            // Lägg till händelse för att övervaka zoomnivån
-            map.on('zoomend', checkZoomLevel);
-
             console.log("WMS layer added to map:", currentWMSLayer);
             updateFAB('Algforvaltningsomrade', true); // Säkerställ att FAB-knappen visas
         } else {
@@ -186,7 +182,6 @@ var Kartor_geojsonHandler = (function() {
                 map.removeLayer(currentWMSLayer);
                 currentWMSLayer = null;
                 wmsClickHandler = null;
-                hideZoomMessage(); // Dölj meddelandet när lagret tas bort
                 map.off('zoomend', checkZoomLevel); // Ta bort händelsen för zoomnivån
                 updateFAB('Algforvaltningsomrade', false); // Säkerställ att FAB-knappen döljs
             }
@@ -340,23 +335,22 @@ var Kartor_geojsonHandler = (function() {
         return url.substring(url.lastIndexOf('/') + 1);
     }
 
-function generatePopupContent(properties) {
-    var content = '<div style="max-width: 300px; overflow-y: auto;">';
+    function generatePopupContent(properties) {
+        var content = '<div style="max-width: 300px; overflow-y: auto;">';
 
-    for (var prop in properties) {
-        if (properties.hasOwnProperty(prop)) {
-            var value = properties[prop];
+        for (var prop in properties) {
+            if (properties.hasOwnProperty(prop)) {
+                var value = properties[prop];
 
-            if (prop === 'BILD' && value && /\.(jpg|jpeg|png|gif)$/.test(value)) {
-                content += '<p><img src="' + value + '" style="max-width: 100%;" alt="Bild"></p>';
+                if (prop === 'BILD' && value && /\.(jpg|jpeg|png|gif)$/.test(value)) {
+                    content += '<p><img src="' + value + '" style="max-width: 100%;" alt="Bild"></p>';
+                }
             }
         }
+
+        content += '</div>';
+        return content;
     }
-
-    content += '</div>';
-    return content;
-}
-
 
     return {
         toggleLayer: toggleLayer,

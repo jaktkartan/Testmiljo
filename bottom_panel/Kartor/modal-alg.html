@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modal för älgjakt</title>
+    <title>Modal för ÄFO & jakttid</title>
     <style>
         /* Grundstilar för content */
         .content {
@@ -57,28 +57,20 @@
 <body>
     <div class="modal-content">
         <span class="close" id="close-upptack">&times;</span>
-        <p class="main-title">Älgjaktskartan!</p>
-        <p>Denna interaktiva karta visar detaljerad information om jakttider och områden med brunstuppehåll i olika älgförvaltningsområden i Sverige. Nedan finner du en teckenförklaring för att underlätta förståelsen för kartan.</p>
+        <p class="main-title">Älgförvaltningsområden & Jakttider!</p>
+        <p>Denna interaktiva karta visar detaljerad information om samtliga Älgförvaltningsområden (ÄFO) i Sverige.</p>
         
         <!-- Checkbox för att styra visningen -->
         <input type="checkbox" id="toggle-features-alg">
-        <label for="toggle-features-alg" class="accordion-button">Kartans funktioner</label>
+        <label for="toggle-features-alg" class="accordion-button">Kartans innehåll</label>
         <div class="content">
             <h3>Information för respektive Älgförvaltningsområde</h3>
             <ul>
-                <li><span>Jakttid:</span> Visar den övergripande jakttiden för älgjakt i det valda älgförvaltningsområdet.</li>
-                <li><span>Jakttid Kalv på Oregistrerad Mark:</span> Anger jakttiden för älgkalv på områden som inte är registrerade.</li>
-                <li><span>Älgförvaltningsområde:</span> Namnet på det specifika älgförvaltningsområdet.</li>
-                <li><span>Förvaltare:</span> Namnet på den Länsstyrelse som ansvarar för området.</li>
-                <li><span>Lokal Information:</span> En länk till Länsstyrelsens webbplats för ytterligare information om älgjakt inom länet.</li>
                 <li><span>Älgförvaltningsområde ID:</span> Ett unikt identifieringsnummer för området.</li>
+                <li><span>Älgförvaltningsområdesnamn:</span> Namnet på det specifika Älgförvaltningsområdet.</li>
+                <li><span>Förvaltande län:</span> Namnet på den Länsstyrelse som ansvarar för området.</li>
+                <li><span>Jakttid:</span> En länk till Länsstyrelsens webbplats för ytterligare information om jakttider för älgjakten inom det valda Älgförvaltningsområdet.</li>
             </ul>
-        </div>
-
-        <input type="checkbox" id="toggle-teckenforklaring-alg">
-        <label for="toggle-teckenforklaring-alg" class="accordion-button">Teckenförklaring</label>
-        <div class="content">
-            <p>Teckenförklaring kommer snart.</p>
         </div>
     </div>
 </body>

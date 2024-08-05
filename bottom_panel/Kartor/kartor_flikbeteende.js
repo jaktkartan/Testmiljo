@@ -114,7 +114,7 @@ function openKartor() {
 
         const elkAlternativButton = document.createElement('button');
         elkAlternativButton.className = 'styled-button';
-        elkAlternativButton.textContent = 'Algforvaltningsomrade'; // Lägg till texten direkt
+        elkAlternativButton.textContent = 'Älgförvaltningsområden & Jakttider'; // Lägg till texten direkt
         elkAlternativButton.onclick = function() {
             // Ladda WMS-lager för Algforvaltningsomrade
             Kartor_geojsonHandler.toggleLayer('Algforvaltningsomrade');

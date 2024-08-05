@@ -62,13 +62,6 @@ function openUpptack() {
         document.getElementById(contentId).style.display = 'block';
     }
 
-    function createUpptackContent(contentDiv) {
-        // Skapa en rubrik
-        const header = document.createElement('h1');
-        header.textContent = 'Upptäck!';
-        header.className = 'tab1-2-header-title';
-        contentDiv.appendChild(header);
-
         // Skapa en container div för att centrera innehållet
         const container = document.createElement('div');
         container.className = 'button-container';
@@ -190,13 +183,6 @@ function openUpptack() {
         }
     }
 
-    function createKommandeMassaContent(contentDiv) {
-        // Skapa och lägg till en rubrik högst upp
-        const header = document.createElement('h1');
-        header.textContent = 'Kommande mässa!';
-        header.className = 'tab1-2-header-title';
-        contentDiv.appendChild(header);
-
         // Skapa en container div för att centrera innehållet
         const container = document.createElement('div');
         container.className = 'button-container';
@@ -209,13 +195,6 @@ function openUpptack() {
         // Lägg till containern till content-div
         contentDiv.appendChild(container);
     }
-
-    function createRekommendationerContent(contentDiv) {
-        // Skapa och lägg till en rubrik högst upp
-        const header = document.createElement('h1');
-        header.textContent = 'Rekommendationer!';
-        header.className = 'tab1-2-header-title';
-        contentDiv.appendChild(header);
 
         // Skapa en container div för att centrera innehållet
         const container = document.createElement('div');

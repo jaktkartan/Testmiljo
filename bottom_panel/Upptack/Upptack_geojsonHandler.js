@@ -1,10 +1,18 @@
+function notifyLayerStatusChanged() {
+    const event = new Event('layerStatusChanged');
+    document.dispatchEvent(event);
+}
+
 var layerURLs = {
-    'Mässor': ['https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Upptack/Massor.geojson'],
-    'Jaktkort': ['https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Upptack/jaktkort.geojson'],
-    'Jaktskyttebanor': ['https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Upptack/jaktskyttebanor.geojson']
+    'Mässor': ['https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Upptack/geojsonfiler/Massor.geojson'],
+    'Jaktkort': ['https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Upptack/geojsonfiler/jaktkort.geojson'],
+    'Jaktskyttebanor': ['https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Upptack/geojsonfiler/jaktskyttebanor.geojson']
 };
 
 var Upptack_geojsonHandler;
+
+// Logga när vi börjar initiera Upptack_geojsonHandler
+console.log("Initializing Upptack_geojsonHandler...");
 
 setTimeout(function() {
     Upptack_geojsonHandler = (function(map) {
@@ -22,26 +30,26 @@ setTimeout(function() {
 
         var layerStyles = {
             'Mässor': {
-                iconUrl: 'bottom_panel/Upptack/bilder/massa_ikon.png',
+                iconUrl: 'bilder/upptack/ikoner/ikon_massor.png',
                 iconSize: [40, 40],
                 fallbackStyle: {
-                    fallbackIconUrl: 'bottom_panel/Upptack/bilder/punkt_massor.png',
+                    fallbackIconUrl: 'bilder/upptack/ikoner/punkt_massor.png',
                     fallbackIconSize: [15, 15]
                 }
             },
             'Jaktkort': {
-                iconUrl: 'bottom_panel/Upptack/bilder/jaktkort_ikon.png',
+                iconUrl: 'bilder/upptack/ikoner/ikon_jaktkort.png',
                 iconSize: [40, 40],
                 fallbackStyle: {
-                    fallbackIconUrl: 'bottom_panel/Upptack/bilder/punkt_jaktkort.png',
+                    fallbackIconUrl: 'bilder/upptack/ikoner/punkt_jaktkort.png',
                     fallbackIconSize: [15, 15]
                 }
             },
             'Jaktskyttebanor': {
-                iconUrl: 'bottom_panel/Upptack/bilder/jaktskyttebanor_ikon.png',
+                iconUrl: 'bilder/upptack/ikoner/ikon_jaktskyttebanor.png',
                 iconSize: [40, 40],
                 fallbackStyle: {
-                    fallbackIconUrl: 'bottom_panel/Upptack/bilder/punkt_jaktskyttebanor.png',
+                    fallbackIconUrl: 'bilder/upptack/ikoner/punkt_jaktskyttebanor.png',
                     fallbackIconSize: [15, 15]
                 }
             }
@@ -79,16 +87,15 @@ setTimeout(function() {
             }
         }
 
-        function toggleLayer(layerName) {
+        function toggleLayer(layerName, activate) {
             console.log(`Toggling layer: ${layerName}`);
-            if (layerName === 'Visa_allt') {
-                activateAllLayers();
-            } else if (layerName === 'Rensa_allt') {
-                deactivateAllLayers();
+            if (activate) {
+                activateLayer(layerName);
             } else {
-                filterLayer(layerName);
+                deactivateLayer(layerName);
             }
             updateFabUpptackVisibility(); // Uppdatera FAB-knappen när lager togglas
+            notifyLayerStatusChanged(); // Uppdatera filtreringsknappens synlighet
         }
 
         function activateLayer(layerName) {
@@ -103,6 +110,7 @@ setTimeout(function() {
             layerIsActive[layerName] = true;
             console.log(`Layer ${layerName} activated.`);
             updateFabUpptackVisibility(); // Uppdatera FAB-knappen när lager aktiveras
+            notifyLayerStatusChanged(); // Uppdatera filtreringsknappens synlighet
         }
 
         function deactivateLayer(layerName) {
@@ -113,6 +121,7 @@ setTimeout(function() {
             layerIsActive[layerName] = false;
             console.log(`Layer ${layerName} deactivated.`);
             updateFabUpptackVisibility(); // Uppdatera FAB-knappen när lager avaktiveras
+            notifyLayerStatusChanged(); // Uppdatera filtreringsknappens synlighet
         }
 
         function activateAllLayers() {
@@ -121,6 +130,7 @@ setTimeout(function() {
                 activateLayer(layerName);
             });
             updateFabUpptackVisibility();
+            notifyLayerStatusChanged(); // Uppdatera filtreringsknappens synlighet
         }
 
         function deactivateAllLayers() {
@@ -134,12 +144,14 @@ setTimeout(function() {
                 }
             });
             updateFabUpptackVisibility();
+            notifyLayerStatusChanged(); // Uppdatera filtreringsknappens synlighet
         }
 
         function filterLayer(layerName) {
             console.log(`Filtering to layer: ${layerName}`);
             deactivateAllLayers();
             activateLayer(layerName);
+            notifyLayerStatusChanged(); // Uppdatera filtreringsknappens synlighet
         }
 
         function getIconAnchor(iconSize) {
@@ -231,7 +243,29 @@ setTimeout(function() {
             toggleLayer: toggleLayer,
             deactivateAllLayers: deactivateAllLayers,
             activateAllLayers: activateAllLayers,
-            activateLayer: activateLayer
+            activateLayer: activateLayer,
+            deactivateLayer: deactivateLayer,
+            filterLayer: filterLayer,
+            layerIsActive: layerIsActive // Exponera layerIsActive
         };
     })(map);
+
+    // Logga att Upptack_geojsonHandler är definierad
+    console.log("Upptack_geojsonHandler has been defined:", Upptack_geojsonHandler);
 }, 1000);
+
+// Kontrollera om Upptack_geojsonHandler är globalt tillgänglig
+if (typeof Upptack_geojsonHandler !== 'undefined') {
+    console.log("Upptack_geojsonHandler is globally accessible:", Upptack_geojsonHandler);
+} else {
+    console.log("Upptack_geojsonHandler is NOT globally accessible.");
+}
+
+// Knappen tab2 (kartor) rensar geojson-lager från tab1 (upptäck) fliken.
+document.getElementById('tab2').addEventListener('click', function() {
+    if (typeof Upptack_geojsonHandler !== 'undefined') {
+        Upptack_geojsonHandler.deactivateAllLayers();
+    } else {
+        console.error("Upptack_geojsonHandler är inte definierad.");
+    }
+});

@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "Massor",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Bild_massor": "bottom_panel/Upptack/bilder/massa_standardbild.jpg", "TYP": "Mässa", "NAMN": "SportfiskeMässan 2025", "DATUM_FRAN": "2025-03-14", "DATUM_TILL": "2025-03-16", "INFO": "", "LINK": "https://www.sportfiskemassan.se/", "AKTUALITET": "2024-05-27" }, "geometry": { "type": "Point", "coordinates": [ 18.015104, 59.277418 ] } },
+{ "type": "Feature", "properties": { "id": null, "Bild_massor": "bottom_panel/Upptack/bilder/massa_standardbild.jpg", "TYP": "Mässa", "NAMN": "Elmia Game Fair 2025", "DATUM_FRAN": "2025-05-29", "DATUM_TILL": "2025-05-31", "INFO": "", "LINK": "https://www.elmia.se/gamefair/", "AKTUALITET": "2024-05-27" }, "geometry": { "type": "Point", "coordinates": [ 14.227054, 57.788585 ] } },
+{ "type": "Feature", "properties": { "id": null, "Bild_massor": "bottom_panel/Upptack/bilder/massa_standardbild.jpg", "TYP": "Mässa", "NAMN": "Älglösa Gamefair", "DATUM_FRAN": "2024-08-17", "DATUM_TILL": "2024-08-17", "INFO": "", "LINK": "https://www.facebook.com/events/orbaden-2018-vallsta-bolln%C3%A4s-kommun/%C3%A4lgl%C3%B6sa-gamefair/367417846453219/", "AKTUALITET": "2024-08-12" }, "geometry": { "type": "Point", "coordinates": [ 16.350049864211158, 61.548957592376439 ] } }
+]
+}

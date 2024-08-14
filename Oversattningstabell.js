@@ -10,7 +10,7 @@ var translationTable = {
     // Översättningstabell i popup-panelerna
     
     // Upptäck
-    'DATUM_FRAN': 'Börjar',
+    'DATUM_FRAN': 'Från',
     'DATUM_TILL': 'Till',
     
     // Allmän jakt: Däggdjur
@@ -58,21 +58,14 @@ var translationTable = {
     "iller5_hag": "Hagelvapen",
     
     // Kronvilt
-    "kronh5_sko": "Jaktperiod 1",
-    "kronh6_sko": "Jakttid",
-    "kron_skå1": "Jaktperiod endast Skåne",
-    "kron_skå2": "Jakttid",
-    "kronh7_ore": "Jaktperiod 2",
-    "kronh8_ore": "Jakttid",
-    "kronh1_sko": "Jaktperiod 3",
-    "kronh2_sko": "Jakttid",
-    "kronh3_sko": "Jaktperiod 4",
-    "kronh4_sko": "Jakttid",
-    "kronh9_kal": "Jaktperiod 5",
-    "kronh91_ka": "Jakttid",
-    "kronh92_ti": "Jakt under dygnet",
-    "kronh93_ku": "Kulvapen",
-    "kronh94_ha": "Hagelvapen",
+    "Kronhjort_Inom_Hjort": "Hjort - Inom Kronhjortsskötselområde",
+    "Kronhjort_Inom_Hind_o_årsKalv": "Hind och årskalv - Inom Kronhjortsskötselområde",
+    "Kronhjort_Utom_årsKalv": "Årskalv - Utom Kronhjortsskötselområde",
+    "Kronhjort_dygnet": "Jakt under dygnet",
+    "Kronhjort_kaliber": "Kaliberkrav",
+    "Kronhjort_hagel": "Hagelvapen",
+    "Kronhjort1_Skåne_Inom": "Kronhjort - Inom Kronhjortsskötselområde",
+    "Kronhjort2_Skåne_Utom": "Kronhjort - Utom Kronhjortsskötselområde",
     
     // Rådjur
     "radjur3_ho": "Jaktperiod 1",
@@ -123,188 +116,6 @@ var translationTable = {
     "xalg3_till": "Jakt under dygnet",
     "xalg4_kulv": "Kulvapen",
     "xalg5_hage": "Hagelvapen",
-
-    //Allmän jakt: Fågel
-
-    // Bläsand
-    "blasand__1": "BLÄSAND",
-    "blasand_aj": "Jakttid",
-    "blasand_kl": "Jakt under dygnet",
-    "blasand_ka": "Kaliberkrav",
-
-    // Bläsgås
-    "blasgas__1": "BLÄSGÅS",
-    "blasgas_aj": "Jakttid",
-    "blasgas_kl": "Jakt under dygnet",
-    "blasgas_ka": "Kaliberkrav",
-
-    // Dalripa
-    "dalripa__1": "DALRIPA",
-    "dalripa_aj": "Jakttid",
-    "dalripa_kl": "Jakt under dygnet",
-    "dalripa_ka": "Kaliberkrav",
-
-    //Fasan
-    "fasan_ajt": "FASAN",
-    "fasan_ajf": "Jakttid",
-    "fasan_kloc": "Jakt under dygnet",
-    "fasan_kali": "Kaliberkrav",
-
-    //Fiskmås
-    "fiskmas__1": "FISKMÅS",
-    "fiskmas_aj": "Jakttid",
-    "fiskmas_kl": "Jakt under dygnet",
-    "fiskmas_ka": "Kaliberkrav",
-
-    //Fjällripa
-    "fjallripa1": "FJÄLLRIPA",
-    "fjallripa_": "Jakttid",
-    "fjallrip_1": "Jakt under dygnet",
-    "fjallrip_2": "Kaliberkrav",
-
-    //Grågås
-    "gragas_ajt": "GRÅGÅS",
-    "gragas_ajf": "Jakttid",
-    "gragas_klo": "Jakt under dygnet",
-    "gragas_kal": "Kaliberkrav",
-
-    //Gråtrut
-    "gratrut__1": "GRÅTRUT",
-    "gratrut_aj": "Jakttid",
-    "gratrut_kl": "Jakt under dygnet",
-    "gratrut_ka": "Kaliberkrav",
-
-    //Gräsand
-    "grasand__1": "GRÄSAND",
-    "grasand_aj": "Jakttid",
-    "grasand_kl": "Jakt under dygnet",
-    "grasand_ka": "Kaliberkrav",
-
-    //Järpe
-    "jarpe_info": "JÄRPE",
-    "jarpe_ajf": "Jakttid",
-    "jarpe_kloc": "Jakt under dygnet",
-    "jarpe_kali": "Kaliberkrav",
-
-    //Kaja
-    "kaja_ajt": "KAJA",
-    "kaja_ajf": "Jakttid",
-    "kaja_klock": "Jakt under dygnet",
-    "kaja_kalib": "Kaliberkrav",
-
-    //Kanadagås
-    "kanadagas1": "KANADAGÅS",
-    "kanadagas_": "Jakttid",
-    "kanadaga_1": "Jakt under dygnet",
-    "kanadaga_2": "Kaliberkrav",
-
-    //Knipa
-    "knipa_ajt": "KNIPA",
-    "knipa_ajf": "Jakttid",
-    "knipa_kloc": "Jakt under dygnet",
-    "knipa_kali": "Kaliberkrav",
-
-    //Kricka
-    "kricka_ajt": "KRICKA",
-    "kricka_ajf": "Jakttid",
-    "kricka_klo": "Jakt under dygnet",
-    "kricka_kal": "Kaliberkrav",
-
-    //Kråka
-    "kraka_ajt": "KRÅKA",
-    "kraka_ajf": "Jakttid",
-    "kraka_kloc": "Jakt under dygnet",
-    "kraka_kali": "Kaliberkrav",
-
-    //Morkulla
-    "morkulla_1": "MORKULLA",
-    "morkulla_a": "Jakttid",
-    "morkulla_k": "Jakt under dygnet",
-    "morkulla_2": "Kaliberkrav",
-
-    //Nötskrika
-    "notskrika1": "NÖTSKRIKA",
-    "notskrika_": "Jakttid",
-    "notskrik_1": "Jakt under dygnet",
-    "notskrik_2": "Kaliberkrav",
-
-    //Orre
-    "orre_ajt": "ORRE",
-    "orre_ajf": "Jakttid",
-    "orre_klock": "Jakt under dygnet",
-    "orre_kalib": "Kaliberkrav",
-
-    //Orrtupp
-    "orrtupp_in": "ORRTUPP",
-    "orrtupp_aj": "Jakttid",
-    "orrtupp_kl": "Jakt under dygnet",
-    "orrtupp_ka": "Kaliberkrav",
-
-    //Rapphöna
-    "rapphona_1": "RAPPHÖNA",
-    "rapphona_a": "Jakttid",
-    "rapphona_k": "Jakt under dygnet",
-    "rapphona_2": "Kaliberkrav",
-
-    //Ringduva
-    "ringduva_1": "RINGDUVA",
-    "ringduva_a": "Jakttid",
-    "ringduva_k": "Jakt under dygnet",
-    "ringduva_2": "Kaliberkrav",
-
-    //Råka
-    "raka_info": "RÅKA",
-    "raka_ajf": "Jakttid",
-    "raka_klock": "Jakt under dygnet",
-    "raka_kalib": "Kaliberkrav",
-
-    //Sjöorre
-    "sjoorre__1": "SJÖORRE",
-    "sjoorre_aj": "Jakttid",
-    "sjoorre_kl": "Jakt under dygnet",
-    "sjoorre_ka": "Kaliberkrav",
-
-    //Skata
-    "skata_ajt": "SKATA",
-    "skata_ajf": "Jakttid",
-    "skata_kloc": "Jakt under dygnet",
-    "skata_kali": "Kaliberkrav",
-
-    //Storskrake
-    "storkrake1": "STORSKRAKE",
-    "storkrake_": "Jakttid",
-    "storkrak_1": "Jakt under dygnet",
-    "storkrak_2": "Kaliberkrav",
-
-    //Tjäder
-    "tjader_ajt": "TJÄDER",
-    "tjader_ajf": "Jakttid",
-    "tjader_klo": "Jakt under dygnet",
-    "tjader_kal": "Kaliberkrav",
-
-    //Tjädertupp
-    "tjadertu_1": "TJÄDERTUPP",
-    "tjadertupp": "Jakttid",
-    "tjadertu_2": "Jakt under dygnet",
-    "tjadertu_3": "Kaliberkrav",
-
-    //Trana
-    "trana_ajt": "TRANA",
-    "trana_ajf": "Jakttid",
-    "trana_klock": "Jakt under dygnet",
-    "trana_kalib": "Kaliberkrav",
-
-    //Vigg
-    "vigg_info": "VIGG",
-    "vigg_ajf": "Jakttid",
-    "vigg_klock": "Jakt under dygnet",
-    "vigg_kalib": "Kaliberkrav",
-
-    //Vitkindad gås
-    "vitkindad1": "VITKINDAD GÅS",
-    "vitkindad_": "Jakttid",
-    "vitkinda_1": "Jakt under dygnet",
-    "vitkinda_2": "Kaliberkrav"
-
+    
 
 };

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startruta</title>
+    <style>
+        /* Grundstilar för content */
+        .content, .sub-content {
+            display: none; /* Dölj innehållet som standard */
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Använd checkbox för att styra visning av innehållet */
+        input[type="checkbox"] {
+            display: none; /* Dölj checkboxen */
+        }
+
+        /* Stilar för knappen */
+        label.accordion-button {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            display: block;
+            transition: background-color 0.3s;
+            margin-bottom: 5px; /* Lägg till margin */
+        }
+
+        label.accordion-button:hover {
+            background-color: #ddd;
+        }
+
+        /* Visa innehållet när checkboxen är kryssad */
+        input[type="checkbox"]:checked + label + .content {
+            display: block;
+        }
+
+        /* Stilar för underflikar */
+        .sub-content {
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        input[type="radio"] {
+            display: none; /* Dölj radio knappar */
+        }
+
+        label.radio-button {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #e1e1e1;
+            border: none;
+            text-align: left;
+            font-size: 14px;
+            display: block;
+            transition: background-color 0.3s;
+            margin-bottom: 5px; /* Lägg till margin */
+        }
+
+        label.radio-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        /* Visa underflik när radio-knapp är vald */
+        input[type="radio"]:checked + label + .sub-content {
+            display: block;
+        }
+
+        .radio-button-container {
+            margin-top: 10px;
+        }
+
+        /* Stilar för bild */
+        .icon-image {
+            width: 50px; /* Justera storleken på bilden */
+            height: auto; /* Behåll bildens proportioner */
+            vertical-align: middle; /* Justera bildens vertikala position */
+            margin-left: 10px; /* Lägga till ett litet avstånd till texten */
+        }
+
+        .image-container {
+            display: flex;
+            align-items: center; /* Vertikal centrering av bild och text */
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-content">
+        <span class="close" id="close-upptack">&times;</span>
+        <img src="bilder/Jaktkartan_logga.png" alt="Jaktkartan Logga" class="centered-image">
+        <p>Välkommen till Jaktkartan.se! Utforska kartan och upptäck våra verktyg och resurser som gör jakten både enklare och mer givande. Nedan finns flikar med information om kartans olika funktioner.</p>
+
+        <!-- Sektion för kartans funktioner -->
+        <input type="checkbox" id="toggle-features-startruta">
+        <label for="toggle-features-startruta" class="accordion-button">Kartans funktioner</label>
+        <div class="content">
+            <h3>Huvudfunktioner:</h3>
+
+                <strong>Upptäck:</strong>
+            <ul>
+                        <li><strong>Jaktmässor:</strong> Information om kommande jaktmässor i Sverige.</li>
+                        <li><strong>Jaktkort:</strong> Hitta områden där du kan köpa dagkort för jakt.</li>
+                        <li><strong>Jaktskyttebanor:</strong> Platser för skytteövning (Under uppbyggnad).</li>
+                        <li><strong>Jaktbutiker:</strong> Rekommendationer för butiker som säljer jaktutrustning (snart tillgängligt).</li>
+            </ul>
+                <strong>Kartor:</strong>
+            <ul>
+                        <li><strong>Allmän jakt på däggdjur:</strong> Jakttider och regler för däggdjursjakt.</li>
+                        <li><strong>Allmän jakt på fågel:</strong> Jakttider och regler för fågeljakt.</li>
+                        <li><strong>Älgjaktskartan:</strong> Jakttider i olika Älgförvaltningsområden.</li>
+                        <li><strong>Älgjaktsområden:</strong> Karta över Älgjaktsområden.</li>
+                </ul>
+    <strong>Jaktbart Idag:</strong> Aktuell information om vilka djur som är jaktbara baserat på din plats och datum. Planera sedan jakten genom att välja datum om län där du tänkt jaga.<br><br>
+    
+    <strong>Kaliberkrav:</strong> Detaljer om kaliberkrav och rekommenderad hagelstorlek för jaktbara vilt.<br><br>
+    
+    <strong>Jaktkollen:</strong> Blogg med nyheter och artiklar om jakttrender och tekniker (snart tillgänglig).
+
+
+            <h3>Ytterligare funktioner:</h3>
+                <strong>Väderleksrapport:</strong> Se aktuell väderprognos för din plats.<br><br>
+                <strong>Soluppgång och solnedgång:</strong> Information om solens upp- och nedgångstider för din plats.
+        </div>
+
+        <!-- Sektion för att lägga till Jaktkartan som app eller genväg -->
+        <input type="checkbox" id="toggle-add-to-home">
+        <label for="toggle-add-to-home" class="accordion-button">Lägg till Jaktkartan som app!</label>
+        <div class="content">
+            <div class="image-container">
+                För att lägga till Jaktkartan.se som genväg eller app på skrivbordet. välj önskad webbläsare:
+                <img src="bilder/ikon_jaktkartanApp.png" alt="Jaktkartan App Icon" class="icon-image">
+            </div>
+            
+            <!-- Radio knappar för att välja webbläsare -->
+            <div class="radio-button-container">
+                <input type="radio" id="chrome" name="browser">
+                <label for="chrome" class="radio-button">Google Chrome</label>
+                <div class="sub-content">
+                    <h4>På en Android-enhet (Google Chrome):</h4>
+                    <ol>
+                        <li>Öppna Chrome och gå till <a href="https://www.jaktkartan.se">Jaktkartan.se</a>.</li>
+                        <li>Klicka på de tre prickarna i det övre högra hörnet av webbläsaren.</li>
+                        <li>Välj "Lägg till på startskärmen".</li>
+                        <li>Ge genvägen ett namn och tryck på "Lägg till".</li>
+                    </ol>
+                    <h4>På en dator (Google Chrome):</h4>
+                    <ol>
+                        <li>Öppna Chrome och gå till <a href="https://www.jaktkartan.se">Jaktkartan.se</a>.</li>
+                        <li>Klicka på de tre prickarna i det övre högra hörnet av webbläsaren.</li>
+                        <li>Välj "Fler verktyg" och sedan "Skapa genväg...".</li>
+                        <li>Ge genvägen ett namn och klicka på "Skapa".</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="radio-button-container">
+                <input type="radio" id="edge" name="browser">
+                <label for="edge" class="radio-button">Microsoft Edge</label>
+                <div class="sub-content">
+                    <h4>På en Android-enhet (Microsoft Edge):</h4>
+                    <ol>
+                        <li>Öppna Edge och gå till <a href="https://www.jaktkartan.se">Jaktkartan.se</a>.</li>
+                        <li>Klicka på de tre prickarna i det övre högra hörnet av webbläsaren.</li>
+                        <li>Välj "Lägg till på startskärmen".</li>
+                        <li>Ge genvägen ett namn och tryck på "Lägg till".</li>
+                    </ol>
+                    <h4>På en dator (Microsoft Edge):</h4>
+                    <ol>
+                        <li>Öppna Edge och gå till <a href="https://www.jaktkartan.se">Jaktkartan.se</a>.</li>
+                        <li>Klicka på de tre prickarna i det övre högra hörnet av webbläsaren.</li>
+                        <li>Välj "Appar" och sedan "Installera denna webbplats som en app".</li>
+                        <li>Ge appen ett namn och klicka på "Installera".</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="radio-button-container">
+                <input type="radio" id="safari" name="browser">
+                <label for="safari" class="radio-button">Safari</label>
+                <div class="sub-content">
+                    <h4>På en iPhone eller iPad (Safari):</h4>
+                    <ol>
+                        <li>Öppna Safari och gå till <a href="https://www.jaktkartan.se">Jaktkartan.se</a>.</li>
+                        <li>Tryck på delningsikonen längst ner på skärmen (ser ut som en fyrkant med en uppåtpil).</li>
+                        <li>Välj "Lägg till på hemskärmen".</li>
+                        <li>Ge genvägen ett namn och tryck på "Lägg till".</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <input type="checkbox" id="toggle-hjalp-oss-flik">
+        <label for="toggle-hjalp-oss-flik" class="accordion-button">Hjälp oss bli bättre!</label>
+        <div class="content">
+            <p>Hemsidan är under uppbyggnad och vi arbetar ständigt med att förbättra den. Vi uppskattar om du som användare vill hjälpa oss genom att rapportera eventuella faktafel eller andra förbättringsförslag. Kontakta oss gärna via vår <a href="https://jaktkartan.se/Kontakt/">kontaktsida</a>.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -169,15 +169,31 @@
     },
     {
         "Grupp": "Däggdjur",
-        "Slag av vilt": "Kronhjort",
+        "Slag av vilt": "Kronvilt",
         "Område": "Skåne län",
         "Starttid": "8 October",
         "Sluttid": "31 January",
-        "Upplysning": "Gäller utanför kronhjortsområden"
+        "Upplysning": "Gäller Inom och utanför kronhjortsområden, Se Länsstyrelsens hemsida för information"
     },
     {
         "Grupp": "Däggdjur",
-        "Slag av vilt": "Kronhjort årskalv",
+        "Slag av vilt": "Kronvilt - Hjort",
+        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
+        "Starttid": "8 October",
+        "Sluttid": "31 January",
+        "Upplysning": "Gäller inom kronhjortsskötselområden."
+    },
+    {
+        "Grupp": "Däggdjur",
+        "Slag av vilt": "Kronvilt - Hind och årskalv",
+        "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
+        "Starttid": "16 August",
+        "Sluttid": "29 February",
+        "Upplysning": "Gäller inom kronhjortsskötselområden. Under perioden den 16 aug.-30 sept. och 1 feb. - 28 (29) feb. endast smyg- eller vaktjakt"
+    },
+    {
+        "Grupp": "Däggdjur",
+        "Slag av vilt": "Kronvilt - årskalv",
         "Område": "Stockholms län, Uppsala län, Södermanlands län, Östergötlands län, Jönköpings län, Kronobergs län, Kalmar län, Gotlands län, Blekinge län, Hallands län, Västra Götalands län, Värmlands län, Örebro län, Västmanlands län, Dalarnas län, Gävleborgs län, Västernorrlands län, Jämtlands län, Västerbottens län, Norrbottens län",
         "Starttid": "16 August",
         "Sluttid": "31 January",

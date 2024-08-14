@@ -39,7 +39,7 @@ function openKartor() {
                     'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Allman_jakt_daggdjur/geojsonfiler/Allman_jakt_daggdjur_2.geojson'
                 ]);
             },
-            imgSrc: 'bottom_panel/Kartor/bilder/daggdjurikon.png',
+            imgSrc: 'bilder/kartor/daggdjurikon.png',
             imgAlt: 'Allmän jakt: Däggdjur'
         },
         {
@@ -49,17 +49,17 @@ function openKartor() {
                     'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Allman_jakt_Fagel/geojsonfiler/OvanfrLapplandsgrnsen_4.geojson', 
                     'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Allman_jakt_Fagel/geojsonfiler/NedanfrLappmarksgrnsen_3.geojson', 
                     'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Allman_jakt_Fagel/geojsonfiler/Grnsfrripjaktilvdalenskommun_2.geojson', 
-                    'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Allman_jakt_Fagel/geojsonfiler/Lnsindelning_1.geojson', 
+                    'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Allman_jakt_Fagel/geojsonfiler/Allman_jakt_fagel.geojson',
                     'https://raw.githubusercontent.com/jaktkartan/jaktkartan/main/bottom_panel/Kartor/Allman_jakt_Fagel/geojsonfiler/GrnslvsomrdetillFinland_5.geojson'
                 ]);
             },
-            imgSrc: 'bottom_panel/Kartor/bilder/fagelikon.png',
+            imgSrc: 'bilder/kartor/fagelikon.png',
             imgAlt: 'Allmän jakt: Fågel'
         },
         {
             className: 'styled-button', // Använd samma klass för stilsättning
             id: 'huvudknapp-älgjakt-button', // Ändrad id
-            imgSrc: 'bottom_panel/Kartor/bilder/algikon.png',
+            imgSrc: 'bilder/kartor/algikon.png',
             imgAlt: 'Huvudknapp-Älgjakt' // Ändrad imgAlt
         }
     ];
@@ -154,3 +154,4 @@ function openKartor() {
     // Debugging
     console.log('Kartor tab created and added to body');
 }
+

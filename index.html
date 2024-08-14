@@ -6,7 +6,7 @@
     <title>Jaktkartan.se</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="styles_modal_o_FAB.css" />
+    <link rel="stylesheet" href="modaler/styles_modal_o_FAB.css" />
     <!-- esri stil för WMS tjänst -->
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet/dist/esri-leaflet.css" />
     <style>
@@ -32,38 +32,55 @@
 <body>
     <!-- jaktkartan logo längst upp i vänstra hörnet med länk till jaktkartan.se -->
     <a href="http://www.jaktkartan.se" style="position: fixed; top: 4px; left: 4px; z-index: 9999;">
-        <img src="bilder/jaktkartan_logga_liten.png" alt="Jaktkartan.se" style="width: 45px; height: auto;">
+        <img src="bilder/indexbilder/jaktkartan_logga_liten.png" alt="Jaktkartan.se" style="width: 45px; height: auto;">
     </a>
 
-<!-- Månfas uppe till höger -->
-<div id="moon-phase-container">
-    <span id="moon-phase"></span>
-    <img id="moon-image" src="" alt="Moon Phase Image" />
-    <div id="moon-phase-info" style="display:none;"></div>
+<div id="loadingMessage" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; border: 1px solid lightgray;">
+    <video autoplay loop muted style="width: 100px;">
+        <source src="bilder/indexbilder/loading_animation.webm" type="video/webm">
+        Din webbläsare stöder inte videouppspelning.
+    </video>
 </div>
 
     
-<div id="fab-container">
-    <button id="fab-daggdjur" class="fab" style="display:none;">Däggdjur</button>
-    <button id="fab-fagel" class="fab" style="display:none;">Fågel</button>
-    <button id="fab-alg" class="fab" style="display:none;">ÄFO & Jakttid</button>
-    <button id="fab-alg-omraden" class="fab" style="display:none;">Jaktområden</button>
-    <button id="fab-upptack" class="fab" style="display:none;">Upptäck!</button>
+    <!-- Månfas uppe till höger -->
+    <div id="moon-phase-container">
+        <span id="moon-phase"></span>
+        <img id="moon-image" src="" alt="Moon Phase Image" />
+        <div id="moon-phase-info" style="display:none;"></div>
+    </div>
+
+  <div id="fab-container">
+    <button id="fab-daggdjur" class="fab" style="display:none;">
+        <img src="bilder/indexbilder/information_logo.svg" alt="Däggdjur">
+    </button>
+    <button id="fab-fagel" class="fab" style="display:none;">
+        <img src="bilder/indexbilder/information_logo.svg" alt="Fågel">
+    </button>
+    <button id="fab-alg" class="fab" style="display:none;">
+        <img src="bilder/indexbilder/information_logo.svg" alt="ÄFO & Jakttid">
+    </button>
+    <button id="fab-alg-omraden" class="fab" style="display:none;">
+        <img src="bilder/indexbilder/information_logo.svg" alt="Jaktområden">
+    </button>
+    <button id="fab-upptack" class="fab" style="display:none;">
+        <img src="bilder/indexbilder/information_logo.svg" alt="Upptäck!">
+    </button>
 </div>
 
-<!-- Modals- till FAB-knapparna -->
-<div id="modal-daggdjur" class="modal"></div>
-<div id="modal-fagel" class="modal"></div>
-<div id="modal-alg" class="modal"></div>
-<div id="modal-alg-omraden" class="modal"></div>    
-<div id="modal-upptack" class="modal"></div>
-<div id="modal-startruta" class="modal"></div>
+    <!-- Modals- till FAB-knapparna -->
+    <div id="modal-daggdjur" class="modal"></div>
+    <div id="modal-fagel" class="modal"></div>
+    <div id="modal-alg" class="modal"></div>
+    <div id="modal-alg-omraden" class="modal"></div>    
+    <div id="modal-upptack" class="modal"></div>
+    <div id="modal-startruta" class="modal"></div>
 
-<div id="top-panel">
+    <div id="top-panel">
         <div id="sunrise-sunset">
-        <img id="sunrise-icon" src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/soluppgang.png" alt="Sunrise Icon" style="height: 24px;">
+        <img id="sunrise-icon" src="bilder/indexbilder/soluppgang.png" alt="Sunrise Icon" style="height: 24px;">
         <span id="sunrise"></span>
-        <img id="sunset-icon" src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/solnedgang.png" alt="Sunset Icon" style="height: 24px;">
+        <img id="sunset-icon" src="bilder/indexbilder/solnedgang.png" alt="Sunset Icon" style="height: 24px;">
         <span id="sunset"></span>
         <hr class="separator-line">
         <div class="expand-toggle" onclick="togglePanel()">Väderprognos <span class="arrow">&#9660;</span></div>
@@ -77,12 +94,13 @@
 
 <div id="map" style="width: 100%; height: 100%;"></div>
 
+
 <div id="bottom-panel">
-    <button class="panel-button" onclick="openTab('tab1', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/upptack.png" alt="Upptäck"></button>
-    <button class="panel-button" onclick="openTab('tab2', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/kartor.png" alt="Kartor"></button>
-    <button class="panel-button" onclick="openTab('tab3', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/jaktbart idag.png" alt="Jaktbart idag"></button>
-    <button class="panel-button" onclick="openTab('tab4', '')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/kaliberkrav.png" alt="Kaliberkrav"></button>
-    <button class="panel-button" onclick="openTab('tab5', 'bottom_panel/Jaktkollen/Jaktkollen.html')"><img src="https://raw.githubusercontent.com/timothylevin/Testmiljo/main/bilder/jaktkollen.png" alt="Jaktkollen"></button>
+    <button class="panel-button" onclick="openTab('tab1', '')"><img src="bilder/indexbilder/upptack.png" alt="Upptäck"></button>
+    <button class="panel-button" onclick="openTab('tab2', '')"><img src="bilder/indexbilder/kartor.png" alt="Kartor"></button>
+    <button class="panel-button" onclick="openTab('tab3', '')"><img src="bilder/indexbilder/jaktbart_idag.png" alt="Jaktbart idag"></button>
+    <button class="panel-button" onclick="openTab('tab4', '')"><img src="bilder/indexbilder/kaliberkrav.png" alt="Kaliberkrav"></button>
+    <button class="panel-button" onclick="openTab('tab5', 'bottom_panel/Jaktkollen/Jaktkollen.html')"><img src="bilder/indexbilder/jaktkollen.png" alt="Jaktkollen"></button>
 </div>
 
 <div id="tab-content" style="display:none;">
@@ -104,7 +122,7 @@
 <script src="vaderprognos.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="bottom_panel/FAB-knapparnas_modaler_kartor_och_upptack.js"></script>
+<script src="modaler/FAB-knapparnas_modaler_kartor_och_upptack.js"></script>
 <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
 <script type="module" src="moonphase.js"></script>
 
@@ -127,23 +145,21 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Lägg till lyssnare för zoomhändelser
-        map.on('zoomend', function() {
-            console.log("Zoom level changed to: " + map.getZoom());
-            // Här kan du lägga till din egen logik eller anrop till funktioner vid zoomförändringar
-        });
+        // Skapa ett nytt pane för användarens position
+        map.createPane('userPane');
+        map.getPane('userPane').classList.add('leaflet-pane', 'userPane'); // Lägg till klasser till pane
 
         var accuracyCircle;
         var userMarker;
         var pulsingDotMarker;
         var sunriseIcon = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/timothylevin/Testmiljo/main/sunrise.png',
+            iconUrl: 'bilder/indexbilder/soluppgang.png',
             iconSize: [20, 20],
             iconAnchor: [10, 10],
             popupAnchor: [0, 0],
         });
         var sunsetIcon = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/timothylevin/Testmiljo/main/sunset.png',
+            iconUrl: 'bilder/indexbilder/soluppgang.png',
             iconSize: [20, 20],
             iconAnchor: [10, 10],
             popupAnchor: [0, 0],
@@ -155,7 +171,7 @@
                 iconSize: [12, 12],
                 html: `<div class="pulsing-dot" data-lat="${lat}" data-lon="${lon}"></div>`
             });
-            return L.marker([lat, lon], { icon: divIcon }).addTo(map);
+            return L.marker([lat, lon], { icon: divIcon, pane: 'userPane' }).addTo(map);
         }
 
         function updateUserPosition(lat, lon, accuracy) {
@@ -163,6 +179,7 @@
 
             if (!accuracyCircle) {
                 accuracyCircle = L.circle([lat, lon], {
+                    pane: 'userPane', // Använd användarpane
                     radius: accuracy,
                     fillColor: 'green',
                     fillOpacity: 0.5,
@@ -173,7 +190,10 @@
             }
 
             if (!userMarker) {
-                userMarker = L.marker([lat, lon], { icon: L.divIcon({className: 'transparent-marker-icon'}) }).addTo(map);
+                userMarker = L.marker([lat, lon], { 
+                    pane: 'userPane', // Använd användarpane
+                    icon: L.divIcon({className: 'transparent-marker-icon'}) 
+                }).addTo(map);
             } else {
                 userMarker.setLatLng([lat, lon]);
             }
@@ -265,12 +285,14 @@
 <script src="Oversattningstabell.js"></script>
 <script src="popupHandler.js"></script>
 <script src="bottom_panel/Upptack/Upptack_geojsonHandler.js"></script>
-<script src="bottom_panel/Kartor/Kartor_geojsonHandler.js"></script>
+<script src="bottom_panel/Kartor/Kartor_geojson_WMS_FAB_ZOOM_Handler.js"></script>
 <script src="tabHandler.js"></script>
 <script src="bottom_panel/Jaktbart_idag/Jaktbart_idag_flikbeteende.js"></script>
 <script src="bottom_panel/Upptack/Upptack_flikbeteende.js"></script>
 <script src="bottom_panel/Kartor/kartor_flikbeteende.js"></script>
-<script src="bottom_panel/Kartor/Algjaktskartan/WMS/Algjaktsomraden.js"></script>
+<script src="bottom_panel/Kaliberkrav/Kaliberkrav_flikbeteende.js"></script>    
+<script src="bottom_panel/Kartor/Algjaktskartan/WMS/AlgjaktsWMS.js"></script>
+<script src="filtreringsknapp.js"></script>
 
 </body>
 </html>

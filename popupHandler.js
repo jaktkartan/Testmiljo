@@ -30,7 +30,11 @@ styleTag.innerHTML = `
     }
 
     #popup-panel p {
-        margin: 0 0 2px 0; /* Marginal endast nedåt */
+        margin: 0 0 2px 0;
+    }
+
+    #popup-panel .margin-top {
+        margin-top: 20px;
     }
 
     #close-button {
@@ -44,7 +48,7 @@ styleTag.innerHTML = `
         z-index: 1001;
     }
 
-    @keyframes slideIn {
+    @keyframes slideInBottom {
         from {
             transform: translateY(100%);
         }
@@ -53,7 +57,7 @@ styleTag.innerHTML = `
         }
     }
 
-    @keyframes slideOut {
+    @keyframes slideOutBottom {
         from {
             transform: translateY(0);
         }
@@ -63,22 +67,22 @@ styleTag.innerHTML = `
     }
 
     .show {
-        animation: slideIn 0.5s forwards;
+        animation: slideInBottom 0.5s forwards;
     }
 
     .hide {
-        animation: slideOut 0.5s forwards;
+        animation: slideOutBottom 0.5s forwards;
     }
 
     #popup-panel img {
         max-width: 100%;
-        border-radius: 10px; /* Rundade hörn för bilder */
+        border-radius: 10px;
     }
 
     .link-button {
         display: inline-flex;
         align-items: center;
-        background-color: rgb(50, 94, 88); /* Färg på knappen */
+        background-color: rgb(50, 94, 88);
         color: white;
         border: none;
         padding: 10px 20px;
@@ -88,26 +92,25 @@ styleTag.innerHTML = `
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 5px;
-        max-height: 50px; /* Begränsar höjden */
+        max-height: 50px;
         overflow: hidden;
     }
 
     .link-button img {
-        max-height: 20px; /* Ändrar storlek på bilden */
+        max-height: 20px;
         margin-left: 10px;
-        border-radius: 0 !important; /* Tar bort rundade hörn med !important */
+        border-radius: 0 !important;
     }
 
     .link-button .custom-image {
-        border-radius: 0 !important; /* Tar bort rundade hörn specifikt för denna bild */
+        border-radius: 0 !important;
     }
 
     .bold-center {
         font-weight: bold;
-        font-size: 1.2em; /* Ändrar textstorleken */
+        font-size: 1.2em;
     }
 
-    /* Anpassa bredden på popup-panelen för större skärmar */
     @media (min-width: 768px) {
         #popup-panel {
             width: 50%;
@@ -119,20 +122,38 @@ styleTag.innerHTML = `
             width: 30%;
         }
     }
+
+    .field-background {
+        background-color: #e0e0e0;
+    }
+
+    .field-name-data {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .field-name-data strong {
+        display: block;
+        font-weight: bold;
+        padding-left: 10px;
+    }
+
+    .field-name-data span {
+        display: block;
+        padding-left: 10px;
+    }
 `;
 
-// Lägg till style-taggen till <head>
 document.head.appendChild(styleTag);
 
 var popupPanel = document.getElementById('popup-panel');
 var popupPanelVisible = false;
 
-// Skapa och lägg till stäng-knappen
 var closeButton = document.createElement('button');
 closeButton.id = 'close-button';
 closeButton.innerHTML = '&times;';
 closeButton.addEventListener('click', function(event) {
-    event.stopPropagation(); // Förhindra att klicket bubblar upp till panelen
+    event.stopPropagation();
     hidePopupPanel();
 });
 popupPanel.appendChild(closeButton);
@@ -145,7 +166,15 @@ function translateKey(key) {
     return translationTable[key] || key;
 }
 
-// Tabell som matchar "Förvaltandelän" med motsvarande URL
+var marginTopFields = [
+    'BÄVER', 'DOVVILT', 'FÄLTHARE', 'GRÄVLING', 'ILLER', 'KRONVILT', 'RÅDJUR', 'RÖDRÄV', 'SKOGSHARE',
+    'SKOGSMÅRD', 'VILDSVIN', 'ÄLG', 'BLÄSAND', 'BLÄSGÅS', 'DALRIPA', 'FASAN', 'FISKMÅS',
+    'FJÄLLRIPA', 'GRÅGÅS', 'GRÅTRUT', 'GRÄSAND', 'JÄRPE', 'KAJA', 'KANADAGÅS', 'KNIPA',
+    'KRICKA', 'KRÅKA', 'MORKULLA', 'NÖTSKRIKA', 'ORRE', 'ORRTUPP', 'RAPPHÖNA', 'RINGDUVA',
+    'RÅKA', 'SJÖORRE', 'SKATA', 'STORSKRAKE', 'TJÄDER', 'TJÄDERTUPP', 'TRANA', 'VIGG',
+    'VITKINDAD GÅS'
+];
+
 var länURLTabell = {
     'Länsstyrelsen i Blekinge län': 'https://www.lansstyrelsen.se/blekinge/djur/jakt-och-vilt/algjakt.html',
     'Länsstyrelsen  Dalarnas län': 'https://www.lansstyrelsen.se/dalarna/djur/jakt-och-vilt/algjakt.html',
@@ -173,6 +202,8 @@ function generatePopupContent(properties) {
     var content = '';
     var förvaltandelän = null;
 
+    var elements = [];
+
     for (var key in properties) {
         if (properties.hasOwnProperty(key)) {
             var value = properties[key];
@@ -184,30 +215,34 @@ function generatePopupContent(properties) {
             if (hideNameOnlyProperties.includes(key)) {
                 if (value) {
                     if (key === 'NAMN' || key === 'Rubrik' || key === 'GRÄNSÄLVSOMR' || key === 'LÄN' || key === 'lan_namn') {
-                        content += '<p class="bold-center">' + value + '</p>';
+                        elements.push('<p class="bold-center">' + value + '</p>');
                     } else {
-                        content += '<p>' + value + '</p>';
+                        elements.push('<p>' + value + '</p>');
                     }
                 }
                 continue;
             }
 
             if (isImageUrl(value)) {
-                content += '<p><img src="' + value + '" alt="Bild"></p>';
+                elements.push('<p><img src="' + value + '" alt="Bild"></p>');
             } else if (key.toLowerCase() === 'link' && value) {
-                content += `
+                elements.push(`
                     <p>
                         <button class="link-button" onclick="window.open('${value}', '_blank')">
                             Besök sidan
                             <img src="bilder/extern_link.png" alt="Extern länk" class="custom-image">
                         </button>
-                    </p>`;
+                    </p>`);
             } else {
                 var translatedKey = translateKey(key);
-                content += '<p><strong>' + translatedKey + ':</strong> ' + (value ? value : '') + '</p>';
+
+                if (marginTopFields.includes(key)) {
+                    elements.push('<p class="field-name-data margin-top"><strong>' + translatedKey + '</strong><span>' + (value ? value : '') + '</span></p>');
+                } else {
+                    elements.push('<p class="field-name-data field-background"><strong>' + translatedKey + '</strong><span>' + (value ? value : '') + '</span></p>');
+                }
             }
 
-            // Hämta länkar för Förvaltandelän
             if (key === 'Förvaltandelän' && value) {
                 förvaltandelän = value;
             }
@@ -215,15 +250,16 @@ function generatePopupContent(properties) {
     }
 
     if (förvaltandelän && länURLTabell[förvaltandelän]) {
-        content += `
+        elements.push(`
             <p>
                 <button class="link-button" onclick="window.open('${länURLTabell[förvaltandelän]}', '_blank')">
                     Jakttid: ${förvaltandelän}
                     <img src="bilder/extern_link.png" alt="Extern länk" class="custom-image">
                 </button>
-            </p>`;
+            </p>`);
     }
 
+    content = elements.join('');
     return content;
 }
 
@@ -234,14 +270,7 @@ function showPopupPanel(properties) {
     popupPanel.classList.add('show');
     popupPanelVisible = true;
 
-    requestAnimationFrame(function() {
-        setTimeout(function() {
-            var panelContent = document.getElementById('popup-panel-content');
-            if (panelContent) {
-                panelContent.scrollTop = 0;
-            }
-        }, 0);
-    });
+    scrollToTop(); // Scrolla till toppen när panelen visas
 }
 
 function hidePopupPanel() {
@@ -258,16 +287,21 @@ function updatePopupPanelContent(properties) {
     }
 
     var content = generatePopupContent(properties);
+    panelContent.innerHTML = content;
 
-    panelContent.innerHTML = '';
-    setTimeout(function() {
-        panelContent.innerHTML = content;
-        requestAnimationFrame(function() {
-            setTimeout(function() {
-                panelContent.scrollTop = 0;
-            }, 0);
-        });
-    }, 0);
+    scrollToTop(); // Scrolla till toppen efter innehållsuppdatering
+}
+
+function scrollToTop() {
+    requestAnimationFrame(function() {
+        var panelContent = document.getElementById('popup-panel-content');
+        if (panelContent) {
+            var firstChild = panelContent.firstElementChild;
+            if (firstChild) {
+                firstChild.scrollIntoView({ behavior: 'instant', block: 'start' });
+            }
+        }
+    });
 }
 
 function addClickHandlerToLayer(layer) {

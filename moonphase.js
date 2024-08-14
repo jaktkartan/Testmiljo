@@ -66,23 +66,23 @@ addStyles(`
 function getMoonPhaseImageSrc(phase) {
     switch(phase) {
         case LunarPhase.NEW:
-            return 'bilder/moonface/moonface-new-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-new-moon.png';
         case LunarPhase.WAXING_CRESCENT:
-            return 'bilder/moonface/moonface-waxing-crescent-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-waxing-crescent-moon.png';
         case LunarPhase.FIRST_QUARTER:
-            return 'bilder/moonface/moonface-first-quarter-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-first-quarter-moon.png';
         case LunarPhase.WAXING_GIBBOUS:
-            return 'bilder/moonface/moonface-waxing-gibbous-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-waxing-gibbous-moon.png';
         case LunarPhase.FULL:
-            return 'bilder/moonface/moonface-full-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-full-moon.png';
         case LunarPhase.WANING_GIBBOUS:
-            return 'bilder/moonface/moonface-waning-gibbous-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-waning-gibbous-moon.png';
         case LunarPhase.LAST_QUARTER:
-            return 'bilder/moonface/moonface-last-quarter-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-last-quarter-moon.png';
         case LunarPhase.WANING_CRESCENT:
-            return 'bilder/moonface/moonface-waning-crescent-moon.png';
+            return 'bilder/indexbilder/moonface/moonface-waning-crescent-moon.png';
         default:
-            return 'bilder/moonface/default-moon.png';
+            return 'bilder/indexbilder/moonface/default-moon.png';
     }
 }
 

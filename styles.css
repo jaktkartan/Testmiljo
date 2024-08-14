@@ -6,6 +6,10 @@
     left: 10px !important;
 }
 
+.leaflet-pane.userPane {
+    z-index: 999 !important; /* Högre z-index för användarens position */
+}
+
 body, button, span, div {
     font-family: 'Roboto', sans-serif !important;
 }
@@ -162,7 +166,7 @@ html, body {
 
 @media (min-width: 1200px) {
     .tab-pane {
-        width: 40%;
+        width: 30%;
     }
 }
 
@@ -194,7 +198,6 @@ html, body {
     height: 50vh; /* Specifik höjd för tab3 och tab5 */
     display: flex; /* Flexbox layout */
     flex-direction: column; /* Kolumnlayout */
-    padding: 0px;
     justify-content: flex-start; /* Placera innehållet längst upp */
     overflow-y: auto; /* Gör fliken skrollbar */
 }
